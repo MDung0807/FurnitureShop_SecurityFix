@@ -33,60 +33,32 @@ public class Product{
 
     @Column(nullable = false)
     private int status;
-    @Column(nullable = false)
-    private int brandId;
-    @Column(nullable = false)
-    private int categoryId;
+
     @OneToMany
     @JoinColumn(name = "productId")
     private List<ProductImage> productImages;
 
-    @OneToMany
-    @JoinColumn(name = "productId")
-    private List<OrderItem> orderItems;
+    @ManyToOne
+    @JoinColumn(name = "brandId")
+    private Brand brand;
+    @ManyToOne
+    @JoinColumn(name = "categoryId")
+    private Category category;
 
-    @OneToMany
-    @JoinColumn(name = "productId")
-    private List<ReviewItem> reviewItems;
-
-    @OneToMany
-    @JoinColumn(name = "productId")
-    private List<CartItem> cartItems;
-
-    @OneToMany
-    @JoinColumn(name = "productId")
-    private List<WishItem> wishItems;
-
-    public List<ReviewItem> getReviewItems() {
-        return reviewItems;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setReviewItems(List<ReviewItem> reviewItems) {
-        this.reviewItems = reviewItems;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
-    public List<WishItem> getWishItems() {
-        return wishItems;
+    public Brand getBrand() {
+        return brand;
     }
 
-    public void setWishItems(List<WishItem> wishItems) {
-        this.wishItems = wishItems;
-    }
-
-    public int getBrandId() {
-        return brandId;
-    }
-
-    public void setBrandId(int brandId) {
-        this.brandId = brandId;
-    }
-
-    public int getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(int categoryId) {
-        this.categoryId = categoryId;
+    public void setBrand(Brand brand) {
+        this.brand = brand;
     }
 
     public int getProductId() {
@@ -161,20 +133,20 @@ public class Product{
         this.productImages = productImages;
     }
 
-    public List<OrderItem> getOrderItems() {
-        return orderItems;
-    }
-
-    public void setOrderItems(List<OrderItem> orderItems) {
-        this.orderItems = orderItems;
-    }
-
-
-    public List<CartItem> getCartItems() {
-        return cartItems;
-    }
-
-    public void setCartItems(List<CartItem> cartItems) {
-        this.cartItems = cartItems;
-    }
+//    public List<OrderItem> getOrderItems() {
+//        return orderItems;
+//    }
+//
+//    public void setOrderItems(List<OrderItem> orderItems) {
+//        this.orderItems = orderItems;
+//    }
+//
+//
+//    public List<CartItem> getCartItems() {
+//        return cartItems;
+//    }
+//
+//    public void setCartItems(List<CartItem> cartItems) {
+//        this.cartItems = cartItems;
+//    }
 }

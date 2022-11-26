@@ -13,17 +13,35 @@ public class OrderItem {
     private int orderItemId;
 
     @Column(nullable = false)
-    private int orderId;
-
-    @Column(nullable = false)
-    private int productId;
-
-    @Column(nullable = false)
     private BigDecimal totalPrice;
     @Column(nullable = false)
     private BigDecimal unitPrice;
     @Column(nullable = false)
     private int quantity;
+
+    @ManyToOne
+    @JoinColumn(name = "productId")
+    private Product product;
+
+    @ManyToOne
+    @JoinColumn(name = "orderId")
+    private Order order;
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
 
     public BigDecimal getTotalPrice() {
         return totalPrice;
@@ -49,21 +67,6 @@ public class OrderItem {
         this.orderItemId = orderItemId;
     }
 
-    public int getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(int orderId) {
-        this.orderId = orderId;
-    }
-
-    public int getProductId() {
-        return productId;
-    }
-
-    public void setProductId(int productId) {
-        this.productId = productId;
-    }
 
     public int getQuantity() {
         return quantity;

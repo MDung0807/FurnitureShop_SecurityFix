@@ -12,12 +12,6 @@ public class CartItem {
     private int cartItemId;
 
     @Column(nullable = false)
-    private int productId;
-
-    @Column(nullable = false)
-    private int cartId;
-
-    @Column(nullable = false)
     private int quantity;
 
     @Column(nullable = false)
@@ -25,7 +19,27 @@ public class CartItem {
 
     @Column(nullable = false)
     private int status;
+    @ManyToOne
+    @JoinColumn(name = "productId")
+    private Product product;
+    public Product getProduct() {
+        return product;
+    }
+    @ManyToOne
+    @JoinColumn(name = "cartId")
+    private Cart cart;
 
+    public Cart getCart() {
+        return cart;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
     public int getCartItemId() {
         return cartItemId;
     }
@@ -33,23 +47,6 @@ public class CartItem {
     public void setCartItemId(int cartItemId) {
         this.cartItemId = cartItemId;
     }
-
-    public int getProductId() {
-        return productId;
-    }
-
-    public void setProductId(int productId) {
-        this.productId = productId;
-    }
-
-    public int getCartId() {
-        return cartId;
-    }
-
-    public void setCartId(int cartId) {
-        this.cartId = cartId;
-    }
-
 
     public int getQuantity() {
         return quantity;

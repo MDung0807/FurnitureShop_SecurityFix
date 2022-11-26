@@ -12,10 +12,6 @@ public class Order {
     @Column(name = "orderId")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int orderId;
-    @Column(nullable = false)
-    private int userId;
-    @Column
-    private Integer discountId;
     @Column
     private LocalDateTime dateDone;
 
@@ -48,6 +44,29 @@ public class Order {
     @JoinColumn(name = "orderId")
     private List<OrderItem> orderItems;
 
+    @ManyToOne
+    @JoinColumn(name = "discountId")
+    private Discount discount;
+
+    @ManyToOne
+    @JoinColumn(name = "userId")
+    private User user;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Discount getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(Discount discount) {
+        this.discount = discount;
+    }
 
     public int getPayment() {
         return payment;
@@ -79,23 +98,6 @@ public class Order {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    public Integer getDiscountId() {
-        return discountId;
-    }
-
-    public void setDiscountId(Integer discountId) {
-        this.discountId = discountId;
     }
 
     public int getOrderId() {

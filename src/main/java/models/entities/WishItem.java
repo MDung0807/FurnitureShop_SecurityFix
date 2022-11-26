@@ -11,38 +11,39 @@ public class WishItem {
     @Column(name = "wishItemId")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int wishItemId;
-
-    @Column(nullable = false)
-    private int wishId;
-    @Column(nullable = false)
-    private int productId;
     @Column(nullable = false)
     private int status;
     @Column(nullable = false)
     private LocalDateTime dateAdded;
+    @ManyToOne
+    @JoinColumn(name = "productId")
+    private Product product;
 
+    @ManyToOne
+    @JoinColumn(name = "wishId")
+    private WishList wishList;
+
+    public WishList getWishList() {
+        return wishList;
+    }
+
+    public void setWishList(WishList wishList) {
+        this.wishList = wishList;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
     public int getWishItemId() {
         return wishItemId;
     }
 
     public void setWishItemId(int wishItemId) {
         this.wishItemId = wishItemId;
-    }
-
-    public int getWishId() {
-        return wishId;
-    }
-
-    public void setWishId(int wishId) {
-        this.wishId = wishId;
-    }
-
-    public int getProductId() {
-        return productId;
-    }
-
-    public void setProductId(int productId) {
-        this.productId = productId;
     }
 
     public int getStatus() {

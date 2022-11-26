@@ -16,9 +16,18 @@ public class ProductImage {
 
     @Column(nullable = false)
     private boolean isDefault;
-    @Column(nullable = false)
-    private int productId;
 
+    @ManyToOne
+    @JoinColumn(name = "productId")
+    private Product product;
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
 
     public int getProductImageId() {
         return productImageId;
@@ -44,12 +53,5 @@ public class ProductImage {
         isDefault = aDefault;
     }
 
-    public int getProductId() {
-        return productId;
-    }
-
-    public void setProductId(int productId) {
-        this.productId = productId;
-    }
 
 }
