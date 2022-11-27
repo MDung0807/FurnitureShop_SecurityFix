@@ -7,11 +7,9 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="FurnitureWebApp" />
+        <module name="FurnitureShop" />
         <module name="FurnitureStore" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="FurnitureShop" target="1.5" />
-    </bytecodeTargetLevel>
   </component>
 </project>
