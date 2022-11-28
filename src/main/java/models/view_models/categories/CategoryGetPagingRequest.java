@@ -1,4 +1,6 @@
 package models.view_models.categories;
 
-public class CategoryGetPagingRequest extends PagingRequest{
+import common.paging.PagingRequest;
+
+public class CategoryGetPagingRequest extends PagingRequest {
 }
