@@ -13,10 +13,19 @@ public class Role {
 
     @Column(nullable = false)
     private String roleName;
-
+    @Column(nullable = false)
+    private int status;
     @OneToMany
     @JoinColumn(name = "roleId", updatable = false)
     private List<UserRole> userRoles;
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
 
     public List<UserRole> getUserRoles() {
         return userRoles;

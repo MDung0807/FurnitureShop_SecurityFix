@@ -8,7 +8,15 @@ public class BrandUpdateRequest {
     private String brandName;
     private String origin;
     private Part image;
+    private int status;
 
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
     public int getBrandId() {
         return brandId;
     }

@@ -18,10 +18,19 @@ public class Category{
     private String description;
     @Column(nullable = false, columnDefinition = "LONGTEXT")
     private String image;
-
+    @Column(nullable = false)
+    private int status;
     @OneToMany
     @JoinColumn(name = "categoryId")
     private List<Product> products;
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
 
     public String getImage() {
         return image;
