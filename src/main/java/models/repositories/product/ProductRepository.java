@@ -4,6 +4,7 @@ import models.entities.Brand;
 import models.entities.Category;
 import models.entities.Product;
 import models.entities.ProductImage;
+import models.repositories.review.ReviewRepository;
 import models.services.product.ProductService;
 import models.view_models.product_images.ProductImageCreateRequest;
 import models.view_models.product_images.ProductImageGetPagingRequest;
