@@ -8,7 +8,24 @@ public class BrandViewModel {
     private String image;
 
     private long totalProducts;
+    private int status;
+    private String statusCode;
 
+    public String getStatusCode() {
+        return statusCode;
+    }
+
+    public void setStatusCode(String statusCode) {
+        this.statusCode = statusCode;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
     public long getTotalProducts() {
         return totalProducts;
     }

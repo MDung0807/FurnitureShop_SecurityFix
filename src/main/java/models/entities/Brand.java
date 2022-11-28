@@ -18,9 +18,20 @@ public class Brand {
     @Column(nullable = false, columnDefinition = "LONGTEXT")
     private String image;
 
+    @Column(nullable = false)
+    private int status;
+
     @OneToMany
     @JoinColumn(name = "brandId")
     private List<Product> products;
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
 
     public int getBrandId() {
         return brandId;
