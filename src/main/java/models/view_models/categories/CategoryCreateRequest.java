@@ -7,7 +7,15 @@ public class CategoryCreateRequest {
     private int parentCategoryId;
     private String description;
     private Part image;
+    private int status;
 
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
 
     public String getDescription() {
         return description;
@@ -40,4 +48,5 @@ public class CategoryCreateRequest {
     public void setParentCategoryId(int parentCategoryId) {
         this.parentCategoryId = parentCategoryId;
     }
+
 }

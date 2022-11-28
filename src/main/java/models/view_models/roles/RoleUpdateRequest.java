@@ -3,7 +3,15 @@ package models.view_models.roles;
 public class RoleUpdateRequest {
     private int roleId;
     private String roleName;
+    private int status;
 
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
     public int getRoleId() {
         return roleId;
     }
