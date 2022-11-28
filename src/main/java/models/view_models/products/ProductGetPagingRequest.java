@@ -1,6 +1,6 @@
-//package models.view_models.products;
-//
-//import common.paging.PagingRequest;
-//
-//public class ProductGetPagingRequest extends PagingRequest {
-//}
+package models.view_models.products;
+
+import common.paging.PagingRequest;
+
+public class ProductGetPagingRequest extends PagingRequest {
+}
