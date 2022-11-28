@@ -52,6 +52,7 @@ public class AddCategory extends HttpServlet {
         else {
             error = "&" + error;
             ServletUtils.redirect(response, request.getContextPath() + "/admin/categories?sub-categories=true" + error);
+            vfbfb
         }
     }
 }
