@@ -12,7 +12,24 @@ public class CategoryViewModel {
     private String image;
     private long totalProduct;
     private long totalSell;
+    private int status;
+    private String statusCode;
 
+    public String getStatusCode() {
+        return statusCode;
+    }
+
+    public void setStatusCode(String statusCode) {
+        this.statusCode = statusCode;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
     public List<CategoryViewModel> getSubCategories() {
         return subCategories;
     }
