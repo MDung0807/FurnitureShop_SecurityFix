@@ -1,5 +1,7 @@
 package models.services.order;
 
+import common.interfaces.IModifyEntity;
+import common.interfaces.IRetrieveEntity;
 import models.view_models.order_items.OrderItemCreateRequest;
 import models.view_models.order_items.OrderItemViewModel;
 import models.view_models.orders.*;

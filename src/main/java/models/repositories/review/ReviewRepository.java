@@ -15,8 +15,7 @@ import org.hibernate.query.Query;
 import utils.DateUtils;
 import utils.HibernateUtils;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class ReviewRepository implements IReviewRepository {
     private static ReviewRepository instance = null;

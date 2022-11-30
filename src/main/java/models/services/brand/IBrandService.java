@@ -1,5 +1,7 @@
 package models.services.brand;
 
+import common.interfaces.IModifyEntity;
+import common.interfaces.IRetrieveEntity;
 import models.view_models.brands.BrandCreateRequest;
 import models.view_models.brands.BrandGetPagingRequest;
 import models.view_models.brands.BrandUpdateRequest;

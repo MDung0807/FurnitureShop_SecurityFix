@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: dodun
-  Date: 11/30/2022
-  Time: 12:00 PM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page import="utils.constants.SORT_BY" %>
 <%@ page import="utils.constants.PAGE_SIZE" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -422,12 +415,12 @@
                                             </svg>
                                         </a>
                                     <li>
-                                        <c:forEach var="i" begin="1" end="${totalPage}">
-                                    <li class="pagination__list">
-                                        <a <c:if test="${i == pageIndex}">class="pagination__item pagination__item--current"</c:if> onclick="onClickLink(this, '${i}')" class="pagination__item link">
+                                    <c:forEach var="i" begin="1" end="${totalPage}">
+                                        <li class="pagination__list">
+                                            <a <c:if test="${i == pageIndex}">class="pagination__item pagination__item--current"</c:if> onclick="onClickLink(this, '${i}')" class="pagination__item link">
                                                 ${i}
-                                        </a>
-                                    </li>
+                                            </a>
+                                        </li>
                                     </c:forEach>
                                     <li class="pagination__list">
                                         <a onclick="onClickLink(this, '${pageIndex + 1 <= totalPage ? pageIndex + 1 : totalPage}')" class="pagination__item--arrow link">

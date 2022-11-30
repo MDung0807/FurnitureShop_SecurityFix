@@ -9,6 +9,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import utils.HibernateUtils;
+import utils.constants.BRAND_STATUS;
 import utils.constants.ROLE_STATUS;
 
 import java.util.ArrayList;

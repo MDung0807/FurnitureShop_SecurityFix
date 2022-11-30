@@ -2,6 +2,8 @@ package models.entities;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.sql.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "order_items",uniqueConstraints =

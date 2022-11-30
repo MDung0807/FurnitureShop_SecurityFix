@@ -258,7 +258,7 @@ public class UserRepository implements IUserRepository{
         return list;
     }
 
-    private int getUserRoleId(int userId, int roleId) {
+     private int getUserRoleId(int userId, int roleId) {
         Session session = HibernateUtils.getSession();
         Query q1 = session.createQuery("select userRoleId from UserRole where userId=:s1 and roleId=:s2");
         q1.setParameter("s1",userId);

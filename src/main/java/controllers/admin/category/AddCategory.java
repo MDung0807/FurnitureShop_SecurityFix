@@ -1,17 +1,14 @@
 package controllers.admin.category;
 
 import models.services.category.CategoryService;
-import models.view_models.categories.CategoryCreateRequest;
 import utils.ServletUtils;
 import utils.StringUtils;
+import models.view_models.categories.CategoryCreateRequest;
 
-import javax.servlet.ServletException;
+import javax.servlet.*;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
+import javax.servlet.http.*;
 import java.io.IOException;
 
 @WebServlet(name = "AddCategory", value = "/admin/category/add")

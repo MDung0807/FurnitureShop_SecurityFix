@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: dodun
-  Date: 11/29/2022
-  Time: 9:07 AM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page import="utils.constants.PRODUCT_STATUS" %>
 <%@ page import="utils.constants.SORT_BY" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -54,48 +47,48 @@
                 <form class="container-fluid" action="<%=request.getContextPath()%>/admin/products">
                   <input type="hidden" name="grid" value="true"/>
                   <div class="row col-lg-12 col-md-12">
-                    <div class="col-lg-9 col-md-9 p-space">
-                      <input type="text" class="form-control" id="searchProduct" name="keyword"
-                             placeholder="Tìm kếm theo tên sản phẩm">
-                    </div>
-                    <div class="col-lg-3 col-md-3 p-space">
-                      <button type="submit" class="btn btn-primary">Tìm kiếm</button>
-                    </div>
+                      <div class="col-lg-9 col-md-9 p-space">
+                        <input type="text" class="form-control" id="searchProduct" name="keyword"
+                               placeholder="Tìm kếm theo tên sản phẩm">
+                      </div>
+                      <div class="col-lg-3 col-md-3 p-space">
+                        <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+                      </div>
                   </div>
                 </form>
                 <div class="card-bar mt-3">
                   <form class="container-fluid" action="<%=request.getContextPath()%>/admin/products">
                     <input type="hidden" name="grid" value="true"/>
                     <div class="row col-lg-12 col-md-12 ">
-                      <div class="col-lg-3 col-md-3 p-space">
-                        <span>Danh mục </span>
-                        <select class="form-control" id="dropdownCategory" name="categoryId">
-                          <option value="0">None</option>
-                          <c:forEach var="c" items="${categories}">
-                            <option <c:if test="${categoryId == c.categoryId}">selected</c:if> value="${c.categoryId}">${c.name}</option>
-                          </c:forEach>
-                        </select>
-                      </div>
-                      <div class="col-lg-3 col-md-3 p-space">
-                        <span>Thương hiệu </span>
-                        <select class="form-control" id="dropdownBrand" name="brandId">
-                          <option value="0">None</option>
-                          <c:forEach var="b" items="${brands}">
-                            <option <c:if test="${brandId == b.brandId}">selected</c:if> value="${b.brandId}">${b.brandName}</option>
-                          </c:forEach>
-                        </select>
-                      </div>
-                      <div class="col-lg-3 col-md-3 p-space">
-                        <span>Sắp xếp </span>
-                        <select class="form-control" id="dropdownOrderBy" name="sortBy">
-                          <c:forEach var="c" items="<%=SORT_BY.SortBy%>">
+                        <div class="col-lg-3 col-md-3 p-space">
+                          <span>Danh mục </span>
+                          <select class="form-control" id="dropdownCategory" name="categoryId">
+                            <option value="0">None</option>
+                            <c:forEach var="c" items="${categories}">
+                              <option <c:if test="${categoryId == c.categoryId}">selected</c:if> value="${c.categoryId}">${c.name}</option>
+                            </c:forEach>
+                          </select>
+                        </div>
+                        <div class="col-lg-3 col-md-3 p-space">
+                          <span>Thương hiệu </span>
+                          <select class="form-control" id="dropdownBrand" name="brandId">
+                            <option value="0">None</option>
+                            <c:forEach var="b" items="${brands}">
+                              <option <c:if test="${brandId == b.brandId}">selected</c:if> value="${b.brandId}">${b.brandName}</option>
+                            </c:forEach>
+                          </select>
+                        </div>
+                        <div class="col-lg-3 col-md-3 p-space">
+                          <span>Sắp xếp </span>
+                          <select class="form-control" id="dropdownOrderBy" name="sortBy">
+                            <c:forEach var="c" items="<%=SORT_BY.SortBy%>">
                             <option <c:if test="${sortBy == c.value}">selected</c:if> value="${c.value}">${c.key}</option>
-                          </c:forEach>
-                        </select>
-                      </div>
-                      <div class="col-lg-3 col-md-3 p-space mt-2">
-                        <button type="submit" class="btn btn-success">Lọc</button>
-                      </div>
+                            </c:forEach>
+                          </select>
+                        </div>
+                        <div class="col-lg-3 col-md-3 p-space mt-2">
+                          <button type="submit" class="btn btn-success">Lọc</button>
+                        </div>
                     </div>
                   </form>
                 </div>
@@ -148,9 +141,9 @@
                         </a>
                       </li>
                       <c:forEach var="p" begin="1" end="${totalPage}">
-                        <li class="page-item ${pageIndex == p ? "active" : ""}">
-                          <a class="page-link" onclick="onClickLink(this, '${p}')">${p}</a>
-                        </li>
+                          <li class="page-item ${pageIndex == p ? "active" : ""}">
+                            <a class="page-link" onclick="onClickLink(this, '${p}')">${p}</a>
+                          </li>
                       </c:forEach>
 
                       <li class="page-item">

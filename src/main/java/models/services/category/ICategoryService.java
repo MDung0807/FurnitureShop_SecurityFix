@@ -1,5 +1,7 @@
 package models.services.category;
 
+import common.interfaces.IModifyEntity;
+import common.interfaces.IRetrieveEntity;
 import models.view_models.categories.CategoryCreateRequest;
 import models.view_models.categories.CategoryGetPagingRequest;
 import models.view_models.categories.CategoryUpdateRequest;

@@ -1,6 +1,12 @@
 package models.services.category;
 
+import models.entities.Category;
 import models.repositories.category.CategoryRepository;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.query.Query;
+import utils.FileUtil;
+import utils.HibernateUtils;
 import models.view_models.categories.CategoryCreateRequest;
 import models.view_models.categories.CategoryGetPagingRequest;
 import models.view_models.categories.CategoryUpdateRequest;
@@ -8,6 +14,7 @@ import models.view_models.categories.CategoryViewModel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class CategoryService implements ICategoryService{
     private static CategoryService instance = null;

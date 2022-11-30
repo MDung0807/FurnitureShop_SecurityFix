@@ -11,6 +11,7 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import utils.FileUtil;
 import utils.HibernateUtils;
+import utils.constants.BRAND_STATUS;
 import utils.constants.CATEGORY_STATUS;
 import utils.constants.PRODUCT_STATUS;
 

@@ -79,4 +79,5 @@ public class UserService implements IUserService{
     public ArrayList<UserRoleViewModel> getUserRoleByUserId(int userId) {
         return UserRepository.getInstance().getUserRoleByUserId(userId);
     }
+
 }

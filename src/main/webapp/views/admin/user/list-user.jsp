@@ -125,7 +125,7 @@
                                      accept=".png, .jpg, .jpeg" required title="Vui lòng chọn ảnh"/>
                               <label for="avatar">
                                 <img src="<%=request.getContextPath()%>/assets/admin/img/icons/edit.svg"
-                                     class="svg_img header_svg" alt="edit"/>
+                                      class="svg_img header_svg" alt="edit"/>
                               </label>
                             </div>
                             <div class="thumb-preview ec-preview">
@@ -230,19 +230,19 @@
                       </div>
                     </div>
                     <div class="col-lg-6">
-                      <div class="dropdown button-group">
-                        <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-bs-toggle="dropdown">Roles</button>
-                        <ul class="role dropdown-menu">
-                          <c:forEach var="role" items="${roles}">
-                            <li>
-                              <a href="#" class="small" data-value="${role.roleId}" tabIndex="-1">
-                                <input type="checkbox" class="roleCheckBox" id="roleCheckBox-${role.roleId}" name="roleCheckBox" value="${role.roleId}"/>&nbsp;${role.roleName}
-                              </a>
-                            </li>
-                          </c:forEach>
-                        </ul>
-                        <p class="mt-3" id='roleEmpty'></p>
-                      </div>
+                        <div class="dropdown button-group">
+                          <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-bs-toggle="dropdown">Roles</button>
+                          <ul class="role dropdown-menu">
+                            <c:forEach var="role" items="${roles}">
+                              <li>
+                                <a href="#" class="small" data-value="${role.roleId}" tabIndex="-1">
+                                  <input type="checkbox" class="roleCheckBox" id="roleCheckBox-${role.roleId}" name="roleCheckBox" value="${role.roleId}"/>&nbsp;${role.roleName}
+                                </a>
+                              </li>
+                            </c:forEach>
+                          </ul>
+                          <p class="mt-3" id='roleEmpty'></p>
+                        </div>
                     </div>
                   </div>
                 </div>

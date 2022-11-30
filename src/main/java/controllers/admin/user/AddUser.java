@@ -32,5 +32,6 @@ public class AddUser extends HttpServlet {
             error = "?error=true";
         }
         ServletUtils.redirect(response, request.getContextPath() + "/admin/users" + error);
+
     }
 }

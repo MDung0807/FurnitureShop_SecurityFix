@@ -1,7 +1,7 @@
 package models.repositories.order;
 
 import models.entities.*;
-import models.repositories.cart.CartRepository;
+import models.repositories.cart.CartIRepository;
 import models.repositories.discount.DiscountRepository;
 import models.repositories.product.ProductRepository;
 import models.services.cart.CartService;
@@ -333,14 +333,14 @@ public class OrderRepository implements IOrderRepository{
                 for(CartItemViewModel ci: cartItems) {
                     int currQuantity = ProductRepository.getInstance().getQuantity(ci.getProductId());
                     if (currQuantity == 0) {
-                        CartRepository.getInstance().delete(ci.getCartItemId());
+                        CartIRepository.getInstance().delete(ci.getCartItemId());
                     }
                     else if(currQuantity < ci.getQuantity()) {
                         CartItemUpdateRequest r = new CartItemUpdateRequest();
                         r.setCartItemId(ci.getCartItemId());
                         r.setQuantity(currQuantity);
                         r.setStatus(1);
-                        CartRepository.getInstance().update(r);
+                        CartIRepository.getInstance().update(r);
                     }
                 }
                 return false;

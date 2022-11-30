@@ -1,12 +1,18 @@
 package models.services.role;
 
+import models.entities.Role;
 import models.repositories.role.RoleRepository;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.query.Query;
+import utils.HibernateUtils;
+import models.view_models.roles.RoleViewModel;
 import models.view_models.roles.RoleCreateRequest;
 import models.view_models.roles.RoleGetPagingRequest;
 import models.view_models.roles.RoleUpdateRequest;
-import models.view_models.roles.RoleViewModel;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class RoleService implements IRoleService{
     private static RoleService instance = null;

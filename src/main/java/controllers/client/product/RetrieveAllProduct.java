@@ -1,4 +1,3 @@
-
 package controllers.client.product;
 
 import models.services.brand.BrandService;
@@ -116,4 +115,3 @@ public class RetrieveAllProduct extends HttpServlet {
         doGet(request, response);
     }
 }
-

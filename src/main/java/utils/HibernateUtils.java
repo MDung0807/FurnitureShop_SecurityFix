@@ -6,6 +6,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
+import java.util.List;
+
 public class HibernateUtils {
     private static final SessionFactory sessionFactory = buildSessionFactory();
 
