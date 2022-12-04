@@ -1,5 +1,6 @@
 package controllers.admin.product;
 
+import models.services.cart.CartService;
 import models.services.product.ProductService;
 import utils.ServletUtils;
 import utils.StringUtils;
@@ -18,6 +19,8 @@ public class RemoveProduct extends HttpServlet {
         String error = "";
         if(!isSuccess){
             error = "?error = true";
+        }else{
+            CartService.getInstance().updateQuantityByProductId(productId, 0);
         }
         ServletUtils.redirect(response,request.getContextPath() + "/admin/products" + error);
     }
