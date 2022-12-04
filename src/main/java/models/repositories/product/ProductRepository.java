@@ -141,6 +141,7 @@ public class ProductRepository implements IProductRepository{
         Session session = HibernateUtils.getSession();
         Product product = session.find(Product.class, entityId);
         product.setStatus(PRODUCT_STATUS.SUSPENDED);
+        product.setQuantity(0);
         session.close();
         return HibernateUtils.merge(product);
     }

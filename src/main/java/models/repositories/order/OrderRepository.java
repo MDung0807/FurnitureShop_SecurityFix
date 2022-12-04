@@ -355,7 +355,7 @@ public class OrderRepository implements IOrderRepository{
         UserViewModel user = (UserViewModel) session.getAttribute("user");
         user.setTotalCartItem(user.getTotalCartItem() - cartItems.size());
         session.setAttribute("user", user);
-        MailJetService.getInstance().sendMail(orderReq.getName(), orderReq.getEmail());
+        MailJetService.getInstance().sendMail(user.getFirstName() + " " + user.getLastName(), user.getEmail());
         if(orderReq.getDiscountId() != 0)
             DiscountRepository.getInstance().updateQuantity(orderReq.getDiscountId());
         return true;
