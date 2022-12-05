@@ -84,6 +84,7 @@ public class DiscountRepository implements IDiscountRepository{
         Session session = HibernateUtils.getSession();
         Discount discount = session.find(Discount.class, entityId);
         discount.setStatus(DISCOUNT_STATUS.SUSPENDED);
+        discount.setQuantity(0);
         session.close();
         return HibernateUtils.merge(discount);
     }
