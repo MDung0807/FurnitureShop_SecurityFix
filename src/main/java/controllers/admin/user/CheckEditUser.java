@@ -1,7 +1,7 @@
 package controllers.admin.user;
 
 import common.user.UserUtils;
-import models.services.user.UserService;
+import models.repositories.user.UserRepository;
 import utils.StringUtils;
 import models.view_models.users.UserViewModel;
 
@@ -27,19 +27,19 @@ public class CheckEditUser extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
 
         int userId = StringUtils.toInt(request.getParameter("userId"));
-        UserViewModel user = UserService.getInstance().retrieveUserById(userId);
+        UserViewModel user = UserRepository.getInstance().retrieveById(userId);
         String username = request.getParameter("username");
         String email = request.getParameter("email");
         String phone = request.getParameter("phone");
         String hasChangePass = request.getParameter("hasChangePass");
         ArrayList<String> exists = new ArrayList<>();
-        if(!Objects.equals(user.getUsername(), username) && UserService.getInstance().checkUsername(username)){
+        if(!Objects.equals(user.getUsername(), username) && UserRepository.getInstance().checkUsername(username)){
             exists.add("user".trim());
         }
-        if(!Objects.equals(user.getEmail(), email) && UserService.getInstance().checkEmail(email)){
+        if(!Objects.equals(user.getEmail(), email) && UserRepository.getInstance().checkEmail(email)){
             exists.add("email".trim());
         }
-        if(!Objects.equals(user.getPhone(), phone) && UserService.getInstance().checkPhone(phone)){
+        if(!Objects.equals(user.getPhone(), phone) && UserRepository.getInstance().checkPhone(phone)){
             exists.add("phone".trim());
         }
         try {

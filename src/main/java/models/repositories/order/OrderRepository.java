@@ -4,11 +4,6 @@ import models.entities.*;
 import models.repositories.cart.CartRepository;
 import models.repositories.discount.DiscountRepository;
 import models.repositories.product.ProductRepository;
-import models.services.cart.CartService;
-import models.services.discount.DiscountService;
-import models.services.mail.MailJetService;
-import models.services.order.OrderService;
-import models.services.product.ProductService;
 import models.view_models.cart_items.CartItemUpdateRequest;
 import models.view_models.cart_items.CartItemViewModel;
 import models.view_models.discounts.DiscountViewModel;
@@ -153,7 +148,7 @@ public class OrderRepository implements IOrderRepository{
         OrderViewModel orderViewModel = new OrderViewModel();
         DiscountViewModel discount = null;
         if(order.getDiscount() != null)
-            discount = DiscountService.getInstance().retrieveDiscountById(order.getDiscount().getDiscountId());
+            discount = DiscountRepository.getInstance().retrieveById(order.getDiscount().getDiscountId());
         Query q = session.createQuery("from User where id =:s1");
         q.setParameter("s1",order.getUser().getUserId());
         User user = (User)q.getSingleResult();
@@ -253,7 +248,7 @@ public class OrderRepository implements IOrderRepository{
 
     @Override
     public BigDecimal getRevenue() {
-        ArrayList<OrderViewModel> orders = OrderService.getInstance().retrieveAllOrder(new OrderGetPagingRequest());
+        ArrayList<OrderViewModel> orders = OrderRepository.getInstance().retrieveAll(new OrderGetPagingRequest());
 
         BigDecimal totalRevenue = BigDecimal.valueOf(0);
         for(OrderViewModel o: orders){
@@ -309,10 +304,10 @@ public class OrderRepository implements IOrderRepository{
 
     @Override
     public boolean createOrder(HttpServletRequest request, OrderCreateRequest orderReq, int userId) {
-        ArrayList<CartItemViewModel> cartItems = CartService.getInstance().retrieveCartByUserId(userId);
+        ArrayList<CartItemViewModel> cartItems = CartRepository.getInstance().retrieveCartByUserId(userId);
         if(cartItems.size() == 0)
             return false;
-        int orderId = OrderService.getInstance().insertOrder(orderReq);
+        int orderId = OrderRepository.getInstance().insert(orderReq);
         if(orderId < 1)
             return false;
         for(CartItemViewModel c: cartItems){
@@ -346,7 +341,7 @@ public class OrderRepository implements IOrderRepository{
                 return false;
             }
         }
-        boolean success = CartService.getInstance().deleteCartByUserId(userId);
+        boolean success = CartRepository.getInstance().deleteCartByUserId(userId);
         if(!success){
             clearOrder(orderId);
             return false;
@@ -355,7 +350,6 @@ public class OrderRepository implements IOrderRepository{
         UserViewModel user = (UserViewModel) session.getAttribute("user");
         user.setTotalCartItem(user.getTotalCartItem() - cartItems.size());
         session.setAttribute("user", user);
-        MailJetService.getInstance().sendMail(user.getFirstName() + " " + user.getLastName(), user.getEmail());
         if(orderReq.getDiscountId() != 0)
             DiscountRepository.getInstance().updateQuantity(orderReq.getDiscountId());
         return true;
@@ -377,7 +371,7 @@ public class OrderRepository implements IOrderRepository{
     }
     private OrderItemViewModel getOrderItemViewModel(OrderItem orderItem){
         OrderItemViewModel orderItemViewModel = new OrderItemViewModel();
-        ProductViewModel product = ProductService.getInstance().retrieveProductById(orderItem.getProduct().getProductId());
+        ProductViewModel product = ProductRepository.getInstance().retrieveById(orderItem.getProduct().getProductId());
 
         orderItemViewModel.setProductId(orderItem.getProduct().getProductId());
         orderItemViewModel.setOrderId(orderItem.getOrder().getOrderId());
@@ -434,9 +428,9 @@ public class OrderRepository implements IOrderRepository{
             session.close();
         }
         if(orderItemId != -1) {
-            boolean res = ProductService.getInstance().updateQuantity(orderItem.getProduct().getProductId(), orderItem.getQuantity());
+            boolean res = ProductRepository.getInstance().updateQuantity(orderItem.getProduct().getProductId(), orderItem.getQuantity());
             if (!res) {
-                OrderService.getInstance().clearOrder(orderItem.getOrder().getOrderId());
+                OrderRepository.getInstance().clearOrder(orderItem.getOrder().getOrderId());
                 return 0;
             }
         }

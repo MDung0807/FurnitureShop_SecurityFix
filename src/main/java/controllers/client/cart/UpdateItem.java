@@ -1,6 +1,6 @@
 package controllers.client.cart;
 
-import models.services.cart.CartService;
+import models.repositories.cart.CartRepository;
 import models.view_models.cart_items.CartItemUpdateRequest;
 import utils.StringUtils;
 
@@ -23,11 +23,11 @@ public class UpdateItem extends HttpServlet {
         updateReq.setCartItemId(cartItemId);
         updateReq.setQuantity(quantity);
 
-        boolean success = CartService.getInstance().updateCartItem(updateReq);
+        boolean success = CartRepository.getInstance().update(updateReq);
         if(success){
             out.println("success");
         }else{
-            int q = CartService.getInstance().canUpdateQuantity(cartItemId, quantity);
+            int q = CartRepository.getInstance().canUpdateQuantity(cartItemId, quantity);
             if(q != -1)
                 out.println(q + "-over");
             else

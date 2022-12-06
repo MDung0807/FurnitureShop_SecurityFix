@@ -1,7 +1,7 @@
 package controllers.admin.product;
 
-import models.services.cart.CartService;
-import models.services.product.ProductService;
+import models.repositories.cart.CartRepository;
+import models.repositories.product.ProductRepository;
 import utils.ServletUtils;
 import utils.StringUtils;
 
@@ -15,12 +15,12 @@ public class RemoveProduct extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int productId = StringUtils.toInt(request.getParameter("productId"));
-        boolean isSuccess = ProductService.getInstance().deleteProduct(productId);
+        boolean isSuccess = ProductRepository.getInstance().delete(productId);
         String error = "";
         if(!isSuccess){
             error = "?error = true";
         }else{
-            CartService.getInstance().updateQuantityByProductId(productId, 0);
+            CartRepository.getInstance().updateQuantityByProductId(productId, 0);
         }
         ServletUtils.redirect(response,request.getContextPath() + "/admin/products" + error);
     }

@@ -1,8 +1,8 @@
 package controllers.client.authentication;
 
 import common.user.UserUtils;
-import models.services.role.RoleService;
-import models.services.user.UserService;
+import models.repositories.role.RoleRepository;
+import models.repositories.user.UserRepository;
 import models.view_models.roles.RoleGetPagingRequest;
 import models.view_models.roles.RoleViewModel;
 import models.view_models.users.UserCreateRequest;
@@ -40,7 +40,7 @@ public class Register extends HttpServlet {
         UserCreateRequest createReq = UserUtils.CreateRegisterRequest(request);
         createReq.setStatus(USER_STATUS.ACTIVE);
         RoleGetPagingRequest reqRole = new RoleGetPagingRequest();
-        ArrayList<RoleViewModel> roles = RoleService.getInstance().retrieveAllRole(reqRole);
+        ArrayList<RoleViewModel> roles = RoleRepository.getInstance().retrieveAll(reqRole);
 
         roles.removeIf(x -> !x.getRoleName().equalsIgnoreCase("khách hàng"));
         createReq.setRoleIds(new ArrayList<Integer>(){
@@ -49,11 +49,13 @@ public class Register extends HttpServlet {
             }
         });
 
-        int userId = UserService.getInstance().insertUser(createReq);
-        String error = "";
+        int userId = UserRepository.getInstance().insert(createReq);
+        String status = "";
         if(userId < 1){
-            error = "?error=true";
+            status = "?error=true";
+        }else{
+            status = "?register=success";
         }
-        ServletUtils.redirect(response, request.getContextPath() + "/signin" + error);
+        ServletUtils.redirect(response, request.getContextPath() + "/signin" + status);
     }
 }

@@ -71,12 +71,32 @@
         </div>
     </div>
     <!-- End login section  -->
-
+    <div class="modal" id="modal-error" data-animation="slideInUp" style="z-index: 999;">
+        <div class="modal-dialog quickview__main--wrapper">
+            <h3 class="modal-header border-bottom-0">Thao tác bị lỗi, vui lòng thực hiện lại</h3>
+        </div>
+    </div>
+    <div class="modal" id="modal-register" data-animation="slideInUp" style="z-index: 999;">
+        <div class="modal-dialog quickview__main--wrapper">
+            <h3 class="modal-header border-bottom-0">Đăng kí tài khoản thành công</h3>
+        </div>
+    </div>
 </main>
 
 <jsp:include page="/views/client/common/footer.jsp" />
 <jsp:include page="/views/client/common/common_js.jsp"/>
 <script>
+    $(window).on('load', function() {
+        if(${error != null}){
+            document.getElementById("modal-error").classList.add('is-visible')
+        }
+        else if(window.location.href.includes("error")){
+            document.getElementById("modal-error").classList.add('is-visible')
+        }
+        else if(window.location.href.includes("register")){
+            document.getElementById("modal-register").classList.add('is-visible')
+        }
+    });
     $('#form-login').submit(function (e){
         validateForm(e)
     })

@@ -1,6 +1,6 @@
 package controllers.admin.category;
 
-import models.services.category.CategoryService;
+import models.repositories.category.CategoryRepository;
 import utils.ServletUtils;
 import utils.StringUtils;
 import models.view_models.categories.CategoryCreateRequest;
@@ -37,7 +37,7 @@ public class AddCategory extends HttpServlet {
         if(parentCategoryId != null && !parentCategoryId.equals(""))
             req.setParentCategoryId(StringUtils.toInt(parentCategoryId));
         req.setStatus(StringUtils.toInt(request.getParameter("status")));
-        int categoryId = CategoryService.getInstance().insertCategory(req);
+        int categoryId = CategoryRepository.getInstance().insert(req);
         String error = "";
         if(categoryId < 1){
             error = "error=true";

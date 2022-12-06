@@ -1,7 +1,7 @@
 package controllers.client.checkout;
 
-import models.services.order.OrderService;
-import models.services.user.UserService;
+import models.repositories.order.OrderRepository;
+import models.repositories.user.UserRepository;
 import models.view_models.orders.OrderCreateRequest;
 import models.view_models.users.UserViewModel;
 import utils.ServletUtils;
@@ -52,12 +52,12 @@ public class CreateOrder extends HttpServlet {
         createOrderReq.setTotalItemPrice(StringUtils.toBigDecimal(totalItemPrice));
         createOrderReq.setUserId(userId);
 
-        boolean res = OrderService.getInstance().createOrder(request, createOrderReq, userId);
+        boolean res = OrderRepository.getInstance().createOrder(request, createOrderReq, userId);
         String error = "";
         if(!res)
             error = "?error=true";
         else{
-            UserViewModel user = UserService.getInstance().retrieveUserById(userId);
+            UserViewModel user = UserRepository.getInstance().retrieveById(userId);
             request.getSession().setAttribute("user", user);
         }
 

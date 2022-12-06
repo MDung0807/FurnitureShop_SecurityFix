@@ -1,6 +1,6 @@
 package controllers.admin.review;
 
-import models.services.review.ReviewService;
+import models.repositories.review.ReviewRepository;
 import utils.ServletUtils;
 import utils.StringUtils;
 
@@ -15,7 +15,7 @@ public class ChangeStatus extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String reviewItemId = request.getParameter("reviewItemId");
 
-        boolean isSuccess = ReviewService.getInstance().ChangeReviewItemStatus(StringUtils.toInt(reviewItemId));
+        boolean isSuccess = ReviewRepository.getInstance().ChangeStatus(StringUtils.toInt(reviewItemId));
         String error = "";
         if(!isSuccess){
             error = "?error=true";

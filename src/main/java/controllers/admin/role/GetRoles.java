@@ -1,6 +1,6 @@
 package controllers.admin.role;
 
-import models.services.role.RoleService;
+import models.repositories.role.RoleRepository;
 import models.view_models.roles.RoleGetPagingRequest;
 import models.view_models.roles.RoleViewModel;
 import models.view_models.roles.RoleGetPagingRequest;
@@ -18,7 +18,7 @@ public class GetRoles extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         RoleGetPagingRequest req = new RoleGetPagingRequest();
-        ArrayList<RoleViewModel> roles = RoleService.getInstance().retrieveAllRole(req);
+        ArrayList<RoleViewModel> roles = RoleRepository.getInstance().retrieveAll(req);
 
         request.setAttribute("roles",roles);
         String error = request.getParameter("error");

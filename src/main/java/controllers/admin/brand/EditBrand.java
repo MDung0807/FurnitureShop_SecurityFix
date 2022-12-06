@@ -1,6 +1,6 @@
 package controllers.admin.brand;
 
-import models.services.brand.BrandService;
+import models.repositories.brand.BrandRepository;
 import utils.ServletUtils;
 import utils.StringUtils;
 import models.view_models.brands.BrandUpdateRequest;
@@ -22,7 +22,7 @@ public class EditBrand extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String brandId = request.getParameter("brandId");
 
-        BrandViewModel brand = BrandService.getInstance().retrieveBrandById(Integer.parseInt(brandId));
+        BrandViewModel brand = BrandRepository.getInstance().retrieveById(Integer.parseInt(brandId));
         request.setAttribute("brand", brand);
         ServletUtils.forward(request, response, "/admin/brands");
     }
@@ -40,7 +40,7 @@ public class EditBrand extends HttpServlet {
         brandReq.setImage(filePart);
         brandReq.setStatus(StringUtils.toInt(request.getParameter("status")));
 
-        boolean isSuccess = BrandService.getInstance().updateBrand(brandReq);
+        boolean isSuccess = BrandRepository.getInstance().update(brandReq);
         String error = "";
         if(!isSuccess){
             error = "?error=true";

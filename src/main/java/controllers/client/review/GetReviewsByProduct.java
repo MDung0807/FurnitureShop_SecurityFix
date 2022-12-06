@@ -1,7 +1,7 @@
 package controllers.client.review;
 
-import models.services.product.ProductService;
-import models.services.review.ReviewService;
+import models.repositories.product.ProductRepository;
+import models.repositories.review.ReviewRepository;
 import models.view_models.review_items.ReviewItemViewModel;
 import utils.ServletUtils;
 import utils.SessionUtils;
@@ -19,9 +19,9 @@ public class GetReviewsByProduct extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int productId = StringUtils.toInt(request.getParameter("productId"));
         int userId = SessionUtils.getUserIdLogin(request);
-        ArrayList<ReviewItemViewModel> reviewItems = ReviewService.getInstance().retrieveUserReviewByProductId(userId, productId);
+        ArrayList<ReviewItemViewModel> reviewItems = ReviewRepository.getInstance().retrieveUserReviewByProductId(userId, productId);
         request.setAttribute("reviewItems",reviewItems);
-        request.setAttribute("product", ProductService.getInstance().retrieveProductById(productId));
+        request.setAttribute("product", ProductRepository.getInstance().retrieveById(productId));
         ServletUtils.forward(request,response,"/views/client/review.jsp");
     }
 

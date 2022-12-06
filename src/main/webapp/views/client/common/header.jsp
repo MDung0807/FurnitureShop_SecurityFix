@@ -61,6 +61,13 @@
             </li>
           </ul>
         </div>
+        <c:if  test="${sessionScope.user == null}">
+          <div>
+            <a href="<%=request.getContextPath()%>/signin">Đăng nhập </a>
+            <span>|</span>
+            <a href="<%=request.getContextPath()%>/register"> Đăng ký</a>
+          </div>
+        </c:if>
         <c:if  test="${sessionScope.user != null}">
           <div>
             <a href="<%=request.getContextPath()%>/signout">Đăng xuất</a>

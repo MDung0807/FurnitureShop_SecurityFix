@@ -1,7 +1,7 @@
 package controllers.client.user;
 
 import common.user.UserUtils;
-import models.services.user.UserService;
+import models.repositories.user.UserRepository;
 import models.view_models.users.UserUpdateRequest;
 import models.view_models.users.UserViewModel;
 import utils.ServletUtils;
@@ -30,11 +30,11 @@ public class EditInfo extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         UserUpdateRequest reqUpdate = UserUtils.CreateUserUpdateRequest(request);
         reqUpdate.setStatus(USER_STATUS.ACTIVE);
-        boolean isSuccess = UserService.getInstance().updateUser(reqUpdate);
+        boolean isSuccess = UserRepository.getInstance().update(reqUpdate);
         if(!isSuccess){
             request.setAttribute("error", "error");
         }else{
-            UserViewModel user = UserService.getInstance().getUserByUserName(request.getParameter("username"));
+            UserViewModel user = UserRepository.getInstance().getUserByUserName(request.getParameter("username"));
             HttpSession session = request.getSession();
             session.setAttribute("user",user);
             request.setAttribute("user", user);

@@ -1,6 +1,7 @@
 package controllers.admin.user;
 
-import models.services.user.UserService;
+
+import models.repositories.user.UserRepository;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -22,13 +23,13 @@ public class CheckAddUser extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
 
         ArrayList<String> exists = new ArrayList<>();
-        if(UserService.getInstance().checkUsername(request.getParameter("username"))){
+        if(UserRepository.getInstance().checkUsername(request.getParameter("username"))){
             exists.add("user".trim());
         }
-        if(UserService.getInstance().checkEmail(request.getParameter("email"))){
+        if(UserRepository.getInstance().checkEmail(request.getParameter("email"))){
             exists.add("email".trim());
         }
-        if(UserService.getInstance().checkPhone(request.getParameter("phone"))){
+        if(UserRepository.getInstance().checkPhone(request.getParameter("phone"))){
             exists.add("phone".trim());
         }
         PrintWriter out = response.getWriter();

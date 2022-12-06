@@ -1,6 +1,6 @@
 package controllers.admin.category;
 
-import models.services.category.CategoryService;
+import models.repositories.category.CategoryRepository;
 import utils.ServletUtils;
 import utils.StringUtils;
 
@@ -16,7 +16,7 @@ public class RemoveCategory extends HttpServlet {
         String categoryId = request.getParameter("categoryId");
         String sub = request.getParameter("sub-categories");
 
-        boolean isSuccess = CategoryService.getInstance().deleteCategory(StringUtils.toInt(categoryId));
+        boolean isSuccess = CategoryRepository.getInstance().delete(StringUtils.toInt(categoryId));
         String error = "";
         if(!isSuccess){
             error = "error=true";

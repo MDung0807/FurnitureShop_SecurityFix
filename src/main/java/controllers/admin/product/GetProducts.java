@@ -1,8 +1,8 @@
 package controllers.admin.product;
 
-import models.services.brand.BrandService;
-import models.services.category.CategoryService;
-import models.services.product.ProductService;
+import models.repositories.brand.BrandRepository;
+import models.repositories.category.CategoryRepository;
+import models.repositories.product.ProductRepository;
 import utils.HibernateUtils;
 import utils.ServletUtils;
 import utils.StringUtils;
@@ -84,7 +84,7 @@ public class GetProducts extends HttpServlet {
             request.setAttribute("totalPage", totalPage);
             request.setAttribute("pageIndex", req.getPageIndex());
         }
-        ArrayList<ProductViewModel> products = ProductService.getInstance().retrieveAllProduct(req);
+        ArrayList<ProductViewModel> products = ProductRepository.getInstance().retrieveAll(req);
 
         request.setAttribute("products", products);
         String error = request.getParameter("error");
@@ -97,10 +97,10 @@ public class GetProducts extends HttpServlet {
         else {
 
             CategoryGetPagingRequest req1 = new CategoryGetPagingRequest();
-            ArrayList<CategoryViewModel> categories = CategoryService.getInstance().retrieveAllCategory(req1);
+            ArrayList<CategoryViewModel> categories = CategoryRepository.getInstance().retrieveAll(req1);
 
             BrandGetPagingRequest req2 = new BrandGetPagingRequest();
-            ArrayList<BrandViewModel> brands = BrandService.getInstance().retrieveAllBrand(req2);
+            ArrayList<BrandViewModel> brands = BrandRepository.getInstance().retrieveAll(req2);
             request.setAttribute("categories",categories);
             request.setAttribute("brands",brands);
 

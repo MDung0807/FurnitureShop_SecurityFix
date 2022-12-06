@@ -1,6 +1,6 @@
 package controllers.admin.discount;
 
-import models.services.discount.DiscountService;
+import models.repositories.discount.DiscountRepository;
 import utils.DateUtils;
 import utils.ServletUtils;
 import utils.StringUtils;
@@ -31,7 +31,7 @@ public class AddDiscount extends HttpServlet {
         createReq.setEndDate(DateUtils.stringToLocalDateTime(request.getParameter("endDate")));
         createReq.setStatus(StringUtils.toInt(request.getParameter("status")));
 
-        int discountId = DiscountService.getInstance().insertDiscount(createReq);
+        int discountId = DiscountRepository.getInstance().insert(createReq);
         String error = "";
         if(discountId < 1){
             error = "?error=true";

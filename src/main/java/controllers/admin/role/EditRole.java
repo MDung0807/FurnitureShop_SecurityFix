@@ -1,7 +1,6 @@
 package controllers.admin.role;
 
-import models.services.role.RoleService;
-import models.services.role.RoleService;
+import models.repositories.role.RoleRepository;
 import models.view_models.roles.RoleUpdateRequest;
 import models.view_models.roles.RoleUpdateRequest;
 import models.view_models.roles.RoleViewModel;
@@ -20,7 +19,7 @@ public class EditRole extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int roleId = StringUtils.toInt(request.getParameter("roleId"));
 
-        RoleViewModel role = RoleService.getInstance().retrieveRoleById(roleId);
+        RoleViewModel role = RoleRepository.getInstance().retrieveById(roleId);
 
         request.setAttribute("role", role);
 
@@ -38,7 +37,7 @@ public class EditRole extends HttpServlet {
 
         updateReq.setRoleName(request.getParameter("roleName"));
 
-        boolean isSuccess = RoleService.getInstance().updateRole(updateReq);
+        boolean isSuccess = RoleRepository.getInstance().update(updateReq);
         String error = "";
         if(!isSuccess){
             error = "?error=true";

@@ -1,8 +1,8 @@
 package controllers.client.user;
 
 import models.entities.User;
-import models.services.order.OrderService;
-import models.services.user.UserService;
+import models.repositories.order.OrderRepository;
+import models.repositories.user.UserRepository;
 import models.view_models.orders.OrderViewModel;
 import models.view_models.users.UserViewModel;
 import utils.ServletUtils;
@@ -27,7 +27,7 @@ public class MyAccount extends HttpServlet {
             url = "/views/client/my-account-info.jsp";
         }
         else{
-            ArrayList<OrderViewModel> orders = OrderService.getInstance().retrieveOrderByUserId(user.getId());
+            ArrayList<OrderViewModel> orders = OrderRepository.getInstance().retrieveOrderByUserId(user.getId());
 
             request.setAttribute("orders", orders);
             url = "/views/client/my-account-order.jsp";

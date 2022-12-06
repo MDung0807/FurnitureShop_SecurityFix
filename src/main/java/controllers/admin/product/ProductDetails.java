@@ -1,6 +1,6 @@
 package controllers.admin.product;
 
-import models.services.product.ProductService;
+import models.repositories.product.ProductRepository;
 import utils.ServletUtils;
 import utils.StringUtils;
 import models.view_models.products.ProductViewModel;
@@ -16,7 +16,7 @@ public class ProductDetails extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int productId = StringUtils.toInt(request.getParameter("productId"));
 
-        ProductViewModel product = ProductService.getInstance().retrieveProductById(productId);
+        ProductViewModel product = ProductRepository.getInstance().retrieveById(productId);
         request.setAttribute("product", product);
 
         ServletUtils.forward(request, response, "/views/admin/product/product-detail.jsp");

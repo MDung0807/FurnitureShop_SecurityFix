@@ -1,7 +1,7 @@
 package controllers.client.authentication;
 
 import common.user.UserUtils;
-import models.services.user.UserService;
+import models.repositories.user.UserRepository;
 import models.view_models.users.UserLoginRequest;
 import models.view_models.users.UserViewModel;
 import utils.ServletUtils;
@@ -32,8 +32,8 @@ public class SignIn extends HttpServlet {
         PrintWriter out = response.getWriter();
         UserLoginRequest loginRequest = UserUtils.CreateLoginRequest(request);
 
-        if(UserService.getInstance().login(loginRequest)){
-            UserViewModel user = UserService.getInstance().getUserByUserName(loginRequest.getUsername());
+        if(UserRepository.getInstance().login(loginRequest)){
+            UserViewModel user = UserRepository.getInstance().getUserByUserName(loginRequest.getUsername());
             if(user.getStatus() == USER_STATUS.IN_ACTIVE){
                 out.println("banned".trim());
             }else {

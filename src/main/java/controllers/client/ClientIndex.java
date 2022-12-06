@@ -1,7 +1,7 @@
 package controllers.client;
 
-import models.services.category.CategoryService;
-import models.services.product.ProductService;
+import models.repositories.category.CategoryRepository;
+import models.repositories.product.ProductRepository;
 import models.view_models.categories.CategoryGetPagingRequest;
 import models.view_models.categories.CategoryViewModel;
 import models.view_models.products.ProductGetPagingRequest;
@@ -23,7 +23,7 @@ public class ClientIndex extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         ProductGetPagingRequest req1 = new ProductGetPagingRequest();
-        ArrayList<ProductViewModel> products = ProductService.getInstance().retrieveAllProduct(req1);
+        ArrayList<ProductViewModel> products = ProductRepository.getInstance().retrieveAll(req1);
         products.sort((o1, o2) -> (int) (o2.getAvgRating() - o1.getAvgRating()));
         ArrayList<ProductViewModel> popularProducts = new ArrayList<>();
         for(int i=0;i<10;i++){
@@ -35,7 +35,7 @@ public class ClientIndex extends HttpServlet {
             }
         }
         CategoryGetPagingRequest req2 = new CategoryGetPagingRequest();
-        ArrayList<CategoryViewModel> categories = CategoryService.getInstance().retrieveAllCategory(req2);
+        ArrayList<CategoryViewModel> categories = CategoryRepository.getInstance().retrieveAll(req2);
         categories.removeIf(x -> x.getParentCategoryId() != 0 || x.getStatus() == CATEGORY_STATUS.IN_ACTIVE);
         request.setAttribute("products", popularProducts);
         request.setAttribute("categories", categories);

@@ -4,10 +4,7 @@ import models.entities.Brand;
 import models.entities.Category;
 import models.entities.Product;
 import models.entities.ProductImage;
-import models.repositories.category.CategoryRepository;
 import models.repositories.review.ReviewRepository;
-import models.services.product.ProductService;
-import models.services.review.ReviewService;
 import models.view_models.product_images.ProductImageCreateRequest;
 import models.view_models.product_images.ProductImageGetPagingRequest;
 import models.view_models.product_images.ProductImageUpdateRequest;
@@ -201,7 +198,7 @@ public class ProductRepository implements IProductRepository{
         productViewModel.setStatusClass(HtmlClassUtils.generateProductStatusClass(product.getStatus()));
         List<ProductImageViewModel> productImageViewModels = new ArrayList<>();
         subProductImageIds.forEach(id -> {
-            productImageViewModels.add(ProductService.getInstance().retrieveImageById(id));
+            productImageViewModels.add(ProductRepository.getInstance().retrieveImageById(id));
         });
         productViewModel.setProductImages(productImageViewModels);
         ArrayList<ReviewItemViewModel> productReviews = ReviewRepository.getInstance().retrieveByProductId(product.getProductId());

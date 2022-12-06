@@ -1,7 +1,7 @@
 package controllers.admin.user;
 
 import common.user.UserUtils;
-import models.services.user.UserService;
+import models.repositories.user.UserRepository;
 import models.view_models.user_roles.UserRoleViewModel;
 import models.view_models.users.UserLoginRequest;
 import models.view_models.users.UserViewModel;
@@ -29,9 +29,9 @@ public class Login extends HttpServlet {
         boolean isAdmin = false;
         boolean isBanned = false;
         boolean isLogin = false;
-        if(UserService.getInstance().login(loginRequest)){
+        if(UserRepository.getInstance().login(loginRequest)){
             isLogin = true;
-            UserViewModel user = UserService.getInstance().getUserByUserName(loginRequest.getUsername());
+            UserViewModel user = UserRepository.getInstance().getUserByUserName(loginRequest.getUsername());
             for(UserRoleViewModel role:user.getRoles()){
                 if(role.getRoleName().equalsIgnoreCase("admin")){
                     Cookie c = new Cookie("admin", loginRequest.getUsername());

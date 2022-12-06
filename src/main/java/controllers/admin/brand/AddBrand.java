@@ -1,6 +1,6 @@
 package controllers.admin.brand;
 
-import models.services.brand.BrandService;
+import models.repositories.brand.BrandRepository;
 import utils.ServletUtils;
 import models.view_models.brands.BrandCreateRequest;
 import utils.StringUtils;
@@ -33,7 +33,7 @@ public class AddBrand extends HttpServlet {
         brandReq.setOrigin(request.getParameter("brandOrigin"));
         brandReq.setImage(filePart);
         brandReq.setStatus(StringUtils.toInt(request.getParameter("status")));
-        int brandId = BrandService.getInstance().insertBrand(brandReq);
+        int brandId = BrandRepository.getInstance().insert(brandReq);
         String error = "";
         if(brandId < 1){
             error = "?error=true";

@@ -3,7 +3,7 @@ package models.repositories.wish;
 import models.entities.Product;
 import models.entities.WishItem;
 import models.entities.WishList;
-import models.services.product.ProductService;
+import models.repositories.product.ProductRepository;
 import models.view_models.products.ProductViewModel;
 import models.view_models.wish_items.WishItemCreateRequest;
 import models.view_models.wish_items.WishItemGetPagingRequest;
@@ -92,7 +92,7 @@ public class WishRepository implements IWishRepository {
     }
     private WishItemViewModel getWishListItemViewModel(WishItem wishItem, Session session){
         WishItemViewModel wishListItemViewModel = new WishItemViewModel();
-        ProductViewModel product = ProductService.getInstance().retrieveProductById(wishItem.getProduct().getProductId());
+        ProductViewModel product = ProductRepository.getInstance().retrieveById(wishItem.getProduct().getProductId());
         wishListItemViewModel.setWishItemId(wishItem.getWishItemId());
         wishListItemViewModel.setWishId(wishItem.getWishList().getWishListId());
         wishListItemViewModel.setProductImage(product.getImage());

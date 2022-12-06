@@ -1,6 +1,6 @@
 package controllers.client.product;
 
-import models.services.product.ProductService;
+import models.repositories.product.ProductRepository;
 import models.view_models.products.ProductViewModel;
 import utils.ServletUtils;
 import utils.StringUtils;
@@ -16,7 +16,7 @@ public class RetrieveProductDetail extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         int productId = StringUtils.toInt(request.getParameter("productId"));
-        ProductViewModel product = ProductService.getInstance().retrieveProductById(productId);
+        ProductViewModel product = ProductRepository.getInstance().retrieveById(productId);
 
         request.setAttribute("product", product);
 

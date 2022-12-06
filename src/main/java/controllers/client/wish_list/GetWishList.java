@@ -1,7 +1,7 @@
 package controllers.client.wish_list;
 
-import models.services.brand.BrandService;
-import models.services.wish.WishService;
+import models.repositories.brand.BrandRepository;
+import models.repositories.wish.WishRepository;
 import models.view_models.brands.BrandGetPagingRequest;
 import models.view_models.brands.BrandViewModel;
 import models.view_models.users.UserViewModel;
@@ -25,10 +25,10 @@ public class GetWishList extends HttpServlet {
         if(user == null)
             return;
         int userId = user.getId();
-        ArrayList<WishItemViewModel> wishItems = WishService.getInstance().retrieveWishListByUserId(userId);
+        ArrayList<WishItemViewModel> wishItems = WishRepository.getInstance().retrieveWishListByUserId(userId);
         request.setAttribute("wishItems", wishItems);
 
-        ArrayList<BrandViewModel> brands = BrandService.getInstance().retrieveAllBrand(new BrandGetPagingRequest());
+        ArrayList<BrandViewModel> brands = BrandRepository.getInstance().retrieveAll(new BrandGetPagingRequest());
         brands.removeIf(x -> x.getStatus() == BRAND_STATUS.IN_ACTIVE);
         request.setAttribute("brands", brands);
 

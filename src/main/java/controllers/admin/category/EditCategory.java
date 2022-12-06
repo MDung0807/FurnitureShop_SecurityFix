@@ -1,6 +1,6 @@
 package controllers.admin.category;
 
-import models.services.category.CategoryService;
+import models.repositories.category.CategoryRepository;
 import utils.ServletUtils;
 import utils.StringUtils;
 import models.view_models.categories.CategoryUpdateRequest;
@@ -22,7 +22,7 @@ public class EditCategory extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String categoryId = request.getParameter("categoryId");
         String sub = request.getParameter("sub-categories");
-        CategoryViewModel category = CategoryService.getInstance().retrieveCategoryById(StringUtils.toInt(categoryId));
+        CategoryViewModel category = CategoryRepository.getInstance().retrieveById(StringUtils.toInt(categoryId));
 
         request.setAttribute("category", category);
 
@@ -52,7 +52,7 @@ public class EditCategory extends HttpServlet {
         if(parentCategoryId != null && !parentCategoryId.equals(""))
             req.setParentCategoryId(StringUtils.toInt(parentCategoryId));
 
-        boolean isSuccess = CategoryService.getInstance().updateCategory(req);
+        boolean isSuccess = CategoryRepository.getInstance().update(req);
         String error = "";
         if(!isSuccess){
             error = "error=true";

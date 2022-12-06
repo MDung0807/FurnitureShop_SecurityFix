@@ -4,7 +4,6 @@ import models.entities.Product;
 import models.entities.ProductImage;
 import models.entities.Review;
 import models.entities.ReviewItem;
-import models.services.review.ReviewService;
 import models.view_models.review_items.ReviewItemCreateRequest;
 import models.view_models.review_items.ReviewItemGetPagingRequest;
 import models.view_models.review_items.ReviewItemUpdateRequest;
@@ -188,7 +187,7 @@ public class ReviewRepository implements IReviewRepository {
 
     @Override
     public ArrayList<ReviewItemViewModel> retrieveUserReviewByProductId(Integer userId, Integer productId) {
-        ArrayList<ReviewItemViewModel> reviewItems = ReviewService.getInstance().retrieveReviewItemByUserId(userId);
+        ArrayList<ReviewItemViewModel> reviewItems = ReviewRepository.getInstance().retrieveByUserId(userId);
         reviewItems.removeIf(x -> x.getProductId() != productId || x.getStatus() == 0);
         return reviewItems;
     }
