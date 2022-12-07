@@ -1,4 +1,4 @@
-package controllers.client.wish_list;
+package controllers.client.wish;
 
 import models.repositories.wish.WishRepository;
 import models.view_models.users.UserViewModel;
