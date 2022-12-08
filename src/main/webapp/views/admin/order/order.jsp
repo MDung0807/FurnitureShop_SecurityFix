@@ -21,11 +21,11 @@
     <div class="ec-content-wrapper">
       <div class="content">
         <div class="breadcrumb-wrapper breadcrumb-wrapper-2">
-          <h1>New Orders</h1>
+          <h1>Danh sách đơn hàng</h1>
           <div class="d-flex justify-content-between">
-            <a href="<%=request.getContextPath()%>/admin/orders?new=true" class="btn btn-outline-info mr-4">View New Orders</a>
-            <a href="<%=request.getContextPath()%>/admin/orders" class="btn btn-outline-info">View All Orders</a>
-            <a href="<%=request.getContextPath()%>/admin/orders?delivered=true" class="btn btn-outline-info ml-4">View Delivered Orders</a>
+            <a href="<%=request.getContextPath()%>/admin/orders?new=true" class="btn btn-outline-info mr-4">Đơn hàng mới</a>
+            <a href="<%=request.getContextPath()%>/admin/orders" class="btn btn-outline-info">Tất cả đơn hàng</a>
+            <a href="<%=request.getContextPath()%>/admin/orders?delivered=true" class="btn btn-outline-info ml-4">Đơn hàng hoàn thành</a>
           </div>
           <p class="breadcrumbs"><span><a href="<%=request.getContextPath()%>/admin/home">Home</a></span>
             <span><i class="mdi mdi-chevron-right"></i></span>Orders

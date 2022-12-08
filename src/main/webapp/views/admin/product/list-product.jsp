@@ -27,13 +27,13 @@
                 <span><i class="mdi mdi-chevron-right"></i></span>Product</p>
             </div>
             <div>
-              <a href="<%=request.getContextPath()%>/admin/products?grid=true" class="btn btn-outline-info">
-                Grid
-              </a>
-              <a href="<%=request.getContextPath()%>/admin/products" class="btn btn-outline-success active">
-                List
-              </a>
-              <a href="<%=request.getContextPath()%>/admin/product/add" class="btn btn-primary"> Add Product</a>
+<%--              <a href="<%=request.getContextPath()%>/admin/products?grid=true" class="btn btn-outline-info">--%>
+<%--                Grid--%>
+<%--              </a>--%>
+<%--              <a href="<%=request.getContextPath()%>/admin/products" class="btn btn-outline-success active">--%>
+<%--                List--%>
+<%--              </a>--%>
+              <a href="<%=request.getContextPath()%>/admin/product/add" class="btn btn-primary">Thêm sản phẩm</a>
             </div>
           </div>
           <div class="row">
@@ -84,9 +84,9 @@
                                 </button>
 
                                 <div class="dropdown-menu">
-                                  <a class="dropdown-item btn btn-info" href="<%=request.getContextPath()%>/admin/product/edit?productId=${product.productId}">Edit</a>
+                                  <a class="dropdown-item btn btn-info" href="<%=request.getContextPath()%>/admin/product/edit?productId=${product.productId}">Sửa</a>
                                   <a type="button" class="dropdown-item btn btn-danger" data-bs-toggle="modal"
-                                     data-bs-target="#modal-delete-product" data-id="${product.productId}" href="#modal-delete-product">Delete</a>
+                                     data-bs-target="#modal-delete-product" data-id="${product.productId}" href="#modal-delete-product">Xoá</a>
                                 </div>
                               </div>
                             </td>

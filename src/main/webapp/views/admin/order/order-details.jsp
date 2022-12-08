@@ -22,7 +22,7 @@
         <div class="ec-content-wrapper">
             <div class="content">
                 <div class="breadcrumb-wrapper breadcrumb-wrapper-2">
-                    <h1>Order Detail</h1>
+                    <h1>Chi tiết đơn hàng</h1>
                     <p class="breadcrumbs">
                         <span><a href="<%=request.getContextPath()%>/admin/home">Home</a></span>
                         <span><i class="mdi mdi-chevron-right"></i></span>
@@ -34,42 +34,35 @@
                     <div class="col-12">
                         <div class="ec-odr-dtl card card-default">
                             <div class="card-header card-header-border-bottom d-flex justify-content-between">
-                                <h2 class="ec-odr">Order Detail<br>
+                                <h2 class="ec-odr">
                                     <span class="small">Order ID: ${order.orderId}</span>
                                 </h2>
                             </div>
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-xl-2 col-lg-6">
+                                    <div class="col-xl-3 col-lg-6">
                                         <address class="info-grid">
-                                            <div class="info-title"><strong>Khách hàng</strong></div><br>
+                                            <div class="info-title"><strong>Người đặt</strong></div><br>
                                             <div class="info-content">
-                                                ${order.userName}<br>
-                                                ${order.userAddress}<br>
-                                                <abbr title="Phone">SĐT:</abbr> ${order.userPhone}
+                                                Tên tài khoản: ${order.userName}<br>
+                                                Địa chỉ: ${order.userAddress}<br>
+                                                SĐT: ${order.userPhone}<br>
+                                                Loại thanh toán: ${order.paymentMethod}
                                             </div>
                                         </address>
                                     </div>
                                     <div class="col-xl-3 col-lg-6">
                                         <address class="info-grid">
-                                            <div class="info-title"><strong>Gửi dến</strong></div><br>
+                                            <div class="info-title"><strong>Người nhận</strong></div><br>
                                             <div class="info-content">
                                                 Tên: ${order.name}<br>
                                                 Địa chỉ: ${order.address}<br>
-                                                <abbr title="Phone">SĐT:</abbr> ${order.phone}
+                                                Email: ${order.email}<br>
+                                                SĐT: ${order.phone}
                                             </div>
                                         </address>
                                     </div>
                                     <div class="col-xl-3 col-lg-6">
-                                        <address class="info-grid">
-                                            <div class="info-title"><strong>Trạng thái thanh toán</strong></div><br>
-                                            <div class="info-content">
-                                                Trạng thái: ${order.paymentMethod}<br>
-                                                Email: ${order.email}<br>
-                                            </div>
-                                        </address>
-                                    </div>
-                                    <div class="col-xl-2 col-lg-6">
                                         <address class="info-grid">
                                             <div class="info-title"><strong>Ngày tạo hoá đơn</strong></div><br>
                                             <div class="info-content">
@@ -77,7 +70,7 @@
                                             </div>
                                         </address>
                                     </div>
-                                    <div class="col-xl-2 col-lg-6">
+                                    <div class="col-xl-3 col-lg-6">
                                         <address class="info-grid">
                                             <div class="info-title"><strong>Ngày thanh toán</strong></div><br>
                                             <div class="info-content">
@@ -117,26 +110,19 @@
                                                         <td colspan="4">
                                                         </td>
                                                         <td class="text-right"><strong>Tổng tiền sản phẩm</strong></td>
-                                                        <td class="text-right"><strong>${order.totalItemPrice}</strong></td>
+                                                        <td class="text-right"><strong>${order.totalItemPrice}</strong> VND</td>
                                                     </tr>
                                                 <tr>
                                                     <td colspan="4">
                                                     </td>
                                                     <td class="text-right"><strong>Phí vận chuyển</strong></td>
-                                                    <td class="text-right"><strong>${order.shipping}</strong></td>
+                                                    <td class="text-right"><strong>${order.shipping}</strong> VND</td>
                                                 </tr>
                                                 <tr>
                                                     <td colspan="4">
                                                     </td>
                                                     <td class="text-right"><strong>Thành tiền</strong></td>
-                                                    <td class="text-right"><strong>${order.totalPrice}</strong></td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td colspan="4">
-                                                    </td>
-                                                    <td class="text-right"><strong>Trạng thái thanh toán</strong></td>
-                                                    <td class="text-right"><strong>${order.paymentMethod}</strong></td>
+                                                    <td class="text-right"><strong>${order.totalPrice}</strong> VND</td>
                                                 </tr>
                                                 </tbody>
                                             </table>

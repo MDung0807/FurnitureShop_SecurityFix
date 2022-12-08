@@ -151,7 +151,7 @@
                   <div class="payment__history mb-30">
                     <h3 class="payment__history--title mb-20">Phương thức thanh toán</h3>
                     <select class="product__view--select payment__history--inner" name="payment">
-                      <option value="<%=ORDER_PAYMENT.PAID%>">Thẻ ngân hàng</option>
+                      <option value="<%=ORDER_PAYMENT.PAYPAL%>">PayPal</option>
                       <option value="<%=ORDER_PAYMENT.COD%>">COD</option>
                     </select>
                   </div>

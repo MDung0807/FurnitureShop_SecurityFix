@@ -25,14 +25,14 @@
       <div class="content">
         <div class="breadcrumb-wrapper breadcrumb-contacts">
           <div>
-            <h1>User List</h1>
+            <h1>Danh sách tài khoản</h1>
             <p class="breadcrumbs"><span><a href="<%=request.getContextPath()%>/admin/home">Home</a></span>
               <span><i class="mdi mdi-chevron-right"></i></span>Quản lý tài khoản
             </p>
           </div>
           <div>
             <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                    data-bs-target="#addUser"> Thêm Người dùng
+                    data-bs-target="#addUser"> Thêm Tài khoản
             </button>
           </div>
         </div>
@@ -85,9 +85,9 @@
                             </button>
 
                             <div class="dropdown-menu">
-                              <a class="dropdown-item btn btn-info" href="<%=request.getContextPath()%>/admin/user/detail?userId=${user.id}">Edit</a>
+                              <a class="dropdown-item btn btn-info" href="<%=request.getContextPath()%>/admin/user/detail?userId=${user.id}">Sửa</a>
                               <a type="button" class="dropdown-item btn btn-danger" data-bs-toggle="modal"
-                                 data-bs-target="#modal-delete-user" data-id="${user.id}" href="#modal-delete-user">Delete</a>
+                                 data-bs-target="#modal-delete-user" data-id="${user.id}" href="#modal-delete-user">Xoá</a>
                             </div>
                           </div>
                         </td>

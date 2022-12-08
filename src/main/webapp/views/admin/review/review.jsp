@@ -21,7 +21,7 @@
 
                 <div
                         class="breadcrumb-wrapper breadcrumb-wrapper-2 d-flex align-items-center justify-content-between">
-                    <h1>Review</h1>
+                    <h1>Đánh giá sản phẩm</h1>
                     <p class="breadcrumbs"><span><a href="<%=request.getContextPath()%>/admin/home">Home</a></span>
                         <span><i class="mdi mdi-chevron-right"></i></span>Review
                     </p>

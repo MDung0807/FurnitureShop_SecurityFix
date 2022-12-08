@@ -55,6 +55,12 @@
                                         <span class="account__login--divide__text">Hoặc</span>
                                     </div>
                                     <div class="account__social d-flex justify-content-center mb-15">
+                                        <a class="account__social--link primary__btn" href="${urlGoogleLogin}">Đăng nhập với Google</a>
+                                    </div>
+                                    <div class="account__login--divide">
+                                        <span class="account__login--divide__text">Hoặc</span>
+                                    </div>
+                                    <div class="account__social d-flex justify-content-center mb-15">
                                         <a class="account__social--link twitter" href="<%=request.getContextPath()%>/admin/login">Đăng nhập vào trang quản trị</a>
                                     </div>
 
@@ -81,6 +87,11 @@
             <h3 class="modal-header border-bottom-0">Đăng kí tài khoản thành công</h3>
         </div>
     </div>
+    <div class="modal" id="modal-banned" data-animation="slideInUp" style="z-index: 999;">
+        <div class="modal-dialog quickview__main--wrapper">
+            <h3 class="modal-header border-bottom-0">Tài khoản của bạn bị cấm hoạt động, vui lòng liên hệ quản trị viên</h3>
+        </div>
+    </div>
 </main>
 
 <jsp:include page="/views/client/common/footer.jsp" />
@@ -93,7 +104,9 @@
         else if(window.location.href.includes("error")){
             document.getElementById("modal-error").classList.add('is-visible')
         }
-        else if(window.location.href.includes("register")){
+        else if(window.location.href.includes("banned")){
+            document.getElementById("modal-banned").classList.add('is-visible')
+        }else if(window.location.href.includes("register")){
             document.getElementById("modal-register").classList.add('is-visible')
         }
     });

@@ -29,7 +29,7 @@
             <div class="ec-cat-list card card-default mb-24px">
               <div class="card-body">
                 <div class="ec-cat-form">
-                  <h4>Add Role</h4>
+                  <h4>Vai trò hệ thống</h4>
                   <form id="form-add"
                           <c:choose>
                             <c:when test="${role == null}">

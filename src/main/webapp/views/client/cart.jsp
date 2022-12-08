@@ -173,6 +173,11 @@
             <h3 class="modal-header border-bottom-0">Có lỗi xảy ra khi đặt hàng, vui lòng thử lại</h3>
         </div>
     </div>
+    <div class="modal" id="modal-checkout-success" data-animation="slideInUp" style="z-index: 999;">
+        <div class="modal-dialog quickview__main--wrapper">
+            <h3 class="modal-header border-bottom-0">Đặt hàng thành công, vui lòng kiểm tra email</h3>
+        </div>
+    </div>
 </main>
 
 <jsp:include page="/views/client/common/footer.jsp" />
@@ -182,6 +187,8 @@
     $(window).on('load', function() {
         if(window.location.href.includes("error") || ${error != null}){
             document.getElementById("modal-checkout-error").classList.add('is-visible')
+        }else if(window.location.href.includes("success")){
+            document.getElementById("modal-checkout-success").classList.add('is-visible')
         }
     });
 </script>

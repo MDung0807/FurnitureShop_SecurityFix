@@ -47,13 +47,13 @@
                                         Avatar: <input class="mb-15" placeholder="Avatar" accept=".png, .jpg, .jpeg" name="avatar" id="avatar" required type="file">
                                     </label>
                                     <label>
-                                        <input class="account__login--input" placeholder="Họ" name="firstName" id="firstName" required type="text">
+                                        <input class="account__login--input" placeholder="Họ" name="firstName" id="firstName" value="${googleUser.family_name}" required type="text">
                                     </label>
                                     <label>
-                                        <input class="account__login--input" placeholder="Tên" name="lastName" id="lastName" required type="text">
+                                        <input class="account__login--input" placeholder="Tên" name="lastName" id="lastName" value="${googleUser.given_name}" required type="text">
                                     </label>
                                     <label>
-                                        <input class="account__login--input" placeholder="Email" name="email" id="email" required type="email">
+                                        <input class="account__login--input" placeholder="Email" name="email" id="email" value="${googleUser.email}" <c:if test="${googleUser != null}">readonly</c:if> required type="email">
                                         <p id="emailValidateMessage"></p>
                                     </label>
                                     <label>

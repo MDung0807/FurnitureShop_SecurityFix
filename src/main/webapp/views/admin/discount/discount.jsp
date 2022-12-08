@@ -28,7 +28,7 @@
             <div class="ec-cat-list card card-default mb-24px">
               <div class="card-body">
                 <div class="ec-cat-form">
-                  <h4>Add Discount</h4>
+                  <h4>Mã khuyến mãi</h4>
                   <form id="form-add"
                           <c:choose>
                             <c:when test="${discount == null}">

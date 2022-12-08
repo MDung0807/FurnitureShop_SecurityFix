@@ -22,7 +22,7 @@
                 <div class="breadcrumb-wrapper breadcrumb-wrapper-2 breadcrumb-contacts">
                     <div>
                         <a class="btn btn-outline-info" href="<%=request.getContextPath()%>/admin/categories">Main Category</a>
-                        <a class="btn btn-outline-success active" href="<%=request.getContextPath()%>/admin/categories?sub-categories=true">Sub Category</a>
+                        <a class="btn btn-outline-success active" href="<%=request.getContextPath()%>/admin/categories?sub-categories=true">Danh mục con</a>
                     </div>
                     <p class="breadcrumbs"><span><a href="<%=request.getContextPath()%>/admin/home">Home</a></span>
                         <span><i class="mdi mdi-chevron-right"></i></span>Sub Category</p>
@@ -32,7 +32,7 @@
                         <div class="ec-cat-list card card-default mb-24px">
                             <div class="card-body">
                                 <div class="ec-cat-form">
-                                    <h4>Add Sub Category</h4>
+                                    <h4>Danh mục con</h4>
                                     <form id="form-add"
                                             <c:choose>
                                                 <c:when test="${category == null}">
