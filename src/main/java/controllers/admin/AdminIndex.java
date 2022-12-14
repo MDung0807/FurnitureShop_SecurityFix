@@ -1,7 +1,7 @@
 package controllers.admin;
 
-import models.repositories.order.OrderRepository;
-import models.repositories.user.UserRepository;
+import models.services.order.OrderService;
+import models.services.user.UserService;
 import models.view_models.orders.OrderGetPagingRequest;
 import models.view_models.orders.OrderOverviewViewModel;
 import models.view_models.orders.OrderViewModel;
@@ -22,15 +22,15 @@ public class AdminIndex extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        ArrayList<UserViewModel> customers = UserRepository.getInstance().getTopUserByTotalOrder(10);
-        long totalUsers =UserRepository.getInstance().getTotalUser();
+        ArrayList<UserViewModel> customers = UserService.getInstance().getTopUserByTotalOrder(10);
+        long totalUsers = UserService.getInstance().getTotalUser();
 
-        ArrayList<OrderViewModel> orders = OrderRepository.getInstance().getTopOrderSoon(10);
-        long totalOrders = OrderRepository.getInstance().getTotalOrder();
+        ArrayList<OrderViewModel> orders = OrderService.getInstance().getTopOrderSoon(10);
+        long totalOrders = OrderService.getInstance().getTotalOrder();
 
-        BigDecimal totalRevenue = OrderRepository.getInstance().getRevenue();
+        BigDecimal totalRevenue = OrderService.getInstance().getRevenue();
 
-        OrderOverviewViewModel statistics = OrderRepository.getInstance().getOrderOverviewStatistics();
+        OrderOverviewViewModel statistics = OrderService.getInstance().getOrderOverviewStatistics();
 
         request.setAttribute("totalUsers",totalUsers);
         request.setAttribute("totalOrders",totalOrders);

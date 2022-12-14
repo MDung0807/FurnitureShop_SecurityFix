@@ -68,6 +68,7 @@
                                         <span class="account__login--divide__text">Hoặc</span>
                                     </div>
                                     <p class="account__login--signup__text">Bạn chưa có tài khoản? <a class="text__secondary" href="<%=request.getContextPath()%>/register">Đăng ký ngay</a></p>
+                                    <p class="account__login--signup__text">Bạn không đăng nhập được? <a class="text__secondary" href="<%=request.getContextPath()%>/forgot-password">Quên mật khẩu</a></p>
                                 </div>
                             </div>
                         </div>
@@ -79,12 +80,17 @@
     <!-- End login section  -->
     <div class="modal" id="modal-error" data-animation="slideInUp" style="z-index: 999;">
         <div class="modal-dialog quickview__main--wrapper">
-            <h3 class="modal-header border-bottom-0">Thao tác bị lỗi, vui lòng thực hiện lại</h3>
+            <h3 class="modal-header border-bottom-0" id="error-message">Thao tác bị lỗi, vui lòng thực hiện lại</h3>
         </div>
     </div>
     <div class="modal" id="modal-register" data-animation="slideInUp" style="z-index: 999;">
         <div class="modal-dialog quickview__main--wrapper">
             <h3 class="modal-header border-bottom-0">Đăng kí tài khoản thành công</h3>
+        </div>
+    </div>
+    <div class="modal" id="modal-forgot-password" data-animation="slideInUp" style="z-index: 999;">
+        <div class="modal-dialog quickview__main--wrapper">
+            <h3 class="modal-header border-bottom-0">Vui lòng kiểm tra mail để biết thông tin chi tiết về mật khẩu mới</h3>
         </div>
     </div>
     <div class="modal" id="modal-banned" data-animation="slideInUp" style="z-index: 999;">
@@ -98,16 +104,40 @@
 <jsp:include page="/views/client/common/common_js.jsp"/>
 <script>
     $(window).on('load', function() {
+        let error_modal = document.getElementById("error-message");
+        let show = true;
         if(${error != null}){
-            document.getElementById("modal-error").classList.add('is-visible')
+            error_modal.innerText = "Thao tác bị lỗi, vui lòng thực hiện lại"
         }
         else if(window.location.href.includes("error")){
-            document.getElementById("modal-error").classList.add('is-visible')
+            error_modal.innerText = "Thao tác bị lỗi, vui lòng thực hiện lại"
         }
         else if(window.location.href.includes("banned")){
-            document.getElementById("modal-banned").classList.add('is-visible')
-        }else if(window.location.href.includes("register")){
-            document.getElementById("modal-register").classList.add('is-visible')
+            error_modal.innerText = "Tài khoản của bạn bị cấm hoạt động, vui lòng liên hệ quản trị viên"
+        }
+        else if(window.location.href.includes("register")){
+            error_modal.innerText = "Đăng kí tài khoản thành công, vui lòng kiểm tra Email để xác nhận"
+        }
+        else if(window.location.href.includes("forgot-password")){
+            error_modal.innerText = "Vui lòng kiểm tra mail để biết thông tin chi tiết về mật khẩu mới"
+        }
+        else if(window.location.href.includes("unconfirm")){
+            error_modal.innerText = "Tài khoản chưa được xác nhận, vui lòng kiểm tra email"
+        }
+        else if(window.location.href.includes("token-expired")){
+            error_modal.innerText = "Token hết hạn. Một token mới đã được gửi lại đến mail của bạn. Vui lòng kiểm tra"
+        }
+        else if(window.location.href.includes("token-error")){
+            error_modal.innerText = "Lỗi khi xác nhận tài khoản, vui lòng thử lại"
+        }
+        else if(window.location.href.includes("token-verify-success")){
+            error_modal.innerText = "Xác nhận tài khoản thành công"
+        }
+        else{
+            show = false
+        }
+        if(show){
+            document.getElementById("modal-error").classList.add('is-visible')
         }
     });
     $('#form-login').submit(function (e){
@@ -128,12 +158,17 @@
             success: function (data){
                 console.log(data)
                 let str = data.toString()
-                if(str.includes('error') && str.length <=10){
-                    $('#authenticationValidateMessage').html('Username/password không chính xác').css('color','red')
-                    noError = false;
-                }else if(str.includes("banned") && str.length <= 10){
-                    $('#authenticationValidateMessage').html('Tài khoản bị cấm hoạt động').css('color','red')
-                    noError = false;
+                if(str.length <= 20) {
+                    if (str.includes('error')) {
+                        $('#authenticationValidateMessage').html('Username/password không chính xác').css('color', 'red')
+                        noError = false;
+                    } else if (str.includes("banned")) {
+                        $('#authenticationValidateMessage').html('Tài khoản bị cấm hoạt động').css('color', 'red')
+                        noError = false;
+                    } else if (str.includes("unconfirm")) {
+                        $('#authenticationValidateMessage').html('Tài khoản chưa xác nhận mail').css('color', 'red')
+                        noError = false;
+                    }
                 }
             },
             error: function (error){

@@ -66,15 +66,20 @@
             success: function (data){
                 console.log(data)
                 let str = data.toString()
-                if(str.includes('error')){
-                    $('#authenticationValidateMessage').html('Username/password không chính xác').css('color','red')
-                    noError = false;
-                }else if(str.includes("banned")){
-                    $('#authenticationValidateMessage').html('Tài khoản bị cấm hoạt động').css('color','red')
-                    noError = false;
-                }else if(str.includes("unauthorize")){
-                    $('#authenticationValidateMessage').html('Tài khoản không có quyền truy cập').css('color','red')
-                    noError = false;
+                if(str.length <= 20) {
+                    if (str.includes('error')) {
+                        $('#authenticationValidateMessage').html('Username/password không chính xác').css('color', 'red')
+                        noError = false;
+                    } else if (str.includes("banned")) {
+                        $('#authenticationValidateMessage').html('Tài khoản bị cấm hoạt động').css('color', 'red')
+                        noError = false;
+                    } else if (str.includes("unauthorize")) {
+                        $('#authenticationValidateMessage').html('Tài khoản không có quyền truy cập').css('color', 'red')
+                        noError = false;
+                    } else if (str.includes("unconfirm")) {
+                        $('#authenticationValidateMessage').html('Tài khoản chưa xác nhận mail').css('color', 'red')
+                        noError = false;
+                    }
                 }
             },
             error: function (error){

@@ -1,8 +1,8 @@
 package controllers.client.product;
 
-import models.repositories.brand.BrandRepository;
-import models.repositories.category.CategoryRepository;
-import models.repositories.product.ProductRepository;
+import models.services.brand.BrandService;
+import models.services.category.CategoryService;
+import models.services.product.ProductService;
 import models.view_models.brands.BrandGetPagingRequest;
 import models.view_models.brands.BrandViewModel;
 import models.view_models.categories.CategoryGetPagingRequest;
@@ -32,11 +32,11 @@ public class RetrieveAllProduct extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         BrandGetPagingRequest req = new BrandGetPagingRequest();
-        ArrayList<BrandViewModel> brands = BrandRepository.getInstance().retrieveAll(req);
+        ArrayList<BrandViewModel> brands = BrandService.getInstance().retrieveAllBrand(req);
         brands.removeIf(x -> x.getStatus() == BRAND_STATUS.IN_ACTIVE);
 
         CategoryGetPagingRequest req2 = new CategoryGetPagingRequest();
-        ArrayList<CategoryViewModel> categories = CategoryRepository.getInstance().retrieveAll(req2);
+        ArrayList<CategoryViewModel> categories = CategoryService.getInstance().retrieveAllCategory(req2);
         categories.removeIf(x -> x.getParentCategoryId() != 0 || x.getStatus() == CATEGORY_STATUS.IN_ACTIVE);
 
         ProductGetPagingRequest req1 = new ProductGetPagingRequest();
@@ -63,7 +63,7 @@ public class RetrieveAllProduct extends HttpServlet {
             req1.setCondition("brandId = " + brandId);
             totalProduct = HibernateUtils.count("Product","brandId = " + brandId);
         }
-        else if(minPrice.compareTo(BigDecimal.valueOf(0)) != 0  && maxPrice.compareTo(BigDecimal.valueOf(0)) != 0){
+        else if(request.getParameter("filter.v.price.gte") != null  && request.getParameter("filter.v.price.lte") != null){
             req1.setCondition("price >= " + minPrice + " and " + "price <= " + maxPrice);
             totalProduct = HibernateUtils.count("Product","price >= " + minPrice + " and " + "price <= " + maxPrice);
         }
@@ -99,7 +99,7 @@ public class RetrieveAllProduct extends HttpServlet {
 
         req1.setPageIndex(pageIndex);
         req1.setPageSize(pageSize);
-        ArrayList<ProductViewModel> products = ProductRepository.getInstance().retrieveAll(req1);
+        ArrayList<ProductViewModel> products = ProductService.getInstance().retrieveAllProduct(req1);
         request.setAttribute("pageIndex", pageIndex);
         request.setAttribute("pageSize", pageSize);
         request.setAttribute("totalPage", Math.ceil((totalProduct * 1.0) / pageSize));

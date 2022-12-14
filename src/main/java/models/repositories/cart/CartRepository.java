@@ -4,6 +4,8 @@ import models.entities.Cart;
 import models.entities.CartItem;
 import models.entities.Product;
 import models.repositories.product.ProductRepository;
+import models.services.cart.CartService;
+import models.services.product.ProductService;
 import models.view_models.cart_items.CartItemCreateRequest;
 import models.view_models.cart_items.CartItemGetPagingRequest;
 import models.view_models.cart_items.CartItemUpdateRequest;
@@ -107,7 +109,7 @@ public class CartRepository implements ICartRepository {
     private CartItemViewModel getCartItemViewModel(CartItem cartItem, Session session){
         CartItemViewModel cartItemViewModel = new CartItemViewModel();
 
-        ProductViewModel product = ProductRepository.getInstance().retrieveById(cartItem.getProduct().getProductId());
+        ProductViewModel product = ProductService.getInstance().retrieveProductById(cartItem.getProduct().getProductId());
         if(cartItem.getQuantity() > product.getQuantity()){
             CartItemUpdateRequest req = new CartItemUpdateRequest();
             req.setCartItemId(cartItem.getCartItemId());
@@ -223,8 +225,8 @@ public class CartRepository implements ICartRepository {
 
     @Override
     public int canUpdateQuantity(int cartItemId, int quantity) {
-        CartItemViewModel cartItem = CartRepository.getInstance().retrieveById(cartItemId);
-        ProductViewModel product = ProductRepository.getInstance().retrieveById(cartItem.getProductId());
+        CartItemViewModel cartItem = CartService.getInstance().retrieveCartItemById(cartItemId);
+        ProductViewModel product = ProductService.getInstance().retrieveProductById(cartItem.getProductId());
         if(product.getQuantity() < quantity) {
             CartItemUpdateRequest req = new CartItemUpdateRequest();
             req.setQuantity(product.getQuantity());
@@ -254,18 +256,18 @@ public class CartRepository implements ICartRepository {
 
     @Override
     public String addProductToCart(int productId, int quantity, int userId) {
-        int cartId = CartRepository.getInstance().getCartIdByUserId(userId);
+        int cartId = CartService.getInstance().getCartIdByUserId(userId);
         String responseStatus;
         int count = -1;
-        CartItemViewModel cartItem = CartRepository.getInstance().getCartItemContain(cartId, productId);
-        ProductViewModel product = ProductRepository.getInstance().retrieveById(productId);
+        CartItemViewModel cartItem = CartService.getInstance().getCartItemContain(cartId, productId);
+        ProductViewModel product = ProductService.getInstance().retrieveProductById(productId);
         if(product.getQuantity() > 0) {
             if (cartItem != null) {
                 CartItemUpdateRequest updateReq = new CartItemUpdateRequest();
                 updateReq.setCartItemId(cartItem.getCartItemId());
                 updateReq.setQuantity(cartItem.getQuantity() + 1);
                 updateReq.setStatus(cartItem.getStatus());
-                count = CartRepository.getInstance().update(updateReq) ? 1 : 0;
+                count = CartService.getInstance().updateCartItem(updateReq) ? 1 : 0;
                 if(count > 0)
                     responseStatus = "repeat";
                 else
@@ -277,7 +279,7 @@ public class CartRepository implements ICartRepository {
                 createReq.setQuantity(quantity);
                 createReq.setStatus(1);
 
-                count = CartRepository.getInstance().insert(createReq);
+                count = CartService.getInstance().insertCartItem(createReq);
                 if (count > 0) {
                     responseStatus = "success";
                 }

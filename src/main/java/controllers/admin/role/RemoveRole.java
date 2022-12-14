@@ -1,6 +1,6 @@
 package controllers.admin.role;
 
-import models.repositories.role.RoleRepository;
+import models.services.role.RoleService;
 import utils.ServletUtils;
 import utils.StringUtils;
 
@@ -15,7 +15,7 @@ public class RemoveRole extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int roleId = StringUtils.toInt(request.getParameter("roleId"));
 
-        boolean isSuccess = RoleRepository.getInstance().delete(roleId);
+        boolean isSuccess = RoleService.getInstance().deleteRole(roleId);
         String error = "";
         if(!isSuccess){
             error = "?error=true";

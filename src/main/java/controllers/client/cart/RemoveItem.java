@@ -1,6 +1,6 @@
 package controllers.client.cart;
 
-import models.repositories.cart.CartRepository;
+import models.services.cart.CartService;
 import models.view_models.users.UserViewModel;
 import utils.StringUtils;
 
@@ -17,7 +17,7 @@ public class RemoveItem extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         PrintWriter out = response.getWriter();
         int cartItemId = StringUtils.toInt(request.getParameter("cartItemId"));
-        boolean success = CartRepository.getInstance().delete(cartItemId);
+        boolean success = CartService.getInstance().deleteCartItem(cartItemId);
         if(!success){
             out.println("error");
         }else{

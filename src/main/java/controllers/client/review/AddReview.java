@@ -1,6 +1,6 @@
 package controllers.client.review;
 
-import models.repositories.review.ReviewRepository;
+import models.services.review.ReviewService;
 import models.view_models.review_items.ReviewItemCreateRequest;
 import utils.ServletUtils;
 import utils.SessionUtils;
@@ -24,7 +24,7 @@ public class AddReview extends HttpServlet {
         int productId = StringUtils.toInt(request.getParameter("productId"));
         int userId = SessionUtils.getUserIdLogin(request);
         ReviewItemCreateRequest createReq = new ReviewItemCreateRequest();
-        int reviewId = ReviewRepository.getInstance().getReviewIdByUserId(userId);
+        int reviewId = ReviewService.getInstance().getReviewIdByUserId(userId);
 
         createReq.setReviewId(reviewId);
         createReq.setRating(StringUtils.toInt(request.getParameter("rating")));
@@ -32,7 +32,7 @@ public class AddReview extends HttpServlet {
         createReq.setProductId(productId);
         createReq.setStatus(1);
         String error = "";
-        int reviewItemId = ReviewRepository.getInstance().insert(createReq);
+        int reviewItemId = ReviewService.getInstance().insertReviewItem(createReq);
         if(reviewItemId == -1)
             error = "&error=true";
         ServletUtils.redirect(response, request.getContextPath() + "/my-account/order/reviews?productId=" + productId + error);

@@ -1,6 +1,6 @@
 package controllers.admin.brand;
 
-import models.repositories.brand.BrandRepository;
+import models.services.brand.BrandService;
 import utils.ServletUtils;
 import utils.StringUtils;
 
@@ -15,7 +15,7 @@ public class RemoveBrand extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String brandId = request.getParameter("brandId");
 
-        boolean isSuccess = BrandRepository.getInstance().delete(StringUtils.toInt(brandId));
+        boolean isSuccess = BrandService.getInstance().deleteBrand(StringUtils.toInt(brandId));
         String error = "";
         if(!isSuccess){
             error = "?error=true";

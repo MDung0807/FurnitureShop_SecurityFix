@@ -1,7 +1,7 @@
 package controllers.admin.user;
 
 import common.user.UserUtils;
-import models.repositories.user.UserRepository;
+import models.services.user.UserService;
 import utils.ServletUtils;
 import models.view_models.users.UserCreateRequest;
 
@@ -26,7 +26,7 @@ public class AddUser extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         UserCreateRequest reqCreate = UserUtils.CreateRegisterRequest(request);
 
-        int userId = UserRepository.getInstance().insert(reqCreate);
+        int userId = UserService.getInstance().insertUser(reqCreate);
         String error = "";
         if(userId < 1){
             error = "?error=true";

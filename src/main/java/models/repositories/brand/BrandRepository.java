@@ -66,16 +66,16 @@ public class BrandRepository implements IBrandRepository{
         if(!request.getImage().getSubmittedFileName().equals("")){
             brand.setImage(FileUtil.encodeBase64(request.getImage()));
         }
-//        if(request.getStatus() == BRAND_STATUS.IN_ACTIVE){
-//            Query q1 = session.createQuery("select productId from Product where brand.brandId=:s1");
-//            q1.setParameter("s1",brand.getBrandId());
-//            List<Integer> productIds = q1.list();
-//            for(Integer id:productIds){
-//                Product subProduct = session.find(Product.class, id);
-//                if(subProduct.getStatus() != PRODUCT_STATUS.SUSPENDED)
-//                    return false;
-//            }
-//        }
+        if(request.getStatus() == BRAND_STATUS.IN_ACTIVE){
+            Query q1 = session.createQuery("select productId from Product where brand.brandId=:s1");
+            q1.setParameter("s1",brand.getBrandId());
+            List<Integer> productIds = q1.list();
+            for(Integer id:productIds){
+                Product subProduct = session.find(Product.class, id);
+                if(subProduct.getStatus() != PRODUCT_STATUS.SUSPENDED)
+                    return false;
+            }
+        }
         brand.setStatus(request.getStatus());
         return HibernateUtils.merge(brand);
     }
@@ -84,14 +84,14 @@ public class BrandRepository implements IBrandRepository{
     public boolean delete(Integer entityId) {
         Session session = HibernateUtils.getSession();
         Brand brand = session.find(Brand.class, entityId);
-//        Query q3 = session.createQuery("select productId from Product where brand.brandId=:s1");
-//        q3.setParameter("s1",brand.getBrandId());
-//        List<Integer> productIds = q3.list();
-//        for(Integer id:productIds){
-//            Product subProduct = session.find(Product.class, id);
-//            if(subProduct.getStatus() != PRODUCT_STATUS.SUSPENDED)
-//                return false;
-//        }
+        Query q3 = session.createQuery("select productId from Product where brand.brandId=:s1");
+        q3.setParameter("s1",brand.getBrandId());
+        List<Integer> productIds = q3.list();
+        for(Integer id:productIds){
+            Product subProduct = session.find(Product.class, id);
+            if(subProduct.getStatus() != PRODUCT_STATUS.SUSPENDED)
+                return false;
+        }
         brand.setStatus(BRAND_STATUS.IN_ACTIVE);
         session.close();
         return HibernateUtils.merge(brand);

@@ -1,7 +1,7 @@
 package controllers.admin.product;
 
 import com.google.gson.Gson;
-import models.repositories.product.ProductRepository;
+import models.services.product.ProductService;
 import utils.StringUtils;
 
 import javax.servlet.*;
@@ -15,7 +15,7 @@ public class RemoveProductImage extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int productImageId = StringUtils.toInt(request.getParameter("productImageId"));
-        boolean isSuccess = ProductRepository.getInstance().deleteImage(productImageId);
+        boolean isSuccess = ProductService.getInstance().deleteImage(productImageId);
 
         PrintWriter out = response.getWriter();
         out.println(new Gson().toJson(isSuccess));

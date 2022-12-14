@@ -1,7 +1,7 @@
 package controllers.admin.user;
 
-import models.repositories.role.RoleRepository;
-import models.repositories.user.UserRepository;
+import models.services.role.RoleService;
+import models.services.user.UserService;
 import utils.ServletUtils;
 import utils.StringUtils;
 import models.view_models.roles.RoleGetPagingRequest;
@@ -20,11 +20,11 @@ public class UserDetails extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int userId = StringUtils.toInt(request.getParameter("userId"));
 
-        UserViewModel user = UserRepository.getInstance().retrieveById(userId);
+        UserViewModel user = UserService.getInstance().retrieveUserById(userId);
 
         request.setAttribute("user", user);
         RoleGetPagingRequest reqRole = new RoleGetPagingRequest();
-        ArrayList<RoleViewModel> roles = RoleRepository.getInstance().retrieveAll(reqRole);
+        ArrayList<RoleViewModel> roles = RoleService.getInstance().retrieveAllRole(reqRole);
         request.setAttribute("roles",roles);
         ServletUtils.forward(request,response,"/views/admin/user/user-detail.jsp");
     }

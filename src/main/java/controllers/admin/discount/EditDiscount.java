@@ -1,6 +1,6 @@
 package controllers.admin.discount;
 
-import models.repositories.discount.DiscountRepository;
+import models.services.discount.DiscountService;
 import utils.DateUtils;
 import utils.ServletUtils;
 import utils.StringUtils;
@@ -18,7 +18,7 @@ public class EditDiscount extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int discountId = StringUtils.toInt(request.getParameter("discountId"));
 
-        DiscountViewModel discount = DiscountRepository.getInstance().retrieveById(discountId);
+        DiscountViewModel discount = DiscountService.getInstance().retrieveDiscountById(discountId);
 
         request.setAttribute("discount", discount);
 
@@ -41,7 +41,7 @@ public class EditDiscount extends HttpServlet {
         updateReq.setDiscountValue(StringUtils.toDouble(request.getParameter("discountValue")));
         updateReq.setQuantity(StringUtils.toInt(request.getParameter("quantity")));
 
-        boolean isSuccess = DiscountRepository.getInstance().update(updateReq);
+        boolean isSuccess = DiscountService.getInstance().updateDiscount(updateReq);
         String error = "";
         if(!isSuccess){
             error = "?error=true";

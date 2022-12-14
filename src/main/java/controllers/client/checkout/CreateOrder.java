@@ -1,12 +1,17 @@
 package controllers.client.checkout;
 
-import models.repositories.order.OrderRepository;
-import models.repositories.user.UserRepository;
+import com.paypal.base.rest.PayPalRESTException;
+import models.repositories.cart.CartRepository;
+import models.services.cart.CartService;
+import models.services.order.OrderService;
+import models.services.paypal.PayPalService;
+import models.services.user.UserService;
 import models.view_models.orders.OrderCreateRequest;
 import models.view_models.users.UserViewModel;
 import utils.ServletUtils;
 import utils.SessionUtils;
 import utils.StringUtils;
+import utils.constants.ORDER_PAYMENT;
 import utils.constants.ORDER_STATUS;
 
 import javax.servlet.*;
@@ -14,6 +19,7 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 @WebServlet(name = "CreateOrder", value = "/order/create")
 public class CreateOrder extends HttpServlet {
@@ -51,16 +57,35 @@ public class CreateOrder extends HttpServlet {
         createOrderReq.setTotalPrice(StringUtils.toBigDecimal(totalPrice));
         createOrderReq.setTotalItemPrice(StringUtils.toBigDecimal(totalItemPrice));
         createOrderReq.setUserId(userId);
-
-        boolean res = OrderRepository.getInstance().createOrder(request, createOrderReq, userId);
-        String error = "";
+        if(createOrderReq.getPayment() == ORDER_PAYMENT.PAYPAL){
+            String approvedUrl = "";
+            String url = request.getRequestURL().toString();
+            String baseURL = url.substring(0, url.length() - request.getRequestURI().length()) + request.getContextPath();
+            HttpSession session = request.getSession();
+            session.setAttribute("createOrderReq", createOrderReq);
+            try {
+                approvedUrl = PayPalService.getInstance().authorizePayment(CartService.getInstance().retrieveCartByUserId(userId), createOrderReq, baseURL);
+            } catch (PayPalRESTException e) {
+                ServletUtils.redirect(response, request.getContextPath() +  "/cart/items?error=true");
+                return;
+            }
+            String u = approvedUrl;
+            if(Objects.equals(approvedUrl, "")) {
+                u = request.getContextPath() +  "/cart/items?error=true";
+            }
+            ServletUtils.redirect(response, u);
+            return;
+        }
+        boolean res = OrderService.getInstance().createOrder(request, createOrderReq, userId);
+        String status = "";
         if(!res)
-            error = "?error=true";
+            status = "?error=true";
         else{
-            UserViewModel user = UserRepository.getInstance().retrieveById(userId);
+            UserViewModel user = UserService.getInstance().retrieveUserById(userId);
             request.getSession().setAttribute("user", user);
+            status = "?success=true";
         }
 
-        ServletUtils.redirect(response, request.getContextPath() + "/cart/items" + error);
+        ServletUtils.redirect(response, request.getContextPath() + "/cart/items" + status);
     }
 }

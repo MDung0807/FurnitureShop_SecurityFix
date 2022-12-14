@@ -1,6 +1,6 @@
 package controllers.client.cart;
 
-import models.repositories.cart.CartRepository;
+import models.services.cart.CartService;
 import models.view_models.users.UserViewModel;
 import utils.StringUtils;
 
@@ -29,7 +29,7 @@ public class AddItemToCart extends HttpServlet {
             return;
         int userId = user.getId();
 
-        String responseStatus = CartRepository.getInstance().addProductToCart(productId, quantity, userId);
+        String responseStatus = CartService.getInstance().addProductToCart(productId, quantity, userId);
 
         if(responseStatus.contains("success")){
             user.setTotalCartItem(user.getTotalCartItem() + 1);

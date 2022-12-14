@@ -1,6 +1,6 @@
 package controllers.admin.role;
 
-import models.repositories.role.RoleRepository;
+import models.services.role.RoleService;
 import models.view_models.roles.RoleCreateRequest;
 import utils.DateUtils;
 import utils.ServletUtils;
@@ -26,7 +26,7 @@ public class AddRole extends HttpServlet {
 
         createReq.setRoleName(request.getParameter("roleName"));
 
-        int roleId = RoleRepository.getInstance().insert(createReq);
+        int roleId = RoleService.getInstance().insertRole(createReq);
         String error = "";
         if(roleId < 1){
             error = "?error=true";

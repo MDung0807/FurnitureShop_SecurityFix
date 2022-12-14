@@ -1,8 +1,9 @@
 package controllers.client.authentication;
 
 import common.user.UserUtils;
-import models.repositories.role.RoleRepository;
-import models.repositories.user.UserRepository;
+import models.services.mail_verify_token.VerifyTokenService;
+import models.services.role.RoleService;
+import models.services.user.UserService;
 import models.view_models.roles.RoleGetPagingRequest;
 import models.view_models.roles.RoleViewModel;
 import models.view_models.users.UserCreateRequest;
@@ -38,9 +39,9 @@ public class Register extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         UserCreateRequest createReq = UserUtils.CreateRegisterRequest(request);
-        createReq.setStatus(USER_STATUS.ACTIVE);
+        createReq.setStatus(USER_STATUS.UN_CONFIRM);
         RoleGetPagingRequest reqRole = new RoleGetPagingRequest();
-        ArrayList<RoleViewModel> roles = RoleRepository.getInstance().retrieveAll(reqRole);
+        ArrayList<RoleViewModel> roles = RoleService.getInstance().retrieveAllRole(reqRole);
 
         roles.removeIf(x -> !x.getRoleName().equalsIgnoreCase("khách hàng"));
         createReq.setRoleIds(new ArrayList<Integer>(){
@@ -49,12 +50,17 @@ public class Register extends HttpServlet {
             }
         });
 
-        int userId = UserRepository.getInstance().insert(createReq);
+        int userId = UserService.getInstance().insertUser(createReq);
         String status = "";
         if(userId < 1){
             status = "?error=true";
         }else{
-            status = "?register=success";
+            boolean res = VerifyTokenService.getInstance().sendVerifyTokenMail(userId,request);
+            if(res){
+                status = "?register=success";
+            }else{
+                status = "?error=true";
+            }
         }
         ServletUtils.redirect(response, request.getContextPath() + "/signin" + status);
     }

@@ -1,6 +1,6 @@
 package controllers.admin.order;
 
-import models.repositories.order.OrderRepository;
+import models.services.order.OrderService;
 import utils.ServletUtils;
 import models.view_models.orders.OrderGetPagingRequest;
 import models.view_models.orders.OrderViewModel;
@@ -25,11 +25,11 @@ public class GetOrders extends HttpServlet {
             request.setAttribute("error",error);
         }
         if(newOrder != null){
-            orders = OrderRepository.getInstance().retrieveNewOrder(req);
+            orders = OrderService.getInstance().retrieveNewOrder(req);
         }else if(delivered != null){
-            orders = OrderRepository.getInstance().retrieveDeliveredOrder(req);
+            orders = OrderService.getInstance().retrieveDeliveredOrder(req);
         }else{
-            orders = OrderRepository.getInstance().retrieveAll(req);
+            orders = OrderService.getInstance().retrieveAllOrder(req);
         }
 
         request.setAttribute("orders", orders);

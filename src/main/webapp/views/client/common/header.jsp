@@ -17,13 +17,13 @@
           <nav class="header__menu--navigation">
             <ul class="d-flex">
               <li class="header__menu--items">
-                <a class="header__menu--link" href="<%=request.getContextPath()%>/home">Home</a>
+                <a class="header__menu--link" href="<%=request.getContextPath()%>/home">Trang chủ</a>
               </li>
               <li class="header__menu--items mega__menu--items">
-                <a class="header__menu--link" href="<%=request.getContextPath()%>/products">Shop</a>
+                <a class="header__menu--link" href="<%=request.getContextPath()%>/products">Trang sản phẩm</a>
               </li>
               <li class="header__menu--items">
-                <a class="header__menu--link" href="<%=request.getContextPath()%>/about">About</a>
+                <a class="header__menu--link" href="<%=request.getContextPath()%>/about">Thông tin</a>
               </li>
             </ul>
           </nav>
@@ -88,12 +88,12 @@
       <nav class="offcanvas__menu">
         <ul class="offcanvas__menu_ul">
           <li class="offcanvas__menu_li">
-            <a class="offcanvas__menu_item" href="<%=request.getContextPath()%>/home">Home</a>
+            <a class="offcanvas__menu_item" href="<%=request.getContextPath()%>/home">Trang chủ</a>
           </li>
           <li class="offcanvas__menu_li">
-            <a class="offcanvas__menu_item" href="<%=request.getContextPath()%>/products">Shop</a>
+            <a class="offcanvas__menu_item" href="<%=request.getContextPath()%>/products">Trang sản phẩm</a>
           </li>
-          <li class="offcanvas__menu_li"><a class="offcanvas__menu_item" href="<%=request.getContextPath()%>/about">About US</a></li>
+          <li class="offcanvas__menu_li"><a class="offcanvas__menu_item" href="<%=request.getContextPath()%>/about">Thông tin</a></li>
         </ul>
         <div class="offcanvas__account--items">
           <a class="offcanvas__account--items__btn d-flex align-items-center" href="<%=request.getContextPath()%>/signin">

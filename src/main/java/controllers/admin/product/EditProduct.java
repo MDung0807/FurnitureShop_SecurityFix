@@ -1,7 +1,7 @@
 package controllers.admin.product;
 
-import models.repositories.cart.CartRepository;
-import models.repositories.product.ProductRepository;
+import models.services.cart.CartService;
+import models.services.product.ProductService;
 import utils.ServletUtils;
 import utils.StringUtils;
 import models.view_models.product_images.ProductImageCreateRequest;
@@ -30,7 +30,7 @@ public class EditProduct extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int productId = StringUtils.toInt(request.getParameter("productId"));
 
-        ProductViewModel product = ProductRepository.getInstance().retrieveById(productId);
+        ProductViewModel product = ProductService.getInstance().retrieveProductById(productId);
 
         request.setAttribute("product", product);
 
@@ -72,14 +72,14 @@ public class EditProduct extends HttpServlet {
         req.setBrandId(brandId);
         req.setStatus(status);
 
-        boolean isSuccess = ProductRepository.getInstance().update(req);
+        boolean isSuccess = ProductService.getInstance().updateProduct(req);
         if(!isSuccess){
             request.setAttribute("error", "true");
             doGet(request, response);
             return;
         }else{
             if(status == PRODUCT_STATUS.OUT_STOCK || status == PRODUCT_STATUS.SUSPENDED){
-                CartRepository.getInstance().updateQuantityByProductId(productId, 0);
+                CartService.getInstance().updateQuantityByProductId(productId, 0);
             }
         }
         if(subImages.size() > 0) {
@@ -87,7 +87,7 @@ public class EditProduct extends HttpServlet {
             productImageCreateRequest.setProductId(productId);
             productImageCreateRequest.setImages(subImages);
 
-            int id = ProductRepository.getInstance().insertImage(productImageCreateRequest);
+            int id = ProductService.getInstance().insertImage(productImageCreateRequest);
             if(id < 1){
                 request.setAttribute("error", "true");
                 doGet(request, response);

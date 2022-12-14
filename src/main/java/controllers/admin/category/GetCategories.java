@@ -1,6 +1,6 @@
 package controllers.admin.category;
 
-import models.repositories.category.CategoryRepository;
+import models.services.category.CategoryService;
 import utils.ServletUtils;
 import models.view_models.categories.CategoryGetPagingRequest;
 import models.view_models.categories.CategoryViewModel;
@@ -20,7 +20,7 @@ public class GetCategories extends HttpServlet {
         String sub = request.getParameter("sub-categories");
 
         req.setTypeSort("brandName");
-        ArrayList<CategoryViewModel> categories = CategoryRepository.getInstance().retrieveAll(req);
+        ArrayList<CategoryViewModel> categories = CategoryService.getInstance().retrieveAllCategory(req);
         String error = request.getParameter("error");
         if(error != null && !error.equals("")){
             request.setAttribute("error",error);
@@ -33,7 +33,7 @@ public class GetCategories extends HttpServlet {
         else {
             categories.removeIf(s -> s.getParentCategoryId() == 0);
             request.setAttribute("categories",categories);
-            HashMap<Integer, String> parentCategories = CategoryRepository.getInstance().getParentCategory();
+            HashMap<Integer, String> parentCategories = CategoryService.getInstance().getParentCategory();
             request.setAttribute("parentCategories",parentCategories);
             ServletUtils.forward(request, response, "/views/admin/category/sub-category.jsp");
         }

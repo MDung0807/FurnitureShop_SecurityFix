@@ -1,7 +1,8 @@
 package controllers.admin.user;
 
 import common.user.UserUtils;
-import models.repositories.user.UserRepository;
+import models.services.user.UserService;
+import models.view_models.user_roles.UserRoleViewModel;
 import models.view_models.users.UserViewModel;
 import utils.DateUtils;
 import utils.ServletUtils;
@@ -32,12 +33,12 @@ public class EditUser extends HttpServlet {
 
         UserUpdateRequest reqUpdate = UserUtils.CreateUserUpdateRequest(request);
 
-        boolean isSuccess = UserRepository.getInstance().update(reqUpdate);
+        boolean isSuccess = UserService.getInstance().updateUser(reqUpdate);
         String error = "";
         if(!isSuccess){
             error = "&error=true";
         }else{
-            UserViewModel user = UserRepository.getInstance().getUserByUserName(request.getParameter("username"));
+            UserViewModel user = UserService.getInstance().getUserByUserName(request.getParameter("username"));
             HttpSession session = request.getSession();
             UserViewModel currUser = (UserViewModel) session.getAttribute("admin");
             if(Objects.equals(currUser.getUsername(), user.getUsername())){

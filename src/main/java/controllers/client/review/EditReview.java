@@ -1,6 +1,6 @@
 package controllers.client.review;
 
-import models.repositories.review.ReviewRepository;
+import models.services.review.ReviewService;
 import models.view_models.review_items.ReviewItemUpdateRequest;
 import models.view_models.review_items.ReviewItemViewModel;
 import utils.ServletUtils;
@@ -17,7 +17,7 @@ public class EditReview extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int reviewItemId = StringUtils.toInt(request.getParameter("reviewItemId"));
-        ReviewItemViewModel productReview = ReviewRepository.getInstance().retrieveById(reviewItemId);
+        ReviewItemViewModel productReview = ReviewService.getInstance().retrieveReviewItemById(reviewItemId);
 
         request.setAttribute("productReview",productReview);
 
@@ -37,7 +37,7 @@ public class EditReview extends HttpServlet {
         updateReq.setRating(StringUtils.toInt(request.getParameter("rating")));
         updateReq.setContent(request.getParameter("content"));
 
-        boolean success = ReviewRepository.getInstance().update(updateReq);
+        boolean success = ReviewService.getInstance().updateReviewItem(updateReq);
 
         ServletUtils.redirect(response, request.getContextPath() + "/my-account/order/reviews?productId=" + productId);
     }

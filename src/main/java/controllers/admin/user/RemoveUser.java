@@ -1,6 +1,6 @@
 package controllers.admin.user;
 
-import models.repositories.user.UserRepository;
+import models.services.user.UserService;
 import utils.ServletUtils;
 import utils.StringUtils;
 
@@ -15,7 +15,7 @@ public class RemoveUser extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int userId = StringUtils.toInt(request.getParameter("userId"));
 
-        boolean isSuccess = UserRepository.getInstance().delete(userId);
+        boolean isSuccess = UserService.getInstance().deleteUser(userId);
         String error = "";
         if(!isSuccess){
             error = "?error=true";

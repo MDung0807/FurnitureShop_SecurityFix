@@ -1,6 +1,6 @@
 package controllers.admin.discount;
 
-import models.repositories.discount.DiscountRepository;
+import models.services.discount.DiscountService;
 import utils.ServletUtils;
 import utils.StringUtils;
 
@@ -15,7 +15,7 @@ public class RemoveDiscount extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int discountId = StringUtils.toInt(request.getParameter("discountId"));
 
-        boolean isSuccess = DiscountRepository.getInstance().delete(discountId);
+        boolean isSuccess = DiscountService.getInstance().deleteDiscount(discountId);
         String error = "";
         if(!isSuccess){
             error = "?error=true";

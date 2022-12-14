@@ -1,6 +1,6 @@
 package controllers.admin.order;
 
-import models.repositories.order.OrderRepository;
+import models.services.order.OrderService;
 import utils.ServletUtils;
 import utils.StringUtils;
 import models.view_models.order_items.OrderItemViewModel;
@@ -17,10 +17,10 @@ public class OrderDetails extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int orderId = StringUtils.toInt(request.getParameter("orderId"));
-        OrderViewModel order = OrderRepository.getInstance().retrieveById(orderId);
+        OrderViewModel order = OrderService.getInstance().retrieveOrderById(orderId);
 
         request.setAttribute("order", order);
-        ArrayList<OrderItemViewModel> orderItems = OrderRepository.getInstance().getItemByOrderId(orderId);
+        ArrayList<OrderItemViewModel> orderItems = OrderService.getInstance().getItemByOrderId(orderId);
         request.setAttribute("orderItems", orderItems);
 
         ServletUtils.forward(request, response, "/views/admin/order/order-details.jsp");

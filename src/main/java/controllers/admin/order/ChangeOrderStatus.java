@@ -1,6 +1,6 @@
 package controllers.admin.order;
 
-import models.repositories.order.OrderRepository;
+import models.services.order.OrderService;
 import utils.ServletUtils;
 import utils.StringUtils;
 import models.view_models.orders.OrderViewModel;
@@ -30,7 +30,7 @@ public class ChangeOrderStatus extends HttpServlet {
         req.setOrderId(orderId);
         req.setStatus(status);
 
-        boolean isSuccess = OrderRepository.getInstance().update(req);
+        boolean isSuccess = OrderService.getInstance().updateOrder(req);
         String error = "";
         if(!isSuccess){
             error = "?error=true";

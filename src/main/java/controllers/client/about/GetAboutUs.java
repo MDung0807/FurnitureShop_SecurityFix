@@ -1,6 +1,6 @@
 package controllers.client.about;
 
-import models.repositories.brand.BrandRepository;
+import models.services.brand.BrandService;
 import models.view_models.brands.BrandGetPagingRequest;
 import models.view_models.brands.BrandViewModel;
 import utils.ServletUtils;
@@ -18,7 +18,7 @@ public class GetAboutUs extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         BrandGetPagingRequest req = new BrandGetPagingRequest();
-        ArrayList<BrandViewModel> brands = BrandRepository.getInstance().retrieveAll(req);
+        ArrayList<BrandViewModel> brands = BrandService.getInstance().retrieveAllBrand(req);
         brands.removeIf(x -> x.getStatus() == BRAND_STATUS.IN_ACTIVE);
         request.setAttribute("brands", brands);
         ServletUtils.forward(request,response,"/views/client/about.jsp");

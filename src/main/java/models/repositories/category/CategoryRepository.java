@@ -69,25 +69,25 @@ public class CategoryRepository implements ICategoryRepository{
         if(!request.getImage().getSubmittedFileName().equals(""))
             category.setImage(FileUtil.encodeBase64(request.getImage()));
 
-//        Query q2 = session.createQuery("select categoryId from Category where parentCategoryId=:s1");
-//        q2.setParameter("s1",category.getCategoryId());
-//        List<Integer> categoryIds = q2.list();
-//        session.close();
-//        for(Integer id:categoryIds){
-//            Category sub = session.find(Category.class, id);
-//            if(sub.getStatus() != CATEGORY_STATUS.IN_ACTIVE)
-//                return false;
-//        }
-//        if(request.getStatus() == CATEGORY_STATUS.IN_ACTIVE){
-//            Query q3 = session.createQuery("select productId from Product where category.categoryId=:s1");
-//            q3.setParameter("s1",category.getCategoryId());
-//            List<Integer> productIds = q3.list();
-//            for(Integer id:productIds){
-//                Product subProduct = session.find(Product.class, id);
-//                if(subProduct.getStatus() != PRODUCT_STATUS.SUSPENDED)
-//                    return false;
-//            }
-//        }
+        Query q2 = session.createQuery("select categoryId from Category where parentCategoryId=:s1");
+        q2.setParameter("s1",category.getCategoryId());
+        List<Integer> categoryIds = q2.list();
+        session.close();
+        for(Integer id:categoryIds){
+            Category sub = session.find(Category.class, id);
+            if(sub.getStatus() != CATEGORY_STATUS.IN_ACTIVE)
+                return false;
+        }
+        if(request.getStatus() == CATEGORY_STATUS.IN_ACTIVE){
+            Query q3 = session.createQuery("select productId from Product where category.categoryId=:s1");
+            q3.setParameter("s1",category.getCategoryId());
+            List<Integer> productIds = q3.list();
+            for(Integer id:productIds){
+                Product subProduct = session.find(Product.class, id);
+                if(subProduct.getStatus() != PRODUCT_STATUS.SUSPENDED)
+                    return false;
+            }
+        }
         return HibernateUtils.merge(category);
     }
 
@@ -96,24 +96,24 @@ public class CategoryRepository implements ICategoryRepository{
         Session session = HibernateUtils.getSession();
         Category category = session.find(Category.class, entityId);
 
-//        Query q2 = session.createQuery("select categoryId from Category where parentCategoryId=:s1");
-//        q2.setParameter("s1",category.getCategoryId());
-//        List<Integer> categoryIds = q2.list();
-//
-//        for(Integer id:categoryIds){
-//            Category sub = session.find(Category.class, id);
-//            if(sub.getStatus() != CATEGORY_STATUS.IN_ACTIVE)
-//                return false;
-//        }
-//
-//        Query q3 = session.createQuery("select productId from Product where category.categoryId=:s1");
-//        q3.setParameter("s1",category.getCategoryId());
-//        List<Integer> productIds = q3.list();
-//        for(Integer id:productIds){
-//            Product subProduct = session.find(Product.class, id);
-//            if(subProduct.getStatus() != PRODUCT_STATUS.SUSPENDED)
-//                return false;
-//        }
+        Query q2 = session.createQuery("select categoryId from Category where parentCategoryId=:s1");
+        q2.setParameter("s1",category.getCategoryId());
+        List<Integer> categoryIds = q2.list();
+
+        for(Integer id:categoryIds){
+            Category sub = session.find(Category.class, id);
+            if(sub.getStatus() != CATEGORY_STATUS.IN_ACTIVE)
+                return false;
+        }
+
+        Query q3 = session.createQuery("select productId from Product where category.categoryId=:s1");
+        q3.setParameter("s1",category.getCategoryId());
+        List<Integer> productIds = q3.list();
+        for(Integer id:productIds){
+            Product subProduct = session.find(Product.class, id);
+            if(subProduct.getStatus() != PRODUCT_STATUS.SUSPENDED)
+                return false;
+        }
         category.setStatus(CATEGORY_STATUS.IN_ACTIVE);
         return HibernateUtils.merge(category);
     }

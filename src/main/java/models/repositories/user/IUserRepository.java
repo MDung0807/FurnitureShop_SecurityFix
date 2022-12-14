@@ -22,6 +22,9 @@ public interface IUserRepository extends IModifyEntity<UserCreateRequest, UserUp
     boolean login(UserLoginRequest request);
     ArrayList<UserViewModel> getTopUserByTotalOrder(int top);
     UserViewModel getUserByUserName(String username);
+    UserViewModel getUserByEmail(String email);
     long getTotalUser();
     ArrayList<UserRoleViewModel> getUserRoleByUserId(int userId);
+
+    boolean forgotPassword(String email);
 }

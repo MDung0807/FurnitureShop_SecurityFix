@@ -1,7 +1,8 @@
 package controllers.client.authentication;
 
 import common.user.UserUtils;
-import models.repositories.user.UserRepository;
+import models.services.google.GoogleService;
+import models.services.user.UserService;
 import models.view_models.users.UserLoginRequest;
 import models.view_models.users.UserViewModel;
 import utils.ServletUtils;
@@ -22,8 +23,14 @@ public class SignIn extends HttpServlet {
         if(user != null){
             ServletUtils.redirect(response, request.getContextPath() + "/home");
         }
-        else
-            ServletUtils.forward(request,response, "/views/client/login.jsp");
+        else {
+            String url = request.getRequestURL().toString();
+            String baseURL = url.substring(0, url.length() - request.getRequestURI().length()) + request.getContextPath();
+            String scope = "profile%20email";
+            String googleLoginLink = "https://accounts.google.com/o/oauth2/auth?scope=" + scope + "&redirect_uri=" + baseURL +"/login-google&response_type=code&client_id=" + GoogleService.GOOGLE_CLIENT_ID +"&approval_prompt=force";
+            request.setAttribute("urlGoogleLogin",googleLoginLink);
+            ServletUtils.forward(request, response, "/views/client/login.jsp");
+        }
     }
 
     @Override
@@ -32,14 +39,17 @@ public class SignIn extends HttpServlet {
         PrintWriter out = response.getWriter();
         UserLoginRequest loginRequest = UserUtils.CreateLoginRequest(request);
 
-        if(UserRepository.getInstance().login(loginRequest)){
-            UserViewModel user = UserRepository.getInstance().getUserByUserName(loginRequest.getUsername());
+        if(UserService.getInstance().login(loginRequest)){
+            UserViewModel user = UserService.getInstance().getUserByUserName(loginRequest.getUsername());
             if(user.getStatus() == USER_STATUS.IN_ACTIVE){
                 out.println("banned".trim());
+
+            }else if (user.getStatus() == USER_STATUS.UN_CONFIRM){
+                out.println("unconfirm".trim());
             }else {
-                HttpSession session = request.getSession();
-                session.setAttribute("user", user);
-                ServletUtils.redirect(response, request.getContextPath() + "/home");
+            HttpSession session = request.getSession();
+            session.setAttribute("user", user);
+            ServletUtils.redirect(response, request.getContextPath() + "/home");
             }
         }else{
             out.println("error".trim());

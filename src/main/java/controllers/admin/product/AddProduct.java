@@ -1,8 +1,8 @@
 package controllers.admin.product;
 
-import models.repositories.brand.BrandRepository;
-import models.repositories.category.CategoryRepository;
-import models.repositories.product.ProductRepository;
+import models.services.brand.BrandService;
+import models.services.category.CategoryService;
+import models.services.product.ProductService;
 import utils.ServletUtils;
 import utils.StringUtils;
 import models.view_models.brands.BrandGetPagingRequest;
@@ -33,11 +33,11 @@ public class AddProduct extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         CategoryGetPagingRequest req1 = new CategoryGetPagingRequest();
 
-        ArrayList<CategoryViewModel> categories = CategoryRepository.getInstance().retrieveAll(req1);
+        ArrayList<CategoryViewModel> categories = CategoryService.getInstance().retrieveAllCategory(req1);
         categories.removeIf(x -> x.getStatus() == CATEGORY_STATUS.IN_ACTIVE);
         BrandGetPagingRequest req2 = new BrandGetPagingRequest();
 
-        ArrayList<BrandViewModel> brands = BrandRepository.getInstance().retrieveAll(req2);
+        ArrayList<BrandViewModel> brands = BrandService.getInstance().retrieveAllBrand(req2);
         brands.removeIf(x -> x.getStatus() == BRAND_STATUS.IN_ACTIVE);
         request.setAttribute("categories",categories);
         request.setAttribute("brands",brands);
@@ -79,7 +79,7 @@ public class AddProduct extends HttpServlet {
         req.setCategoryId(categoryId);
         req.setBrandId(brandId);
         req.setStatus(status);
-        int productId = ProductRepository.getInstance().insert(req);
+        int productId = ProductService.getInstance().insertProduct(req);
         if(productId < 1){
             request.setAttribute("error", "true");
             doGet(request, response);
@@ -90,7 +90,7 @@ public class AddProduct extends HttpServlet {
 
         productImageCreateRequest.setImages(subImages);
 
-        int id = ProductRepository.getInstance().insertImage(productImageCreateRequest);
+        int id = ProductService.getInstance().insertImage(productImageCreateRequest);
         if(id < 1){
             request.setAttribute("error", "true");
             doGet(request, response);

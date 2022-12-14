@@ -2,8 +2,11 @@ package models.repositories.user;
 
 import common.user.UserUtils;
 import models.entities.*;
+import models.services.mail.MailJetService;
+import models.services.user.UserService;
 import models.view_models.user_roles.UserRoleViewModel;
 import models.view_models.users.*;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -215,7 +218,7 @@ public class UserRepository implements IUserRepository{
         Object res5 = q5.getSingleResult();
         userViewModel.setTotalCost(res5 != null ? (BigDecimal)res5 : BigDecimal.valueOf(0));
 
-        userViewModel.setRoles(UserRepository.getInstance().getUserRoleByUserId(user.getUserId()));
+        userViewModel.setRoles(UserService.getInstance().getUserRoleByUserId(user.getUserId()));
 
         ArrayList<Integer> roleIds = new ArrayList<>();
         userViewModel.getRoles().forEach(s -> roleIds.add(s.getRoleId()));
@@ -371,7 +374,7 @@ public class UserRepository implements IUserRepository{
     @Override
     public ArrayList<UserViewModel> getTopUserByTotalOrder(int top) {
 
-        ArrayList<UserViewModel> users = UserRepository.getInstance().retrieveAll(new UserGetPagingRequest());
+        ArrayList<UserViewModel> users = UserService.getInstance().retrieveAllUser(new UserGetPagingRequest());
 
         users.sort((o1, o2) -> (int) (o2.getTotalOrders() - o1.getTotalOrders()));
 
@@ -398,6 +401,27 @@ public class UserRepository implements IUserRepository{
         }
         if(user != null){
             return getUserViewModel(user, session);
+        }
+        return null;
+    }
+
+    @Override
+    public UserViewModel getUserByEmail(String email) {
+        try {
+            Session session = HibernateUtils.getSession();
+
+            Query q = session.createQuery("from User where email=:s1");
+            q.setParameter("s1", email);
+            Object o = q.getSingleResult();
+            User user = null;
+            if (o != null) {
+                user = (User) o;
+            }
+            if (user != null) {
+                return getUserViewModel(user, session);
+            }
+        }catch(Exception e){
+            return null;
         }
         return null;
     }
@@ -433,5 +457,25 @@ public class UserRepository implements IUserRepository{
             }
         }
         return userRoles;
+    }
+
+    @Override
+    public boolean forgotPassword(String email) {
+        String randomPassword = RandomStringUtils.randomAlphabetic(10);
+        Session session = HibernateUtils.getSession();
+        Query q = session.createQuery("from User where email=:s1");
+        q.setParameter("s1", email);
+        User u = null;
+        try {
+            u = (User) q.getSingleResult();
+            u.setPassword(UserUtils.hashPassword(randomPassword));
+        }catch(Exception e){
+            return false;
+        }
+        boolean res = HibernateUtils.merge(u);
+        if(!res)
+            return false;
+        MailJetService.getInstance().sendMail(u.getFirstName() + " " + u.getLastName(), email, "<h2>Chào " + u.getFirstName() + " " + u.getLastName() + ", </h2><h3>Mật khẩu mới cho tài khoản <em>" + u.getUsername() + "</em>: " + randomPassword + " </h3>" + "<h4>Bạn vui lòng đổi mật khẩu sau khi đăng nhập. Xin cảm ơn!!!</h4>", "(FurSshop) Mật khẩu mới ");
+        return true;
     }
 }

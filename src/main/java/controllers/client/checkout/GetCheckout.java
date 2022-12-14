@@ -1,6 +1,6 @@
 package controllers.client.checkout;
 
-import models.repositories.cart.CartRepository;
+import models.services.cart.CartService;
 import models.view_models.cart_items.CartItemViewModel;
 import utils.ServletUtils;
 import utils.SessionUtils;
@@ -19,10 +19,10 @@ public class GetCheckout extends HttpServlet {
         int userId = SessionUtils.getUserIdLogin(request);
         if(userId == -1)
             return;
-        ArrayList<CartItemViewModel> cartItems = CartRepository.getInstance().retrieveCartByUserId(userId);
+        ArrayList<CartItemViewModel> cartItems = CartService.getInstance().retrieveCartByUserId(userId);
         cartItems.removeIf(x -> x.getQuantity() == 0);
         request.setAttribute("cartItems",cartItems);
-        BigDecimal totalItemPrice = CartRepository.getInstance().getTotalCartItemPriceByUserId(userId);
+        BigDecimal totalItemPrice = CartService.getInstance().getTotalCartItemPriceByUserId(userId);
         BigDecimal shipping = BigDecimal.valueOf(0);
         BigDecimal discount = BigDecimal.valueOf(0);
         BigDecimal totalPrice;

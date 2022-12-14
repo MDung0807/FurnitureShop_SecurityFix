@@ -1,6 +1,6 @@
 package controllers.admin.brand;
 
-import models.repositories.brand.BrandRepository;
+import models.services.brand.BrandService;
 import utils.ServletUtils;
 import models.view_models.brands.BrandGetPagingRequest;
 import models.view_models.brands.BrandViewModel;
@@ -18,7 +18,7 @@ public class GetBrands extends HttpServlet {
         BrandGetPagingRequest req = new BrandGetPagingRequest();
 
         req.setTypeSort("brandName");
-        ArrayList<BrandViewModel> brands = BrandRepository.getInstance().retrieveAll(req);
+        ArrayList<BrandViewModel> brands = BrandService.getInstance().retrieveAllBrand(req);
 
         request.setAttribute("brands", brands);
         String error = request.getParameter("error");
