@@ -205,7 +205,7 @@
                                                             </li>
                                                         </c:forEach>
                                                     </ul>
-                                                    <p class="reviews__comment--content__desc">${review.content}</p>
+                                                    <p class="reviews__comment--content__desc"><c:out value="${review.content}" /></p>
                                                     <span class="reviews__comment--content__date">${review.dateUpdated}</span>
                                                 </div>
                                             </div>
