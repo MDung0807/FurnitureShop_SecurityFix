@@ -78,7 +78,7 @@
                                         <p id="userValidateMessage"></p>
                                     </label>
                                     <label>
-                                        <input class="account__login--input" placeholder="Password" id="password" name="password" required type="password">
+                                        <input class="account__login--input" placeholder="Password" id="password"  name="password" required type="password">
                                     </label>
                                     <label>
                                         <input class="account__login--input" placeholder="Confirm Password" id="confirmPassword" name="confirmPassword" required type="password">

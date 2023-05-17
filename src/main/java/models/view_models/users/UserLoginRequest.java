@@ -1,7 +1,10 @@
 package models.view_models.users;
 
+import javax.validation.constraints.Pattern;
+
 public class UserLoginRequest {
     private String username;
+    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{8,30}$", message = "password not strong")
     private String password;
     private boolean rememberMe;
 
@@ -10,6 +13,8 @@ public class UserLoginRequest {
     }
 
     public void setUsername(String username) {
+        if (username.length()<50)
+            return;
         this.username = username;
     }
 

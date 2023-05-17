@@ -6,6 +6,14 @@ function validateForm(e, context){
     let confirmPassword = $('#confirmPassword')
     let newPassword = $('#newPassword')
     let userId = $('#userId');
+    const pattern = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!]).{8,30}$/;
+    console.log(password.val())
+    console.log(pattern)
+    console.log(pattern.test(password.val()))
+    if (pattern.test(password.val())){
+        console.log("password này không mạnh")
+        passMatch.html("Mật khẩu không mạnh, vui lòng thử lại").css("color", 'red')
+    }
     if(userId.length === 0) {
         if (password.val() !== confirmPassword.val()) {
             passMatch.html('Mật khẩu không khớp').css('color', 'red');
@@ -40,10 +48,10 @@ function validateForm(e, context){
         },
         async: false,
         success: function (data){
-            console.log(data)
+            // console.log(data)
             let str = data.toString()
             let arr = str.substring(0, str.lastIndexOf(']')).replace('[','').replace(']','').split(', ');
-            console.log(arr)
+            // console.log(arr)
             if (arr.includes('user')) {
                 $('#userValidateMessage').html('Tên tài khoản đã tồn tại').css('color','red')
                 noError = false;
