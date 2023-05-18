@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <jsp:useBean id="reviewItems" type="java.util.ArrayList<models.view_models.review_items.ReviewItemViewModel>" scope="request"/>
 <html>
@@ -59,7 +60,7 @@
                                             </li>
                                         </c:forEach>
                                     </ul>
-                                    <p class="reviews__comment--content__desc">${review.content}</p>
+                                    <p class="reviews__comment--content__desc"><c:out value="${review.content}" /></p>
                                     <span class="reviews__comment--content__date">${review.dateUpdated}</span>
                                 </div>
                                 <a class="text-white primary__btn" href="<%=request.getContextPath()%>/my-account/order/review/edit?reviewItemId=${review.reviewItemId}">Chỉnh sửa</a>
@@ -119,7 +120,7 @@
                             <input type="hidden" name="productId" id="productId" value="${product.productId}">
                             <div class="row">
                                 <div class="col-12 mb-10">
-                                    <textarea name="content" id="content" class="reviews__comment--reply__textarea" placeholder="Đánh giá của bạn...." required>${productReview.content}</textarea>
+                                    <textarea name="content" id="content" class="reviews__comment--reply__textarea" placeholder="Đánh giá của bạn...." required>${fn:escapeXml(productReview.content)}</textarea>
                                 </div>
                             </div>
                             <input type="hidden" id="rating" name="rating" value="${productReview == null ? 5 :productReview.rating}">

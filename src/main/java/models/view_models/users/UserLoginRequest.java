@@ -13,8 +13,6 @@ public class UserLoginRequest {
     }
 
     public void setUsername(String username) {
-        if (username.length()<50)
-            return;
         this.username = username;
     }
 

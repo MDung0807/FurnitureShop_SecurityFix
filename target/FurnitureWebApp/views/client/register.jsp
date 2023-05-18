@@ -78,7 +78,8 @@
                                         <p id="userValidateMessage"></p>
                                     </label>
                                     <label>
-                                        <input class="account__login--input" placeholder="Password" id="password"  name="password" required type="password">
+                                        <input class="account__login--input" placeholder="Password" id="password"  name="password" title="Password phải chứa ký tự hoa, thường và ký tự đặc biệt"  required type="password">
+                                        <p id="passwordValidateMessage"></p>
                                     </label>
                                     <label>
                                         <input class="account__login--input" placeholder="Confirm Password" id="confirmPassword" name="confirmPassword" required type="password">
