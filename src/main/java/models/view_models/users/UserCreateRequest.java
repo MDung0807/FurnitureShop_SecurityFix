@@ -2,6 +2,7 @@ package models.view_models.users;
 
 import utils.validate.PasswordValidate;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.Part;
 import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
@@ -106,9 +107,10 @@ public class UserCreateRequest {
         return password;
     }
 
-    public void setPassword(String password) {
-        if (PasswordValidate.isCorrectFormat(password))
-            this.password = password;
+    public void setPassword(String password) throws ServletException {
+        if (!PasswordValidate.isCorrectFormat(password))
+            throw new ServletException();
+        this.password = password;
     }
 
     public String getEmail() {
