@@ -36,7 +36,7 @@ public class CheckDiscount extends HttpServlet {
             out.println("out");
         }
         else {
-            out.println(new Gson().toJson(discount));
+            out.println(new Gson().toJson(StringEscapeUtils.escapeHtml4(discount.getDiscountCode())));
         }
     }
 
