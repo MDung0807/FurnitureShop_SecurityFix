@@ -3,6 +3,8 @@ package controllers.client.discount;
 import com.google.gson.Gson;
 import models.services.discount.DiscountService;
 import models.view_models.discounts.DiscountViewModel;
+import org.apache.commons.codec.Encoder;
+import org.apache.commons.text.StringEscapeUtils;
 import utils.DateUtils;
 import utils.StringUtils;
 import utils.constants.DISCOUNT_STATUS;
@@ -19,6 +21,7 @@ public class CheckDiscount extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PrintWriter out = response.getWriter();
         String discountCode = request.getParameter("discountCode");
+        discountCode = StringEscapeUtils.escapeXml11(discountCode);
         DiscountViewModel discount = DiscountService.getInstance().getByDiscountCode(discountCode);
         if(discount == null)
             out.println("error");
