@@ -2,6 +2,7 @@ package filter;
 
 import models.view_models.users.UserViewModel;
 import utils.ServletUtils;
+import utils.constants.USER_STATUS;
 
 import javax.servlet.*;
 import javax.servlet.annotation.*;
@@ -45,9 +46,16 @@ public class ClientFilter implements Filter {
 
         String url = httpReq.getRequestURL().toString();
         if(user != null){
-            chain.doFilter(request, response);
+            if (user.getStatus() == USER_STATUS.PASSWORD_HAS_NOT_CHANGED && url.contains("/my-account")) {
+                chain.doFilter(request, response);
+            }
+            else if (user.getStatus() != USER_STATUS.PASSWORD_HAS_NOT_CHANGED)
+                chain.doFilter(request, response);
+            else {
+                ServletUtils.redirect(httpResp, httpReq.getContextPath() + "//my-account?info=true");
+            }
         }else{
-            if(url.contains("add-wish") || url.contains("cart/add")){
+            if(url.contains("add-wish") || url.contains("cart/add") || url.contains("my-account")){
                 out.println("must-login");
             }
             else {

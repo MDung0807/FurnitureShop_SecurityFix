@@ -21,7 +21,10 @@ public class SignIn extends HttpServlet {
         HttpSession session = request.getSession();
         UserViewModel user = (UserViewModel)session.getAttribute("user");
         if(user != null){
-            ServletUtils.redirect(response, request.getContextPath() + "/home");
+            if (user.getStatus() == USER_STATUS.PASSWORD_HAS_NOT_CHANGED)
+                ServletUtils.redirect(response, request.getContextPath() + "/my-account?info=true");
+            else
+                ServletUtils.redirect(response, request.getContextPath() + "/home");
         }
         else {
             String url = request.getRequestURL().toString();
@@ -46,7 +49,13 @@ public class SignIn extends HttpServlet {
 
             }else if (user.getStatus() == USER_STATUS.UN_CONFIRM){
                 out.println("unconfirm".trim());
-            }else {
+            }
+            else if (user.getStatus() == USER_STATUS.PASSWORD_HAS_NOT_CHANGED){
+                HttpSession session = request.getSession();
+                session.setAttribute("user", user);
+                ServletUtils.redirect(response, request.getContextPath()+ "/my-account?info=true");
+            }
+            else {
             HttpSession session = request.getSession();
             session.setAttribute("user", user);
             ServletUtils.redirect(response, request.getContextPath() + "/home");

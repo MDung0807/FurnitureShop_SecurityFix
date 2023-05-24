@@ -110,6 +110,8 @@ public class UserRepository implements IUserRepository{
         user.setUsername(request.getUsername());
         if(request.getPassword() != null && !Objects.equals(request.getPassword(), "")) {
             try {
+                if (user.getPassword().matches(request.getPassword()))
+                    user.setStatus(1);
                 user.setPassword(UserUtils.hashPassword(request.getPassword()));
             } catch (NoSuchAlgorithmException e) {
                 return false;
@@ -461,7 +463,7 @@ public class UserRepository implements IUserRepository{
 
     @Override
     public boolean forgotPassword(String email) {
-        String randomPassword = RandomStringUtils.randomAlphabetic(10);
+        String randomPassword = RandomStringUtils.randomAlphabetic(10, 20);
         Session session = HibernateUtils.getSession();
         Query q = session.createQuery("from User where email=:s1");
         q.setParameter("s1", email);
@@ -469,13 +471,20 @@ public class UserRepository implements IUserRepository{
         try {
             u = (User) q.getSingleResult();
             u.setPassword(UserUtils.hashPassword(randomPassword));
+            u.setStatus(3);
         }catch(Exception e){
             return false;
         }
         boolean res = HibernateUtils.merge(u);
         if(!res)
             return false;
-        MailJetService.getInstance().sendMail(u.getFirstName() + " " + u.getLastName(), email, "<h2>Chào " + u.getFirstName() + " " + u.getLastName() + ", </h2><h3>Mật khẩu mới cho tài khoản <em>" + u.getUsername() + "</em>: " + randomPassword + " </h3>" + "<h4>Bạn vui lòng đổi mật khẩu sau khi đăng nhập. Xin cảm ơn!!!</h4>", "(FurSshop) Mật khẩu mới ");
+        MailJetService.getInstance().sendMail(u.getFirstName() + " "
+                + u.getLastName(), email, "<h2>Chào "
+                + u.getFirstName() + " "
+                + u.getLastName()
+                + ", </h2><h3>Mật khẩu mới cho tài khoản <em>" +
+                u.getUsername() + "</em>: " + randomPassword +
+                " </h3>" + "<h4>Bạn vui lòng đổi mật khẩu sau khi đăng nhập. Xin cảm ơn!!!</h4>", "(FurSshop) Mật khẩu mới ");
         return true;
     }
 }

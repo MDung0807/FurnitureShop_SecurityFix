@@ -7,6 +7,9 @@
   <version>1.0-SNAPSHOT</version>
   <name>FurnitureWebApp Maven Webapp</name>
   <url>http://maven.apache.org</url>
+  <properties>
+    <hibernate.version>5.4.32.Final</hibernate.version>
+  </properties>
   <dependencies>
     <dependency>
       <groupId>com.paypal.sdk</groupId>
@@ -45,7 +48,7 @@
     <dependency>
       <groupId>org.hibernate</groupId>
       <artifactId>hibernate-core</artifactId>
-      <version>5.3.20.Final</version>
+      <version>${hibernate.version}</version>
     </dependency>
     <dependency>
       <groupId>org.hibernate.validator</groupId>

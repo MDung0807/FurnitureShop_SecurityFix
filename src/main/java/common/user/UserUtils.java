@@ -31,7 +31,7 @@ public class UserUtils {
         reqCreate.setLastName(request.getParameter("lastName"));
         reqCreate.setEmail(request.getParameter("email"));
         reqCreate.setPhone(request.getParameter("phone"));
-//        reqCreate.setDateOfBirth(DateUtils.stringToLocalDate(request.getParameter("dob"), "MM/dd/yyyy"));
+        reqCreate.setDateOfBirth(DateUtils.stringToLocalDate(request.getParameter("dob"), "MM/dd/yyyy"));
         reqCreate.setAddress(request.getParameter("address"));
         reqCreate.setGender(StringUtils.toInt(request.getParameter("gender")));
         reqCreate.setPassword(request.getParameter("password"));
