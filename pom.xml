@@ -11,6 +11,14 @@
     <hibernate.version>5.4.32.Final</hibernate.version>
   </properties>
   <dependencies>
+    <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-text -->
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-text</artifactId>
+      <version>1.10.0</version>
+    </dependency>
+
+
     <dependency>
       <groupId>com.paypal.sdk</groupId>
       <artifactId>rest-api-sdk</artifactId>
