@@ -37,6 +37,7 @@ public class Login extends HttpServlet {
                 if(role.getRoleName().equalsIgnoreCase("admin")){
                     Cookie c = new Cookie("admin", loginRequest.getUsername());
                     c.setSecure(true);
+                    c.setHttpOnly(true);
                     response.addCookie(c);
                     isAdmin = true;
                     if(user.getStatus() == USER_STATUS.IN_ACTIVE) {

@@ -14,6 +14,7 @@ public class SignOut extends HttpServlet {
         Cookie c = new Cookie("user","");
         c.setSecure(true);
         c.setMaxAge(0);
+        c.setHttpOnly(true);
         response.addCookie(c);
         HttpSession session = request.getSession();
         if(session.getAttribute("user") != null){
