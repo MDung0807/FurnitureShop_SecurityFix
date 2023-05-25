@@ -9,6 +9,7 @@ import models.view_models.users.UserViewModel;
 import org.hibernate.Session;
 import utils.HibernateUtils;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
 public class VerifyTokenService implements IVerifyTokenService{
@@ -20,7 +21,7 @@ public class VerifyTokenService implements IVerifyTokenService{
         return instance;
     }
     @Override
-    public boolean sendVerifyTokenMail(int userId, HttpServletRequest request) {
+    public boolean sendVerifyTokenMail(int userId, HttpServletRequest request) throws ServletException {
         String title = "Xác nhận đăng ký tài khoản";
         UserViewModel user = UserService.getInstance().retrieveUserById(userId);
         int verifyTokenId = VerifyTokenRepository.getInstance().insertToken(userId);
@@ -34,7 +35,7 @@ public class VerifyTokenService implements IVerifyTokenService{
     }
 
     @Override
-    public boolean resendVerifyTokenMail(String token, HttpServletRequest request) {
+    public boolean resendVerifyTokenMail(String token, HttpServletRequest request) throws ServletException {
         int userId = VerifyTokenRepository.getInstance().deleteToken(token);
         if(userId == -1)
             return false;

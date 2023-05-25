@@ -11,6 +11,7 @@ import models.view_models.orders.OrderViewModel;
 import models.view_models.users.UserViewModel;
 import utils.StringUtils;
 
+import javax.servlet.ServletException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ public class PayPalService implements IPayPalService{
         return instance;
     }
     @Override
-    public String authorizePayment(ArrayList<CartItemViewModel> cartItems, OrderCreateRequest orderCreateRequest, String context) throws PayPalRESTException {
+    public String authorizePayment(ArrayList<CartItemViewModel> cartItems, OrderCreateRequest orderCreateRequest, String context) throws PayPalRESTException, ServletException {
 
         Payer payer = getPayerInformation(orderCreateRequest);
         RedirectUrls redirectUrls = getRedirectUrls(context);
@@ -45,7 +46,7 @@ public class PayPalService implements IPayPalService{
     }
 
     @Override
-    public Payer getPayerInformation(OrderCreateRequest orderCreateRequest) {
+    public Payer getPayerInformation(OrderCreateRequest orderCreateRequest) throws ServletException {
         Payer payer = new Payer();
         payer.setPaymentMethod("paypal");
         UserViewModel user = UserRepository.getInstance().retrieveById(orderCreateRequest.getUserId());

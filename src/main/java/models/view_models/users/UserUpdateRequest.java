@@ -1,5 +1,8 @@
 package models.view_models.users;
 
+import utils.validate.PasswordValidate;
+
+import javax.servlet.ServletException;
 import javax.servlet.http.Part;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -34,7 +37,9 @@ public class UserUpdateRequest {
         return password;
     }
 
-    public void setPassword(String password) {
+    public void setPassword(String password) throws ServletException {
+        if (!PasswordValidate.isCorrectFormat(password))
+            throw new ServletException();
         this.password = password;
     }
 

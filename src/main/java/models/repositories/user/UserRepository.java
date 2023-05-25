@@ -7,6 +7,7 @@ import models.services.user.UserService;
 import models.view_models.user_roles.UserRoleViewModel;
 import models.view_models.users.*;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.RandomUtils;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -16,8 +17,10 @@ import utils.HibernateUtils;
 import utils.constants.USER_GENDER;
 import utils.constants.USER_STATUS;
 
+import javax.servlet.ServletException;
 import java.math.BigDecimal;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -110,9 +113,14 @@ public class UserRepository implements IUserRepository{
         user.setUsername(request.getUsername());
         if(request.getPassword() != null && !Objects.equals(request.getPassword(), "")) {
             try {
-                if (user.getPassword().matches(request.getPassword()))
-                    user.setStatus(1);
-                user.setPassword(UserUtils.hashPassword(request.getPassword()));
+                if (!user.getPassword().matches(request.getPassword())){
+                    user.setStatus(request.getStatus());
+                    user.setPassword(UserUtils.hashPassword(request.getPassword()));
+                }
+                else{
+                    user.setStatus(USER_STATUS.PASSWORD_HAS_NOT_CHANGED);
+                }
+
             } catch (NoSuchAlgorithmException e) {
                 return false;
             }
@@ -171,7 +179,7 @@ public class UserRepository implements IUserRepository{
         user.setStatus(USER_STATUS.IN_ACTIVE);
         return HibernateUtils.merge(user);
     }
-    private UserViewModel getUserViewModel(User user, Session session){
+    private UserViewModel getUserViewModel(User user, Session session) throws ServletException {
         UserViewModel userViewModel = new UserViewModel();
 
         userViewModel.setId(user.getUserId());
@@ -230,7 +238,7 @@ public class UserRepository implements IUserRepository{
         return userViewModel;
     }
     @Override
-    public UserViewModel retrieveById(Integer entityId) {
+    public UserViewModel retrieveById(Integer entityId) throws ServletException {
         Session session = HibernateUtils.getSession();
         User user = session.find(User.class, entityId);
         if(user == null){
@@ -244,7 +252,7 @@ public class UserRepository implements IUserRepository{
     }
 
     @Override
-    public ArrayList<UserViewModel> retrieveAll(UserGetPagingRequest request) {
+    public ArrayList<UserViewModel> retrieveAll(UserGetPagingRequest request) throws ServletException {
         ArrayList<UserViewModel> list = new ArrayList<>();
         Session session = HibernateUtils.getSession();
         int offset = (request.getPageIndex() - 1)*request.getPageSize();
@@ -374,7 +382,7 @@ public class UserRepository implements IUserRepository{
     }
 
     @Override
-    public ArrayList<UserViewModel> getTopUserByTotalOrder(int top) {
+    public ArrayList<UserViewModel> getTopUserByTotalOrder(int top) throws ServletException {
 
         ArrayList<UserViewModel> users = UserService.getInstance().retrieveAllUser(new UserGetPagingRequest());
 
@@ -391,7 +399,7 @@ public class UserRepository implements IUserRepository{
     }
 
     @Override
-    public UserViewModel getUserByUserName(String username) {
+    public UserViewModel getUserByUserName(String username) throws ServletException {
         Session session = HibernateUtils.getSession();
 
         Query q = session.createQuery("from User where username=:s1");
@@ -463,14 +471,23 @@ public class UserRepository implements IUserRepository{
 
     @Override
     public boolean forgotPassword(String email) {
-        String randomPassword = RandomStringUtils.randomAlphabetic(10, 20);
+        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%^&+=!";
+        SecureRandom secureRandom = new SecureRandom();
+        StringBuilder stringBuilder = new StringBuilder();
+        int sizePass = RandomUtils.nextInt(10, 20);
+
+        for (int i = 0; i < sizePass; i++) {
+            int randomIndex = secureRandom.nextInt(characters.length());
+            char randomChar = characters.charAt(randomIndex);
+            stringBuilder.append(randomChar);
+        }
         Session session = HibernateUtils.getSession();
         Query q = session.createQuery("from User where email=:s1");
         q.setParameter("s1", email);
         User u = null;
         try {
             u = (User) q.getSingleResult();
-            u.setPassword(UserUtils.hashPassword(randomPassword));
+            u.setPassword(UserUtils.hashPassword(stringBuilder.toString()));
             u.setStatus(3);
         }catch(Exception e){
             return false;
@@ -483,7 +500,7 @@ public class UserRepository implements IUserRepository{
                 + u.getFirstName() + " "
                 + u.getLastName()
                 + ", </h2><h3>Mật khẩu mới cho tài khoản <em>" +
-                u.getUsername() + "</em>: " + randomPassword +
+                u.getUsername() + "</em>: " + stringBuilder.toString() +
                 " </h3>" + "<h4>Bạn vui lòng đổi mật khẩu sau khi đăng nhập. Xin cảm ơn!!!</h4>", "(FurSshop) Mật khẩu mới ");
         return true;
     }

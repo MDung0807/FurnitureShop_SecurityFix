@@ -17,7 +17,6 @@ public class UserCreateRequest {
     private String phone;
     private int status;
     private String username;
-    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{8,30}$", message = "password not strong")
     private String password;
     private String email;
     private Part avatar;

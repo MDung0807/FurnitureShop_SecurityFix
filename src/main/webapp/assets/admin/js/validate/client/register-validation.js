@@ -6,11 +6,14 @@ function validateForm(e, context){
     let password = $('#password')
     let confirmPassword = $('#confirmPassword')
     let newPassword = $('#newPassword')
+    let textNewPass = $('#newPasswordText')
     let userId = $('#userId');
     const pattern = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!]).{8,30}$/;
-    console.log(newPassword)
+    console.log("Mật khẩu yếu")
     if (pattern.test(password.val()) === false){
-        $('#passwordValidateMessage').html('Mật khẩu không mạnh').css("color", 'red')
+        passValidate.html('Mật khẩu yếu').css("color", 'red')
+        console.log("Mật khẩu yếu")
+
         noError = false;
     }
     if(userId.length === 0) {
@@ -29,7 +32,14 @@ function validateForm(e, context){
         }
 
         if (pattern.test(password.val()) === false){
-            $('#passwordValidateMessage').html('Mật khẩu không mạnh').css("color", 'red')
+            passValidate.html('Mật khẩu yếu').css("color", 'red')
+            console.log("Mật khẩu yếu")
+
+            noError = false;
+        }
+        if (pattern.test(newPassword.val()) === false){
+            textNewPass.html('Mật khẩu yếu').css("color", 'red')
+            console.log("Mật khẩu yếu")
             noError = false;
         }
     }
