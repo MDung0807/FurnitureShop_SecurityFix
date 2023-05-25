@@ -53,6 +53,7 @@ public class SignIn extends HttpServlet {
             else if (user.getStatus() == USER_STATUS.PASSWORD_HAS_NOT_CHANGED){
                 HttpSession session = request.getSession();
                 session.setAttribute("user", user);
+                session.setAttribute("Secure", true);
                 ServletUtils.redirect(response, request.getContextPath()+ "/my-account?info=true");
             }
             else {

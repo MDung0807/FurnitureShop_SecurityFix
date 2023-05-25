@@ -49,6 +49,7 @@ public class Login extends HttpServlet {
                     }
                     HttpSession session = request.getSession();
                     session.setAttribute("admin",user);
+                    session.setAttribute("Secure", true);
                     break;
                 }
             }
