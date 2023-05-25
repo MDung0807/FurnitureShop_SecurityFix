@@ -38,9 +38,14 @@ public class UserUpdateRequest {
     }
 
     public void setPassword(String password) throws ServletException {
-        if (!PasswordValidate.isCorrectFormat(password))
-            throw new ServletException();
-        this.password = password;
+        if (password.equals(""))
+            this.password = password;
+
+        else{
+            if (!PasswordValidate.isCorrectFormat(password))
+                throw new ServletException();
+            this.password = password;
+        }
     }
 
     public Part getAvatar() {
