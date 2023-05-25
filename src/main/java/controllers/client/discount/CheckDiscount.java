@@ -3,10 +3,8 @@ package controllers.client.discount;
 import com.google.gson.Gson;
 import models.services.discount.DiscountService;
 import models.view_models.discounts.DiscountViewModel;
-import org.apache.commons.codec.Encoder;
 import org.apache.commons.text.StringEscapeUtils;
 import utils.DateUtils;
-import utils.StringUtils;
 import utils.constants.DISCOUNT_STATUS;
 
 import javax.servlet.*;

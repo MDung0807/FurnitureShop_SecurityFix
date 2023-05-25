@@ -36,6 +36,7 @@ public class Login extends HttpServlet {
             for(UserRoleViewModel role:user.getRoles()){
                 if(role.getRoleName().equalsIgnoreCase("admin")){
                     Cookie c = new Cookie("admin", loginRequest.getUsername());
+                    c.setSecure(true);
                     response.addCookie(c);
                     isAdmin = true;
                     if(user.getStatus() == USER_STATUS.IN_ACTIVE) {

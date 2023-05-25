@@ -12,6 +12,7 @@ public class SignOut extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Cookie c = new Cookie("user","");
+        c.setSecure(true);
         c.setMaxAge(0);
         response.addCookie(c);
         HttpSession session = request.getSession();
