@@ -42,7 +42,7 @@ public class UserUpdateRequest {
             this.password = password;
 
         else{
-            if (!PasswordValidate.isCorrectFormat(password))
+            if (PasswordValidate.inCorrectFormat(password))
                 throw new ServletException();
             this.password = password;
         }
