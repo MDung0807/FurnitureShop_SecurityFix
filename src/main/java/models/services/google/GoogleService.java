@@ -8,8 +8,8 @@ import org.apache.http.client.fluent.Request;
 import java.io.IOException;
 
 public class GoogleService implements IGoogleService{
-    public static String GOOGLE_CLIENT_ID = "903062961446-ri29gdpngnr71lil7fgkpnckc296eeoa.apps.googleusercontent.com";
-    public static String GOOGLE_CLIENT_SECRET = "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";
+    public static String GOOGLE_CLIENT_ID = "1093428259628-2u4arvbs4pg6dq8b65lggo5gbp1r7aev.apps.googleusercontent.com";
+    public static String GOOGLE_CLIENT_SECRET = "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";
     public static String GOOGLE_LINK_GET_TOKEN = "https://accounts.google.com/o/oauth2/token";
     public static String GOOGLE_LINK_GET_USER_INFO = "https://www.googleapis.com/oauth2/v1/userinfo?access_token=";
     public static String GOOGLE_GRANT_TYPE = "authorization_code";
