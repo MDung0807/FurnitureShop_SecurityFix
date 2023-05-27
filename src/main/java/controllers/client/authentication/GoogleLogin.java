@@ -39,6 +39,7 @@ public class GoogleLogin extends HttpServlet {
                 else {
                     HttpSession session = request.getSession();
                     session.setAttribute("user", user);
+                    session.setAttribute("Secure", true);
                     ServletUtils.redirect(response, request.getContextPath() + "/home");
                 }
             }

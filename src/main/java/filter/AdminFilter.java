@@ -2,6 +2,7 @@ package filter;
 
 import models.view_models.users.UserViewModel;
 import utils.ServletUtils;
+import utils.constants.USER_STATUS;
 
 import javax.servlet.*;
 import javax.servlet.annotation.*;
@@ -27,10 +28,16 @@ public class AdminFilter implements Filter {
         httpResp.setCharacterEncoding("UTF-8");
         HttpSession session = httpReq.getSession(false);
         UserViewModel user = null;
+        String url = httpReq.getRequestURI();
         if(session != null)
             user = (UserViewModel) session.getAttribute("admin");
         if(user != null){
-            chain.doFilter(request, response);
+            if (user.getStatus() != USER_STATUS.PASSWORD_HAS_NOT_CHANGED)
+                chain.doFilter(request, response);
+            else {
+                httpReq.setAttribute("error","error");
+                ServletUtils.forward(httpReq, httpResp, "/admin/login");
+            }
         }else{
             httpReq.setAttribute("error","error");
             ServletUtils.forward(httpReq, httpResp, "/admin/login");

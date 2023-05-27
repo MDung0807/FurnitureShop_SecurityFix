@@ -10,6 +10,7 @@ import models.view_models.user_roles.UserRoleViewModel;
 import models.view_models.users.*;
 import org.hibernate.Session;
 
+import javax.servlet.ServletException;
 import java.util.ArrayList;
 
 public interface IUserRepository extends IModifyEntity<UserCreateRequest, UserUpdateRequest, Integer>,
@@ -20,8 +21,8 @@ public interface IUserRepository extends IModifyEntity<UserCreateRequest, UserUp
     boolean checkPhone(String phone);
     boolean checkPassword(int userId, String password);
     boolean login(UserLoginRequest request);
-    ArrayList<UserViewModel> getTopUserByTotalOrder(int top);
-    UserViewModel getUserByUserName(String username);
+    ArrayList<UserViewModel> getTopUserByTotalOrder(int top) throws ServletException;
+    UserViewModel getUserByUserName(String username) throws ServletException;
     UserViewModel getUserByEmail(String email);
     long getTotalUser();
     ArrayList<UserRoleViewModel> getUserRoleByUserId(int userId);

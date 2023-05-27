@@ -4,7 +4,6 @@ import utils.validate.PasswordValidate;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.Part;
-import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -17,7 +16,6 @@ public class UserCreateRequest {
     private String phone;
     private int status;
     private String username;
-    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{8,30}$", message = "password not strong")
     private String password;
     private String email;
     private Part avatar;
@@ -108,7 +106,7 @@ public class UserCreateRequest {
     }
 
     public void setPassword(String password) throws ServletException {
-        if (!PasswordValidate.isCorrectFormat(password))
+        if (PasswordValidate.inCorrectFormat(password))
             throw new ServletException();
         this.password = password;
     }

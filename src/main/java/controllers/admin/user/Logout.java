@@ -13,6 +13,8 @@ public class Logout extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Cookie c = new Cookie("admin","");
         c.setMaxAge(0);
+        c.setSecure(true);
+        c.setHttpOnly(true);
         response.addCookie(c);
         HttpSession session = request.getSession();
         if(session.getAttribute("admin") != null){

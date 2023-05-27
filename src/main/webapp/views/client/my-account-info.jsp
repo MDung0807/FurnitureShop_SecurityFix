@@ -200,6 +200,7 @@
                                                                 <label for="newPassword">Mật khẩu mới</label>
                                                                 <input type="password" class="form-control" id="newPassword"
                                                                        name="newPassword">
+                                                                <p class="mt-3" id='newPasswordText'></p>
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-6">

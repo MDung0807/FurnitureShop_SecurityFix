@@ -6,4 +6,15 @@
     <error-page>
         <location>/ExceptionHandler</location>
     </error-page>
+    <init-param>
+        <param-name>readonly</param-name>
+        <param-value>true</param-value>
+    </init-param>
+
+    <session-config>
+        <cookie-config>
+            <http-only>true</http-only>
+            <secure>true</secure>
+        </cookie-config>
+    </session-config>
 </web-app>

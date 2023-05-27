@@ -9,11 +9,12 @@ import models.view_models.cart_items.CartItemViewModel;
 import models.view_models.order_items.OrderItemViewModel;
 import models.view_models.orders.OrderCreateRequest;
 
+import javax.servlet.ServletException;
 import java.util.ArrayList;
 
 public interface IPayPalService {
-    String authorizePayment(ArrayList<CartItemViewModel> cartItems, OrderCreateRequest orderCreateRequest, String context) throws PayPalRESTException;
-    Payer getPayerInformation(OrderCreateRequest orderCreateRequest);
+    String authorizePayment(ArrayList<CartItemViewModel> cartItems, OrderCreateRequest orderCreateRequest, String context) throws PayPalRESTException, ServletException;
+    Payer getPayerInformation(OrderCreateRequest orderCreateRequest) throws ServletException;
     RedirectUrls getRedirectUrls(String context);
     ArrayList<Transaction> getTransactionInformation(ArrayList<CartItemViewModel> orderItems, OrderCreateRequest orderCreateRequest);
     String getApprovalLink(Payment approvedPayment);

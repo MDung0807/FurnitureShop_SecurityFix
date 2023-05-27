@@ -41,7 +41,7 @@ public class EditUser extends HttpServlet {
             UserViewModel user = UserService.getInstance().getUserByUserName(request.getParameter("username"));
             HttpSession session = request.getSession();
             UserViewModel currUser = (UserViewModel) session.getAttribute("admin");
-            if(Objects.equals(currUser.getUsername(), user.getUsername())){
+            if(Objects.equals(currUser.getId() ,user.getId())){
                 session.setAttribute("admin",user);
             }
         }

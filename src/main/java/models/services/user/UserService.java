@@ -4,9 +4,10 @@ import models.repositories.user.UserRepository;
 import models.view_models.user_roles.UserRoleViewModel;
 import models.view_models.users.*;
 
+import javax.servlet.ServletException;
 import java.util.ArrayList;
 
-public class UserService implements IUserService{
+public class UserService implements IUserService {
     private static UserService instance = null;
     public static UserService getInstance(){
         if(instance == null)
@@ -27,12 +28,12 @@ public class UserService implements IUserService{
         return UserRepository.getInstance().delete(userId);
     }
     @Override
-    public UserViewModel retrieveUserById(Integer userId) {
+    public UserViewModel retrieveUserById(Integer userId) throws ServletException {
         return UserRepository.getInstance().retrieveById(userId);
     }
 
     @Override
-    public ArrayList<UserViewModel> retrieveAllUser(UserGetPagingRequest request) {
+    public ArrayList<UserViewModel> retrieveAllUser(UserGetPagingRequest request) throws ServletException {
         return UserRepository.getInstance().retrieveAll(request);
     }
 
@@ -61,7 +62,7 @@ public class UserService implements IUserService{
         return UserRepository.getInstance().login(request);
     }
     @Override
-    public UserViewModel getUserByUserName(String username) {
+    public UserViewModel getUserByUserName(String username) throws ServletException {
         return UserRepository.getInstance().getUserByUserName(username);
     }
 
@@ -71,7 +72,7 @@ public class UserService implements IUserService{
     }
 
     @Override
-    public ArrayList<UserViewModel> getTopUserByTotalOrder(int top) {
+    public ArrayList<UserViewModel> getTopUserByTotalOrder(int top) throws ServletException {
         return UserRepository.getInstance().getTopUserByTotalOrder(top);
     }
 
