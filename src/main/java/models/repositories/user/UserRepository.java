@@ -347,7 +347,15 @@ public class UserRepository implements IUserRepository{
     @Override
     public boolean checkPassword(int userId, String password) {
         try {
-            return checkContain("select count(*) from User where userId=" + userId +" and password=:s1", UserUtils.hashPassword(password));
+            Session session = HibernateUtils.getSession();
+            Query q = session.createQuery("select count(*) from User where userId=:s1 and password=:s2");
+            q.setParameter("s1", userId);
+            q.setParameter("s2", UserUtils.hashPassword(password));
+
+            Object result = q.getSingleResult();
+            long count = (result != null) ? (long) result : 0;
+
+            return count > 0;
         } catch (NoSuchAlgorithmException e) {
             return false;
         }
