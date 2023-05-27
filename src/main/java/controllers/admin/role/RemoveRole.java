@@ -13,6 +13,7 @@ import java.io.IOException;
 public class RemoveRole extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("X-Content-Type-Options", "nosniff");
         int roleId = StringUtils.toInt(request.getParameter("roleId"));
 
         boolean isSuccess = RoleService.getInstance().deleteRole(roleId);

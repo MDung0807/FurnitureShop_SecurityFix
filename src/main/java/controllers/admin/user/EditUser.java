@@ -30,7 +30,7 @@ public class EditUser extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        response.setHeader("X-Content-Type-Options", "nosniff");
         UserUpdateRequest reqUpdate = UserUtils.CreateUserUpdateRequest(request);
 
         boolean isSuccess = UserService.getInstance().updateUser(reqUpdate);

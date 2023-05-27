@@ -14,6 +14,7 @@ import java.io.PrintWriter;
 public class RemoveProductImage extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("X-Content-Type-Options", "nosniff");
         int productImageId = StringUtils.toInt(request.getParameter("productImageId"));
         boolean isSuccess = ProductService.getInstance().deleteImage(productImageId);
 

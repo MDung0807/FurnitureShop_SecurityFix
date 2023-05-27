@@ -13,6 +13,7 @@ import java.io.IOException;
 public class RemoveDiscount extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("X-Content-Type-Options", "nosniff");
         int discountId = StringUtils.toInt(request.getParameter("discountId"));
 
         boolean isSuccess = DiscountService.getInstance().deleteDiscount(discountId);

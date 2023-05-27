@@ -12,6 +12,7 @@ import java.io.PrintWriter;
 public class CheckEmail extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("X-Content-Type-Options", "nosniff");
         String email = request.getParameter("email");
         boolean contain = UserService.getInstance().checkEmail(email);
         PrintWriter out = response.getWriter();

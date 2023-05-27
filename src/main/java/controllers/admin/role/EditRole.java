@@ -18,6 +18,7 @@ import java.io.IOException;
 public class EditRole extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("X-Content-Type-Options", "nosniff");
         int roleId = StringUtils.toInt(request.getParameter("roleId"));
 
         RoleViewModel role = RoleService.getInstance().retrieveRoleById(roleId);
@@ -29,6 +30,7 @@ public class EditRole extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("X-Content-Type-Options", "nosniff");
         request.setCharacterEncoding("UTF-8");
 
         RoleUpdateRequest updateReq = new RoleUpdateRequest();

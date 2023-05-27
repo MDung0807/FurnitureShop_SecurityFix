@@ -15,6 +15,7 @@ import java.io.PrintWriter;
 public class AddWish extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("X-Content-Type-Options", "nosniff");
         PrintWriter out = response.getWriter();
         request.setCharacterEncoding("UTF-8");
         int productId = StringUtils.toInt(request.getParameter("productId"));

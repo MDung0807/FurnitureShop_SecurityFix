@@ -13,6 +13,7 @@ import java.io.IOException;
 public class RemoveCategory extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("X-Content-Type-Options", "nosniff");
         String categoryId = request.getParameter("categoryId");
         String sub = request.getParameter("sub-categories");
 
@@ -33,6 +34,7 @@ public class RemoveCategory extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("X-Content-Type-Options", "nosniff");
         doGet(request, response);
     }
 }

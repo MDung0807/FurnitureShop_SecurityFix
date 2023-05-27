@@ -26,6 +26,7 @@ public class AddBrand extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("X-Content-Type-Options", "nosniff");
         request.setCharacterEncoding("UTF-8");
         Part filePart = request.getPart("brand-logo");
         BrandCreateRequest brandReq = new BrandCreateRequest();

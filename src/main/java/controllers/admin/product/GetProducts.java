@@ -26,6 +26,7 @@ import java.util.Objects;
 public class GetProducts extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("X-Content-Type-Options", "nosniff");
         ProductGetPagingRequest req = new ProductGetPagingRequest();
         int pageIndex = StringUtils.toInt(request.getParameter("pageIndex"));
         String grid = request.getParameter("grid");
@@ -110,6 +111,7 @@ public class GetProducts extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("X-Content-Type-Options", "nosniff");
         doGet(request, response);
     }
 }

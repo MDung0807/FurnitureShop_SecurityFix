@@ -13,6 +13,7 @@ import java.io.IOException;
 public class ChangeStatus extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("X-Content-Type-Options", "nosniff");
         String reviewItemId = request.getParameter("reviewItemId");
 
         boolean isSuccess = ReviewService.getInstance().ChangeReviewItemStatus(StringUtils.toInt(reviewItemId));
@@ -25,6 +26,7 @@ public class ChangeStatus extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("X-Content-Type-Options", "nosniff");
         doGet(request, response);
     }
 }

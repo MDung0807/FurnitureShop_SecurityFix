@@ -16,6 +16,7 @@ import java.util.ArrayList;
 public class GetAboutUs extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("X-Content-Type-Options", "nosniff");
         request.setCharacterEncoding("UTF-8");
         BrandGetPagingRequest req = new BrandGetPagingRequest();
         ArrayList<BrandViewModel> brands = BrandService.getInstance().retrieveAllBrand(req);

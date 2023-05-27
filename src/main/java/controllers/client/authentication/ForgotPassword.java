@@ -13,11 +13,13 @@ import java.io.PrintWriter;
 public class ForgotPassword extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("X-Content-Type-Options", "nosniff");
         ServletUtils.forward(request, response, "views/client/forgot-password.jsp");
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("X-Content-Type-Options", "nosniff");
         String email = request.getParameter("email");
         PrintWriter out = response.getWriter();
 

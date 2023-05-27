@@ -14,6 +14,7 @@ import java.io.PrintWriter;
 public class AddItemToCart extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("X-Content-Type-Options", "nosniff");
         request.setCharacterEncoding("UTF-8");
         PrintWriter out = response.getWriter();
 

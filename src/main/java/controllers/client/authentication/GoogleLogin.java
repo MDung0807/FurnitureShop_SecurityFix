@@ -17,6 +17,7 @@ import java.io.PrintWriter;
 public class GoogleLogin extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("X-Content-Type-Options", "nosniff");
         String code = request.getParameter("code");
         if (code == null || code.isEmpty()) {
             ServletUtils.redirect(response, request.getContextPath() + "/signin?error=true");

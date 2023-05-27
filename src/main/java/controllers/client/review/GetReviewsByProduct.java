@@ -17,6 +17,7 @@ import java.util.ArrayList;
 public class GetReviewsByProduct extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("X-Content-Type-Options", "nosniff");
         int productId = StringUtils.toInt(request.getParameter("productId"));
         int userId = SessionUtils.getUserIdLogin(request);
         ArrayList<ReviewItemViewModel> reviewItems = ReviewService.getInstance().retrieveUserReviewByProductId(userId, productId);
