@@ -16,6 +16,7 @@ import java.util.ArrayList;
 public class OrderDetails extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("X-Content-Type-Options", "nosniff");
         int orderId = StringUtils.toInt(request.getParameter("orderId"));
         OrderViewModel order = OrderService.getInstance().retrieveOrderById(orderId);
 

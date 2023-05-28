@@ -13,6 +13,7 @@ import java.io.IOException;
 public class RemoveBrand extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("X-Content-Type-Options", "nosniff");
         String brandId = request.getParameter("brandId");
 
         boolean isSuccess = BrandService.getInstance().deleteBrand(StringUtils.toInt(brandId));
@@ -25,6 +26,7 @@ public class RemoveBrand extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("X-Content-Type-Options", "nosniff");
         doGet(request, response);
     }
 }

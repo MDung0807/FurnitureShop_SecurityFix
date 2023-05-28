@@ -11,6 +11,7 @@ import java.io.IOException;
 public class Logout extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("X-Content-Type-Options", "nosniff");
         Cookie c = new Cookie("admin","");
         c.setMaxAge(0);
         c.setSecure(true);

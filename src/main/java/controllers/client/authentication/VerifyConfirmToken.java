@@ -13,6 +13,7 @@ import java.util.Objects;
 public class VerifyConfirmToken extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("X-Content-Type-Options", "nosniff");
         String verifyToken = request.getParameter("verifyToken");
         String res = VerifyTokenService.getInstance().verifyToken(verifyToken);
         String status = "";

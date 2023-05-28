@@ -17,6 +17,7 @@ import java.util.ArrayList;
 public class MyAccount extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("X-Content-Type-Options", "nosniff");
         request.setCharacterEncoding("UTF-8");
         HttpSession session = request.getSession();
         UserViewModel user = (UserViewModel) session.getAttribute("user");

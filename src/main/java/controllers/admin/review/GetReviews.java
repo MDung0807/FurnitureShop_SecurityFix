@@ -15,6 +15,7 @@ import java.util.ArrayList;
 public class GetReviews extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("X-Content-Type-Options", "nosniff");
         ReviewItemGetPagingRequest req = new ReviewItemGetPagingRequest();
 
         ArrayList<ReviewItemViewModel> reviews = ReviewService.getInstance().retrieveAllReviewItem(req);

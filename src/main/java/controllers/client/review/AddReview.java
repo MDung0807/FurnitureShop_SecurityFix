@@ -20,6 +20,7 @@ public class AddReview extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("X-Content-Type-Options", "nosniff");
         request.setCharacterEncoding("UTF-8");
         int productId = StringUtils.toInt(request.getParameter("productId"));
         int userId = SessionUtils.getUserIdLogin(request);

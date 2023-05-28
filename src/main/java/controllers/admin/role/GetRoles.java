@@ -17,6 +17,7 @@ import java.util.ArrayList;
 public class GetRoles extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("X-Content-Type-Options", "nosniff");
         RoleGetPagingRequest req = new RoleGetPagingRequest();
         ArrayList<RoleViewModel> roles = RoleService.getInstance().retrieveAllRole(req);
 

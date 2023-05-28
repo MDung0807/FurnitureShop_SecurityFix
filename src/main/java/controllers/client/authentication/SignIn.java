@@ -18,6 +18,7 @@ import java.io.PrintWriter;
 public class SignIn extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("X-Content-Type-Options", "nosniff");
         HttpSession session = request.getSession();
         UserViewModel user = (UserViewModel)session.getAttribute("user");
         if(user != null){
@@ -38,32 +39,37 @@ public class SignIn extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("X-Content-Type-Options", "nosniff");
         request.setCharacterEncoding("UTF-8");
         PrintWriter out = response.getWriter();
-        UserLoginRequest loginRequest = UserUtils.CreateLoginRequest(request);
+        try{
+            UserLoginRequest loginRequest = UserUtils.CreateLoginRequest(request);
 
-        if(UserService.getInstance().login(loginRequest)){
-            UserViewModel user = UserService.getInstance().getUserByUserName(loginRequest.getUsername());
-            if(user.getStatus() == USER_STATUS.IN_ACTIVE){
-                out.println("banned".trim());
+            if(UserService.getInstance().login(loginRequest)){
+                UserViewModel user = UserService.getInstance().getUserByUserName(loginRequest.getUsername());
+                if(user.getStatus() == USER_STATUS.IN_ACTIVE){
+                    out.println("banned".trim());
 
-            }else if (user.getStatus() == USER_STATUS.UN_CONFIRM){
-                out.println("unconfirm".trim());
+                }else if (user.getStatus() == USER_STATUS.UN_CONFIRM){
+                    out.println("unconfirm".trim());
+                }
+                else if (user.getStatus() == USER_STATUS.PASSWORD_HAS_NOT_CHANGED){
+                    HttpSession session = request.getSession();
+                    session.setAttribute("user", user);
+                    session.setAttribute("Secure", true);
+                    ServletUtils.redirect(response, request.getContextPath()+ "/my-account?info=true");
+                }
+                else {
+                    HttpSession session = request.getSession();
+                    session.setAttribute("user", user);
+                    ServletUtils.redirect(response, request.getContextPath() + "/home");
+                }
+            }else{
+                out.println("error".trim());
             }
-            else if (user.getStatus() == USER_STATUS.PASSWORD_HAS_NOT_CHANGED){
-                HttpSession session = request.getSession();
-                session.setAttribute("user", user);
-                session.setAttribute("Secure", true);
-                ServletUtils.redirect(response, request.getContextPath()+ "/my-account?info=true");
-            }
-            else {
-            HttpSession session = request.getSession();
-            session.setAttribute("user", user);
-            ServletUtils.redirect(response, request.getContextPath() + "/home");
-            }
-        }else{
+        }
+        catch (Exception e){
             out.println("error".trim());
         }
-
     }
 }

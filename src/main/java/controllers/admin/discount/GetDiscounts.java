@@ -15,6 +15,7 @@ import java.util.ArrayList;
 public class GetDiscounts extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("X-Content-Type-Options", "nosniff");
         DiscountGetPagingRequest req = new DiscountGetPagingRequest();
         ArrayList<DiscountViewModel> discounts = DiscountService.getInstance().retrieveAllDiscount(req);
 

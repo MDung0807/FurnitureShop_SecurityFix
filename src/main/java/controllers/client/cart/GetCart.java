@@ -20,6 +20,7 @@ import java.util.ArrayList;
 public class GetCart extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("X-Content-Type-Options", "nosniff");
         HttpSession session = request.getSession();
         UserViewModel user = (UserViewModel) session.getAttribute("user");
         if(user == null)

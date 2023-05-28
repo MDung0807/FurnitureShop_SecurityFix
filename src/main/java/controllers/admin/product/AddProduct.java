@@ -31,6 +31,7 @@ import java.util.Objects;
 public class AddProduct extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("X-Content-Type-Options", "nosniff");
         CategoryGetPagingRequest req1 = new CategoryGetPagingRequest();
 
         ArrayList<CategoryViewModel> categories = CategoryService.getInstance().retrieveAllCategory(req1);
@@ -46,6 +47,7 @@ public class AddProduct extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("X-Content-Type-Options", "nosniff");
         request.setCharacterEncoding("UTF-8");
         Part file = request.getPart("main-image");
 

@@ -13,6 +13,7 @@ import java.io.IOException;
 public class RemoveUser extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("X-Content-Type-Options", "nosniff");
         int userId = StringUtils.toInt(request.getParameter("userId"));
 
         boolean isSuccess = UserService.getInstance().deleteUser(userId);

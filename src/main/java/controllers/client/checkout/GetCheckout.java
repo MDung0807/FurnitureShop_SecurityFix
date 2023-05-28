@@ -16,6 +16,7 @@ import java.util.ArrayList;
 public class GetCheckout extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("X-Content-Type-Options", "nosniff");
         int userId = SessionUtils.getUserIdLogin(request);
         if(userId == -1)
             return;

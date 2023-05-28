@@ -14,6 +14,7 @@ import java.io.IOException;
 public class RemoveProduct extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("X-Content-Type-Options", "nosniff");
         int productId = StringUtils.toInt(request.getParameter("productId"));
         boolean isSuccess = ProductService.getInstance().deleteProduct(productId);
         String error = "";

@@ -30,6 +30,7 @@ public class CreateOrder extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("X-Content-Type-Options", "nosniff");
         request.setCharacterEncoding("UTF-8");
         int userId = SessionUtils.getUserIdLogin(request);
         if(userId == -1)

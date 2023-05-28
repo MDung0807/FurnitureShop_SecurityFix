@@ -14,6 +14,7 @@ import java.io.PrintWriter;
 public class RemoveItem extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("X-Content-Type-Options", "nosniff");
         request.setCharacterEncoding("UTF-8");
         PrintWriter out = response.getWriter();
         int cartItemId = StringUtils.toInt(request.getParameter("cartItemId"));

@@ -15,6 +15,7 @@ import java.util.ArrayList;
 public class GetBrands extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("X-Content-Type-Options", "nosniff");
         BrandGetPagingRequest req = new BrandGetPagingRequest();
 
         req.setTypeSort("brandName");
@@ -30,6 +31,7 @@ public class GetBrands extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("X-Content-Type-Options", "nosniff");
         request.setAttribute("edit","true");
         doGet(request, response);
     }

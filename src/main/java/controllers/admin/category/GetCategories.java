@@ -16,6 +16,7 @@ import java.util.HashMap;
 public class GetCategories extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("X-Content-Type-Options", "nosniff");
         CategoryGetPagingRequest req = new CategoryGetPagingRequest();
         String sub = request.getParameter("sub-categories");
 
@@ -41,6 +42,7 @@ public class GetCategories extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("X-Content-Type-Options", "nosniff");
         doGet(request, response);
     }
 }

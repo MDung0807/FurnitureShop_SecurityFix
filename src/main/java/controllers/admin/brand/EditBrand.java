@@ -20,6 +20,7 @@ import java.io.IOException;
 public class EditBrand extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("X-Content-Type-Options", "nosniff");
         String brandId = request.getParameter("brandId");
 
         BrandViewModel brand = BrandService.getInstance().retrieveBrandById(Integer.parseInt(brandId));
@@ -29,6 +30,7 @@ public class EditBrand extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("X-Content-Type-Options", "nosniff");
         request.setCharacterEncoding("UTF-8");
         Part filePart = request.getPart("brand-logo");
         BrandUpdateRequest brandReq = new BrandUpdateRequest();
