@@ -27,49 +27,56 @@ public class Login extends HttpServlet {
         response.setHeader("X-Content-Type-Options", "nosniff");
         PrintWriter out = response.getWriter();
 
-        UserLoginRequest loginRequest = UserUtils.CreateLoginRequest(request);
         boolean isAdmin = false;
         boolean isBanned = false;
         boolean isLogin = false;
         boolean isUnConfirm = false;
-        if(UserService.getInstance().login(loginRequest)){
-            isLogin = true;
-            UserViewModel user = UserService.getInstance().getUserByUserName(loginRequest.getUsername());
-            for(UserRoleViewModel role:user.getRoles()){
-                if(role.getRoleName().equalsIgnoreCase("admin")){
-                    Cookie c = new Cookie("admin", loginRequest.getUsername());
-                    c.setSecure(true);
-                    c.setHttpOnly(true);
-                    response.addCookie(c);
-                    isAdmin = true;
-                    if(user.getStatus() == USER_STATUS.IN_ACTIVE) {
-                        isBanned = true;
-                        break;
-                    }else if(user.getStatus() == USER_STATUS.UN_CONFIRM){
-                        isUnConfirm = true;
+        try{
+            UserLoginRequest loginRequest = UserUtils.CreateLoginRequest(request);
+            if(UserService.getInstance().login(loginRequest)){
+                isLogin = true;
+                UserViewModel user = UserService.getInstance().getUserByUserName(loginRequest.getUsername());
+                for(UserRoleViewModel role:user.getRoles()){
+                    if(role.getRoleName().equalsIgnoreCase("admin")){
+                        Cookie c = new Cookie("admin", loginRequest.getUsername());
+                        c.setSecure(true);
+                        c.setHttpOnly(true);
+                        String cookieHeader = c.getName() + c.getValue() + "; Secure; HttpOnly; SameSite=" + "Strict";
+                        response.setHeader("Set-Cookie", cookieHeader);
+                        response.addCookie(c);
+                        isAdmin = true;
+                        if(user.getStatus() == USER_STATUS.IN_ACTIVE) {
+                            isBanned = true;
+                            break;
+                        }else if(user.getStatus() == USER_STATUS.UN_CONFIRM){
+                            isUnConfirm = true;
+                            break;
+                        }
+                        HttpSession session = request.getSession();
+                        session.setAttribute("admin",user);
+                        session.setAttribute("Secure", true);
                         break;
                     }
-                    HttpSession session = request.getSession();
-                    session.setAttribute("admin",user);
-                    session.setAttribute("Secure", true);
-                    break;
                 }
             }
+            if(!isLogin){
+                out.println("error");
+            }
+            else if(!isAdmin){
+                out.println("unauthorize");
+            }
+            else if(isBanned){
+                out.println("banned");
+            }
+            else if(isUnConfirm){
+                out.println("unconfirm");
+            }
+            else{
+                ServletUtils.redirect(response, request.getContextPath() + "/admin/home");
+            }
         }
-        if(!isLogin){
+        catch (Exception e){
             out.println("error");
-        }
-        else if(!isAdmin){
-            out.println("unauthorize");
-        }
-        else if(isBanned){
-            out.println("banned");
-        }
-        else if(isUnConfirm){
-            out.println("unconfirm");
-        }
-        else{
-            ServletUtils.redirect(response, request.getContextPath() + "/admin/home");
         }
     }
 }

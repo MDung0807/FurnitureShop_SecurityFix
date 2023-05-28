@@ -6,10 +6,10 @@
     <error-page>
         <location>/ExceptionHandler</location>
     </error-page>
-    <init-param>
-        <param-name>readonly</param-name>
-        <param-value>true</param-value>
-    </init-param>
+<!--    <init-param>-->
+<!--        <param-name>readonly</param-name>-->
+<!--        <param-value>true</param-value>-->
+<!--    </init-param>-->
 
     <session-config>
         <cookie-config>
@@ -17,4 +17,13 @@
             <secure>true</secure>
         </cookie-config>
     </session-config>
+
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Disable TRACE Method</web-resource-name>
+            <url-pattern>/*</url-pattern>
+            <http-method>TRACE</http-method>
+        </web-resource-collection>
+        <auth-constraint/>
+    </security-constraint>
 </web-app>

@@ -53,16 +53,23 @@ public class SignIn extends HttpServlet {
                 }else if (user.getStatus() == USER_STATUS.UN_CONFIRM){
                     out.println("unconfirm".trim());
                 }
-                else if (user.getStatus() == USER_STATUS.PASSWORD_HAS_NOT_CHANGED){
-                    HttpSession session = request.getSession();
-                    session.setAttribute("user", user);
-                    session.setAttribute("Secure", true);
-                    ServletUtils.redirect(response, request.getContextPath()+ "/my-account?info=true");
-                }
                 else {
                     HttpSession session = request.getSession();
                     session.setAttribute("user", user);
-                    ServletUtils.redirect(response, request.getContextPath() + "/home");
+                    session.setAttribute("Secure", true);
+                    Cookie c = new Cookie("user", loginRequest.getUsername());
+                    c.setSecure(true);
+                    c.setHttpOnly(true);
+                    String cookieHeader = c.getName() + c.getValue() + "; Secure; HttpOnly; SameSite=" + "strict";
+                    response.setHeader("Set-Cookie", cookieHeader);
+                    response.addCookie(c);
+                    if (user.getStatus() == USER_STATUS.PASSWORD_HAS_NOT_CHANGED){
+
+                        ServletUtils.redirect(response, request.getContextPath()+ "/my-account?info=true");
+                    }
+                    else {
+                        ServletUtils.redirect(response, request.getContextPath() + "/home");
+                    }
                 }
             }else{
                 out.println("error".trim());
