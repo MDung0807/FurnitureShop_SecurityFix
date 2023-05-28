@@ -28,6 +28,7 @@ import java.util.Objects;
 public class EditProduct extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("X-Content-Type-Options", "nosniff");
         int productId = StringUtils.toInt(request.getParameter("productId"));
 
         ProductViewModel product = ProductService.getInstance().retrieveProductById(productId);
@@ -39,6 +40,7 @@ public class EditProduct extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("X-Content-Type-Options", "nosniff");
         request.setCharacterEncoding("UTF-8");
         Part file = request.getPart("main-image");
 

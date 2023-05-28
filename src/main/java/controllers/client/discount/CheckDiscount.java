@@ -17,6 +17,7 @@ import java.io.PrintWriter;
 public class CheckDiscount extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("X-Content-Type-Options", "nosniff");
         PrintWriter out = response.getWriter();
         String discountCode = request.getParameter("discountCode");
         discountCode = StringEscapeUtils.escapeXml11(discountCode);

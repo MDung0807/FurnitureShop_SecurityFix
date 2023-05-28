@@ -18,11 +18,13 @@ import java.io.PrintWriter;
 public class Login extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("X-Content-Type-Options", "nosniff");
         ServletUtils.forward(request,response,"/views/admin/signin/signin.jsp");
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("X-Content-Type-Options", "nosniff");
         PrintWriter out = response.getWriter();
 
         UserLoginRequest loginRequest = UserUtils.CreateLoginRequest(request);

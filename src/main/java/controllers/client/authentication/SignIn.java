@@ -18,6 +18,7 @@ import java.io.PrintWriter;
 public class SignIn extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("X-Content-Type-Options", "nosniff");
         HttpSession session = request.getSession();
         UserViewModel user = (UserViewModel)session.getAttribute("user");
         if(user != null){
@@ -38,6 +39,7 @@ public class SignIn extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("X-Content-Type-Options", "nosniff");
         request.setCharacterEncoding("UTF-8");
         PrintWriter out = response.getWriter();
         try{

@@ -17,6 +17,7 @@ import java.io.IOException;
 public class HandleThirdPartyPayment extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("X-Content-Type-Options", "nosniff");
         String paymentId = request.getParameter("paymentId");
         String payerId = request.getParameter("PayerID");
         int userId = SessionUtils.getUserIdLogin(request);

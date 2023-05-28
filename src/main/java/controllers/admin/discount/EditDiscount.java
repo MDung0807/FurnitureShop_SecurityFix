@@ -16,6 +16,7 @@ import java.io.IOException;
 public class EditDiscount extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("X-Content-Type-Options", "nosniff");
         int discountId = StringUtils.toInt(request.getParameter("discountId"));
 
         DiscountViewModel discount = DiscountService.getInstance().retrieveDiscountById(discountId);
@@ -27,6 +28,7 @@ public class EditDiscount extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("X-Content-Type-Options", "nosniff");
         request.setCharacterEncoding("UTF-8");
 
         DiscountUpdateRequest updateReq = new DiscountUpdateRequest();

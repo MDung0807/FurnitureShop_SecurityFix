@@ -15,6 +15,7 @@ import java.util.ArrayList;
 public class GetOrders extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("X-Content-Type-Options", "nosniff");
         OrderGetPagingRequest req = new OrderGetPagingRequest();
 
         String newOrder = request.getParameter("new");
@@ -39,6 +40,7 @@ public class GetOrders extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("X-Content-Type-Options", "nosniff");
         doGet(request, response);
     }
 }

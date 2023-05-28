@@ -24,6 +24,7 @@ public class ChangeOrderStatus extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("X-Content-Type-Options", "nosniff");
         int orderId = StringUtils.toInt(request.getParameter("editOrderId"));
         int status = StringUtils.toInt(request.getParameter("orderStatus"));
         OrderUpdateRequest req = new OrderUpdateRequest();

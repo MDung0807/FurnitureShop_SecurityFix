@@ -16,6 +16,7 @@ import java.io.IOException;
 public class EditReview extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("X-Content-Type-Options", "nosniff");
         int reviewItemId = StringUtils.toInt(request.getParameter("reviewItemId"));
         ReviewItemViewModel productReview = ReviewService.getInstance().retrieveReviewItemById(reviewItemId);
 
@@ -26,6 +27,7 @@ public class EditReview extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("X-Content-Type-Options", "nosniff");
         request.setCharacterEncoding("UTF-8");
         int productId = StringUtils.toInt(request.getParameter("productId"));
         int reviewItemId = StringUtils.toInt(request.getParameter("reviewItemId"));

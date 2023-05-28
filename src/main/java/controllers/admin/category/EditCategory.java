@@ -20,6 +20,7 @@ import java.io.IOException;
 public class EditCategory extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("X-Content-Type-Options", "nosniff");
         String categoryId = request.getParameter("categoryId");
         String sub = request.getParameter("sub-categories");
         CategoryViewModel category = CategoryService.getInstance().retrieveCategoryById(StringUtils.toInt(categoryId));
@@ -35,6 +36,7 @@ public class EditCategory extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("X-Content-Type-Options", "nosniff");
         request.setCharacterEncoding("UTF-8");
         Part categoryLogo = request.getPart("category-logo");
         String categoryName = request.getParameter("categoryName");

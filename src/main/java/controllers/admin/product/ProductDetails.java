@@ -14,6 +14,7 @@ import java.io.IOException;
 public class ProductDetails extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("X-Content-Type-Options", "nosniff");
         int productId = StringUtils.toInt(request.getParameter("productId"));
 
         ProductViewModel product = ProductService.getInstance().retrieveProductById(productId);
