@@ -13,10 +13,12 @@ public class ServletUtils {
     public static void forward(HttpServletRequest request, HttpServletResponse response, String url)
             throws ServletException, IOException {
         RequestDispatcher dispatcher = request.getRequestDispatcher(url);
+        response.addHeader("Content-Security-Policy", "default-src 'self'");
         dispatcher.forward(request, response);
     }
     public static void redirect(HttpServletResponse response, String url)
             throws ServletException, IOException {
+        response.addHeader("Content-Security-Policy", "default-src 'self'");
         response.sendRedirect(url);
     }
 
