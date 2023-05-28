@@ -1,5 +1,5 @@
 # Furniture-Store-JSP-Servlet
-Final Project
+Final Project Developer Website
 Furniture Store use JSP & Servlet + MySql + Hibernate technologies
 
 
