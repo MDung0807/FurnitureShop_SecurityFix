@@ -18,6 +18,8 @@ import java.io.PrintWriter;
 public class SignIn extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Cookie cookie = new Cookie("myCookie", "cookieValue");
+
         response.setHeader("X-Content-Type-Options", "nosniff");
         HttpSession session = request.getSession();
         UserViewModel user = (UserViewModel)session.getAttribute("user");

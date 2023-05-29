@@ -9,6 +9,7 @@
         <module name="FurnitureShop" />
         <module name="FurnitureWebApp" />
         <module name="FurnitureStore" />
+        <module name="FurnitureShop_SecurityFix" />
       </profile>
     </annotationProcessing>
   </component>
