@@ -424,6 +424,23 @@ public class UserRepository implements IUserRepository{
     }
 
     @Override
+    public User getUserByUserNameUser(String username) throws ServletException {
+        Session session = HibernateUtils.getSession();
+
+        Query q = session.createQuery("from User where username=:s1");
+        q.setParameter("s1",username);
+        Object o = q.getSingleResult();
+        User user = null;
+        if(o != null){
+            user = (User)o;
+        }
+        if(user != null){
+            return user;
+        }
+        return null;
+    }
+
+    @Override
     public UserViewModel getUserByEmail(String email) {
         try {
             Session session = HibernateUtils.getSession();

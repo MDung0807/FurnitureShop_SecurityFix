@@ -1,10 +1,13 @@
 package controllers.client.authentication;
 
 import common.user.UserUtils;
+import models.entities.User;
 import models.services.google.GoogleService;
 import models.services.user.UserService;
 import models.view_models.users.UserLoginRequest;
+import models.view_models.users.UserUpdateRequest;
 import models.view_models.users.UserViewModel;
+import utils.HibernateUtils;
 import utils.ServletUtils;
 import utils.constants.USER_STATUS;
 
@@ -58,13 +61,37 @@ public class SignIn extends HttpServlet {
                     session.setAttribute("user", user);
                     session.setAttribute("Secure", true);
                     ServletUtils.redirect(response, request.getContextPath()+ "/my-account?info=true");
-                }
-                else {
+                } else if (user.getStatus() == USER_STATUS.LOCK) {
+                    out.println("locked".trim());
+                } else {
                     HttpSession session = request.getSession();
+                    session.setAttribute("loginAttempts", 0);
                     session.setAttribute("user", user);
                     ServletUtils.redirect(response, request.getContextPath() + "/home");
                 }
             }else{
+                // Xác thực thất bại
+                HttpSession session = request.getSession();
+                Integer loginAttempts = (Integer) session.getAttribute("loginAttempts");
+
+                if (loginAttempts == null) {
+                    // Lần đầu tiên nhập sai mật khẩu
+                    session.setAttribute("loginAttempts", 1);
+                } else {
+                    // Cập nhật số lần nhập sai mật khẩu
+                    loginAttempts++;
+                    session.setAttribute("loginAttempts", loginAttempts);
+                    System.out.println("loginAttempts"+loginAttempts);
+                    if (loginAttempts >= 5) {
+                        // Khóa tài khoản sau 5 lần nhập sai
+                        User user = UserService.getInstance().getUserByUserNameUser(loginRequest.getUsername());
+                        user.setStatus(USER_STATUS.LOCK);
+                        HibernateUtils.merge(user);
+                        out.println("locked".trim());
+                        return;
+                    }
+                }
+
                 out.println("error".trim());
             }
         }

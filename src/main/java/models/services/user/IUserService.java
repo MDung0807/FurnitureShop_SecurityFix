@@ -1,5 +1,6 @@
 package models.services.user;
 
+import models.entities.User;
 import models.view_models.user_roles.UserRoleViewModel;
 import models.view_models.users.*;
 
@@ -18,6 +19,7 @@ public interface IUserService {
     boolean checkPassword(int userId, String password);
     boolean login(UserLoginRequest request);
     UserViewModel getUserByUserName(String username) throws ServletException;
+    User getUserByUserNameUser(String username) throws ServletException;
     UserViewModel getUserByEmail(String email);
     ArrayList<UserViewModel> getTopUserByTotalOrder(int top) throws ServletException;
     long getTotalUser();

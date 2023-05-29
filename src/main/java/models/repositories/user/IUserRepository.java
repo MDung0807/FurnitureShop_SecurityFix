@@ -23,6 +23,7 @@ public interface IUserRepository extends IModifyEntity<UserCreateRequest, UserUp
     boolean login(UserLoginRequest request);
     ArrayList<UserViewModel> getTopUserByTotalOrder(int top) throws ServletException;
     UserViewModel getUserByUserName(String username) throws ServletException;
+    User getUserByUserNameUser(String username) throws ServletException;
     UserViewModel getUserByEmail(String email);
     long getTotalUser();
     ArrayList<UserRoleViewModel> getUserRoleByUserId(int userId);
