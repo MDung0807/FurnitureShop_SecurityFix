@@ -1,6 +1,7 @@
 <%@ page import="com.google.gson.Gson" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <jsp:useBean id="customers" type="java.util.ArrayList<models.view_models.users.UserViewModel>" scope="request"/>
 <jsp:useBean id="orders" type="java.util.ArrayList<models.view_models.orders.OrderViewModel>" scope="request"/>
 <jsp:useBean id="statistics" type="models.view_models.orders.OrderOverviewViewModel" scope="request"/>
@@ -259,5 +260,6 @@
             graph.update();
         }
     </script>
+        <sec:csrfInput />
     </body>
 </html>
