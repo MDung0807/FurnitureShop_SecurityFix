@@ -27,7 +27,7 @@ public class ServletUtils {
 //                        "script-src 'self' 'unsafe-inline';" +
 //                        "font-src 'self' https: data: ; " +
 //                        "img-src 'self' https: data: ;");
-//         response.sendRedirect(url);
+         response.sendRedirect(url);
     }
 
     public static boolean isAuthenticateAdmin(HttpServletRequest request){
