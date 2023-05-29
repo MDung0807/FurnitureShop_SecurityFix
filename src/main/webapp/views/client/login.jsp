@@ -32,7 +32,6 @@
     <!-- Start login section  -->
     <div class="login__section section--padding">
         <div class="container">
-            <form id="form-login" action="<%=request.getContextPath()%>/signin" method="post">
                 <div class="login__section--inner">
                     <div class="row justify-content-center">
                         <div class="col col-8">
@@ -42,6 +41,7 @@
                                     <p class="account__login--header__desc">Đăng nhập nếu ban đã có tài khoản</p>
                                 </div>
                                 <div class="account__login--inner">
+                                    <form id="form-login" action="<%=request.getContextPath()%>/signin" method="post">
                                     <label>
                                         <input class="account__login--input" placeholder="Username" type="text" id="username" name="username" required>
                                     </label>
@@ -51,6 +51,7 @@
 
                                     <p id="authenticationValidateMessage" class="mt-3 mb-3"></p>
                                     <button class="account__login--btn primary__btn" type="submit">Đăng nhập</button>
+                                    </form>
                                     <div class="account__login--divide">
                                         <span class="account__login--divide__text">Hoặc</span>
                                     </div>
@@ -74,7 +75,6 @@
                         </div>
                     </div>
                 </div>
-            </form>
         </div>
     </div>
     <!-- End login section  -->

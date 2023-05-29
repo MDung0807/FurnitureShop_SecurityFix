@@ -1,5 +1,6 @@
 package models.services.user;
 
+import models.entities.User;
 import models.repositories.user.UserRepository;
 import models.view_models.user_roles.UserRoleViewModel;
 import models.view_models.users.*;
@@ -64,6 +65,11 @@ public class UserService implements IUserService {
     @Override
     public UserViewModel getUserByUserName(String username) throws ServletException {
         return UserRepository.getInstance().getUserByUserName(username);
+    }
+
+    @Override
+    public User getUserByUserNameUser(String username) throws ServletException {
+        return UserRepository.getInstance().getUserByUserNameUser(username);
     }
 
     @Override
