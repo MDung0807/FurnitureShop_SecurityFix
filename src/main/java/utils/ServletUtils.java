@@ -12,12 +12,22 @@ import java.io.IOException;
 public class ServletUtils {
     public static void forward(HttpServletRequest request, HttpServletResponse response, String url)
             throws ServletException, IOException {
+//        response.setHeader("Content-Security-Policy",
+//                    "default-src 'self' https: 'unsafe-inline';" +
+//                        "script-src 'self' 'unsafe-inline';" +
+//                        "font-src 'self' https: data: ; " +
+//                        "img-src 'self' https: data: ;");
         RequestDispatcher dispatcher = request.getRequestDispatcher(url);
         dispatcher.forward(request, response);
     }
     public static void redirect(HttpServletResponse response, String url)
             throws ServletException, IOException {
-        response.sendRedirect(url);
+//        response.setHeader("Content-Security-Policy",
+//                "default-src 'self' https: 'unsafe-inline';" +
+//                        "script-src 'self' 'unsafe-inline';" +
+//                        "font-src 'self' https: data: ; " +
+//                        "img-src 'self' https: data: ;");
+         response.sendRedirect(url);
     }
 
     public static boolean isAuthenticateAdmin(HttpServletRequest request){

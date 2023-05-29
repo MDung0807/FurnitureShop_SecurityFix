@@ -23,7 +23,8 @@ function validateForm(e, context){
         } else {
             passMatch.html('')
         }
-    }else if(newPassword.length !== 0){
+    }else if(newPassword.val() !== ""){
+        console.log(newPassword.length)
         if (confirmPassword != null && newPassword.val() !== confirmPassword.val()) {
             passMatch.html('Mật khẩu không khớp').css('color', 'red');
             noError = false;
@@ -38,6 +39,7 @@ function validateForm(e, context){
             noError = false;
         }
         if (pattern.test(newPassword.val()) === false){
+            console.log(newPassword)
             textNewPass.html('Mật khẩu yếu').css("color", 'red')
             console.log("Mật khẩu yếu")
             noError = false;

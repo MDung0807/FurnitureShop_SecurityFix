@@ -1,5 +1,6 @@
 <%@ page import="utils.constants.USER_GENDER" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <jsp:useBean id="user" type="models.view_models.users.UserViewModel" scope="request"/>
 <html>
@@ -57,7 +58,7 @@
                                             <img src="data:image/png;base64, ${user.avatar}" alt="user image">
                                         </div>
                                         <div class="card-body">
-                                            <h4 class="py-2 text-dark">${user.firstName}<span> ${user.lastName}</span></h4>
+                                            <h4 class="py-2 text-dark">${fn:escapeXml(user.firstName)}<span> ${fn:escapeXml(user.lastName)}</span></h4>
                                             <p>${user.email}</p>
                                         </div>
                                     </div>
@@ -79,11 +80,11 @@
                                     <div class="contact-info pt-4">
                                         <h3 class="text-dark">Thông tin liên hệ</h3>
                                         <p class="text-dark font-weight-medium pt-24px mb-2">Email</p>
-                                        <p>${user.email}</p>
+                                        <p>${fn:escapeXml(user.email)}</p>
                                         <p class="text-dark font-weight-medium pt-24px mb-2">Điện thoại</p>
-                                        <p>${user.phone}</p>
+                                        <p>${fn:escapeXml(user.phone)}</p>
                                         <p class="text-dark font-weight-medium pt-24px mb-2">Ngày sinh</p>
-                                        <p>${user.dateOfBirth}</p>
+                                        <p>${fn:escapeXml(user.dateOfBirth)}</p>
                                     </div>
                                 </div>
                             </div>
@@ -136,7 +137,7 @@
                                                             <div class="form-group">
                                                                 <label for="firstName">Họ</label>
                                                                 <input type="text" class="form-control" id="firstName"
-                                                                       name="firstName" value="${user.firstName}" required>
+                                                                       name="firstName" value="${fn:escapeXml(user.firstName)}" required>
                                                             </div>
                                                         </div>
 
@@ -144,7 +145,7 @@
                                                             <div class="form-group">
                                                                 <label for="lastName">Tên</label>
                                                                 <input type="text" class="form-control" id="lastName"
-                                                                       name="lastName" value="${user.lastName}" required>
+                                                                       name="lastName" value="${fn:escapeXml(user.lastName)}" required>
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-4">
@@ -163,7 +164,7 @@
                                                             <div class="form-group mb-4">
                                                                 <label for="username">User name</label>
                                                                 <input type="text" class="form-control" id="username"
-                                                                       name="username" value="${user.username}" required>
+                                                                       name="username" value="${fn:escapeXml(user.username)}" required>
                                                                 <p class="mt-3" id='userValidateMessage' ></p>
                                                             </div>
                                                         </div>
@@ -181,7 +182,7 @@
                                                             <div class="form-group mb-4">
                                                                 <label for="email">Email</label>
                                                                 <input type="email" class="form-control" id="email"
-                                                                       name="email" value="${user.email}" required>
+                                                                       name="email" value="${fn:escapeXml(user.email)}" required>
                                                                 <p class="mt-3" id='emailValidateMessage'></p>
                                                             </div>
                                                         </div>
@@ -189,7 +190,7 @@
                                                             <div class="form-group">
                                                                 <label for="phone">Điện thoại</label>
                                                                 <input type="text" class="form-control" id="phone" pattern="[0-9]{10}"
-                                                                       name="phone" value="${user.phone}" required>
+                                                                       name="phone" value="${fn:escapeXml(user.phone)}" required>
                                                                 <p class="mt-3" id='phoneValidateMessage'></p>
                                                             </div>
                                                         </div>
@@ -218,13 +219,13 @@
                                                             <div class="form-group mb-4">
                                                                 <label for="dob">Ngày sinh</label>
                                                                 <input type="date" class="form-control" id="dob"
-                                                                       name="dob" value="${user.dateOfBirth}" required>
+                                                                       name="dob" value="${fn:escapeXml(user.dateOfBirth)}" required>
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-6">
                                                             <div class="form-group mb-4">
                                                                 <label for="address">Địa chỉ</label>
-                                                                <input type="text" class="form-control" id="address" name="address" value="${user.address}" required/>
+                                                                <input type="text" class="form-control" id="address" name="address" value="${fn:escapeXml(user.address)}" required/>
                                                             </div>
                                                         </div>
                                                     </div>

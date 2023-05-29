@@ -21,6 +21,8 @@ import java.io.PrintWriter;
 public class SignIn extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Cookie cookie = new Cookie("myCookie", "cookieValue");
+
         response.setHeader("X-Content-Type-Options", "nosniff");
         HttpSession session = request.getSession();
         UserViewModel user = (UserViewModel)session.getAttribute("user");
@@ -67,7 +69,20 @@ public class SignIn extends HttpServlet {
                     HttpSession session = request.getSession();
                     session.setAttribute("loginAttempts", 0);
                     session.setAttribute("user", user);
-                    ServletUtils.redirect(response, request.getContextPath() + "/home");
+                    session.setAttribute("Secure", true);
+                    Cookie c = new Cookie("user", loginRequest.getUsername());
+                    c.setSecure(true);
+                    c.setHttpOnly(true);
+//                    String cookieHeader = c.getName() + c.getValue() + "; Secure; HttpOnly; SameSite=" + "strict";
+//                    response.setHeader("Set-Cookie", cookieHeader);
+                    response.addCookie(c);
+                    if (user.getStatus() == USER_STATUS.PASSWORD_HAS_NOT_CHANGED){
+
+                        ServletUtils.redirect(response, request.getContextPath()+ "/my-account?info=true");
+                    }
+                    else {
+                        ServletUtils.redirect(response, request.getContextPath() + "/home");
+                    }
                 }
             }else{
                 // Xác thực thất bại

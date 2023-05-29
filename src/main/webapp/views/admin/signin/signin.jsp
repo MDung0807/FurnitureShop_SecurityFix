@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <html>
 <head>
@@ -35,11 +36,13 @@
                                 <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
                             </div>
 
+                            <sec:csrfInput />
                             <div class="col-md-12">
                                 <p id="authenticationValidateMessage" class="mt-3 mb-3"></p>
                                 <button type="submit" class="btn btn-primary btn-block mb-4">Sign In</button>
                             </div>
                         </div>
+
                     </form>
                 </div>
             </div>

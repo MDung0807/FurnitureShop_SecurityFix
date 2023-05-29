@@ -40,7 +40,6 @@ public class EditInfo extends HttpServlet {
             session.setAttribute("user",user);
             request.setAttribute("user", user);
         }
-
         ServletUtils.redirect(response, request.getContextPath() + "/my-account?info=true");
     }
 }
