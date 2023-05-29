@@ -10,12 +10,13 @@ public class HeaderFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         response.setHeader("X-Frame-Options", "SAMEORIGIN");
         response.setHeader("X-Content-Type-Options", "nosniff");
+        response.setHeader("Set-Cookie", "; Secure; HttpOnly; SameSite=" + "strict");
         response.setHeader("Access-Control-Allow-Origin", "*");
-        response.setHeader("Content-Security-Policy",
-                    "default-src 'self' https: 'unsafe-inline';" +
-                        "script-src 'self' 'unsafe-inline';" +
-                        "font-src 'self' https: data: ; " +
-                        "img-src 'self' https: data: ;");
+//        response.setHeader("Content-Security-Policy",
+//                    "default-src 'self' https: 'unsafe-inline';" +
+//                        "script-src 'self' 'unsafe-inline';" +
+//                        "font-src 'self' https: data: ; " +
+//                        "img-src 'self' https: data: ;");
 
         filterChain.doFilter(servletRequest, servletResponse);
     }

@@ -62,8 +62,8 @@ public class SignIn extends HttpServlet {
                     Cookie c = new Cookie("user", loginRequest.getUsername());
                     c.setSecure(true);
                     c.setHttpOnly(true);
-                    String cookieHeader = c.getName() + c.getValue() + "; Secure; HttpOnly; SameSite=" + "strict";
-                    response.setHeader("Set-Cookie", cookieHeader);
+//                    String cookieHeader = c.getName() + c.getValue() + "; Secure; HttpOnly; SameSite=" + "strict";
+//                    response.setHeader("Set-Cookie", cookieHeader);
                     response.addCookie(c);
                     if (user.getStatus() == USER_STATUS.PASSWORD_HAS_NOT_CHANGED){
 

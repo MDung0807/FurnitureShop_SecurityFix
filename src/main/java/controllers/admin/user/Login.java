@@ -41,8 +41,8 @@ public class Login extends HttpServlet {
                         Cookie c = new Cookie("admin", loginRequest.getUsername());
                         c.setSecure(true);
                         c.setHttpOnly(true);
-                        String cookieHeader = c.getName() + c.getValue() + "; Secure; HttpOnly; SameSite=" + "Strict";
-                        response.setHeader("Set-Cookie", cookieHeader);
+//                        String cookieHeader = c.getName() + c.getValue() + "; Secure; HttpOnly; SameSite=" + "Strict";
+//                        response.setHeader("Set-Cookie", cookieHeader);
                         response.addCookie(c);
                         isAdmin = true;
                         if(user.getStatus() == USER_STATUS.IN_ACTIVE) {
