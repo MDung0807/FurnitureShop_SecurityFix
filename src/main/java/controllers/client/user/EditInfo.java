@@ -30,8 +30,16 @@ public class EditInfo extends HttpServlet {
         response.setHeader("X-Content-Type-Options", "nosniff");
         request.setCharacterEncoding("UTF-8");
         UserUpdateRequest reqUpdate = UserUtils.CreateUserUpdateRequest(request);
+        boolean isSuccess = false;
         reqUpdate.setStatus(USER_STATUS.ACTIVE);
-        boolean isSuccess = UserService.getInstance().updateUser(reqUpdate);
+        UserViewModel userViewModel = (UserViewModel) request.getSession().getAttribute("user");
+        //Kiểm tra, nếu như id của user trong sesion giống với user yêu cầu thay đổi thông tin
+        if (userViewModel.getId() != reqUpdate.getUserId()){
+            ServletUtils.redirect(response, request.getContextPath() + "/my-account?error=true");
+            return;
+        }
+        else if (userViewModel.getPassword().equals(reqUpdate.getPassword()))
+            isSuccess= UserService.getInstance().updateUser(reqUpdate); // Thực hiện cập nhật thông tin
         if(!isSuccess){
             request.setAttribute("error", "error");
         }else{
@@ -40,6 +48,7 @@ public class EditInfo extends HttpServlet {
             session.setAttribute("user",user);
             request.setAttribute("user", user);
         }
+
         ServletUtils.redirect(response, request.getContextPath() + "/my-account?info=true");
     }
 }

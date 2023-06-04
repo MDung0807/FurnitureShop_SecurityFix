@@ -11,6 +11,8 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Objects;
 
 @WebServlet(name = "EditReview", value = "/my-account/order/review/edit")
 public class EditReview extends HttpServlet {
@@ -34,13 +36,24 @@ public class EditReview extends HttpServlet {
 
         int userId = SessionUtils.getUserIdLogin(request);
         ReviewItemUpdateRequest updateReq = new ReviewItemUpdateRequest();
+        ArrayList<ReviewItemViewModel> reviewItems = ReviewService.getInstance().retrieveReviewItemByUserId(userId);
+        String error = null;
+        for (ReviewItemViewModel i: reviewItems){
+            if (i.getProductId() == productId && i.getReviewItemId() == reviewItemId) {
+                error = "";
+                break;
+            }
+        }
 
-        updateReq.setReviewItemId(reviewItemId);
-        updateReq.setRating(StringUtils.toInt(request.getParameter("rating")));
-        updateReq.setContent(request.getParameter("content"));
+        if (Objects.equals(error, "")) {
+            updateReq.setReviewItemId(reviewItemId);
+            updateReq.setRating(StringUtils.toInt(request.getParameter("rating")));
+            updateReq.setContent(request.getParameter("content"));
 
-        boolean success = ReviewService.getInstance().updateReviewItem(updateReq);
-
-        ServletUtils.redirect(response, request.getContextPath() + "/my-account/order/reviews?productId=" + productId);
+            boolean success = ReviewService.getInstance().updateReviewItem(updateReq);
+        }
+        else
+            error = "&error=true";
+        ServletUtils.redirect(response, request.getContextPath() + "/my-account/order/reviews?productId=" + -1 +error);
     }
 }
